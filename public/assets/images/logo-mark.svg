@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Flights Monkey">
+  <!--
+    The client has no logo and asked for "whatever is best", so this is the
+    one idea the name actually gives you: a monkey's tail and a flight path
+    are the same curve. It coils from the tile's lower left and releases
+    into a climb, and the aircraft sits at the point where the coil lets go.
+
+    Drawn on a 48-unit grid with round caps so it stays legible at 20px in
+    the header, and in one colour pair — emerald tile, gold line — so it
+    reads on cream, on the dark hero, and in a favicon.
+  -->
+  <rect width="48" height="48" rx="12" fill="#0c3b33"/>
+
+  <!-- the tail: a coil that straightens into a departure path -->
+  <path d="M12.5 34.5c-3.2 0-5-2.1-5-4.4 0-2.1 1.6-3.7 3.6-3.7 1.8 0 3.1 1.3 3.1 3 0 1.4-1 2.4-2.2 2.4-1 0-1.8-.7-1.8-1.6"
+        fill="none" stroke="#f0b429" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M12.5 34.5c6.4 0 11.4-3.3 16.2-9.2"
+        fill="none" stroke="#f0b429" stroke-width="2.6" stroke-linecap="round"/>
+
+  <!-- the aircraft, banking away at the end of the curve -->
+  <path d="M29.2 25.1 41 16.4l-3.2 7.9-6.9 1.9z"
+        fill="#f0b429"/>
+  <path d="M31.6 26.4v4.4l2.9-3.1z"
+        fill="#f0b429" opacity=".75"/>
+</svg>

@@ -1,0 +1,146 @@
+{
+"NYC": [
+"JFK",
+"LGA",
+"EWR"
+],
+"LON": [
+"LHR",
+"LGW",
+"STN",
+"LTN",
+"LCY",
+"SEN"
+],
+"PAR": [
+"CDG",
+"ORY",
+"BVA"
+],
+"TYO": [
+"NRT",
+"HND"
+],
+"CHI": [
+"ORD",
+"MDW"
+],
+"WAS": [
+"IAD",
+"DCA",
+"BWI"
+],
+"MIL": [
+"MXP",
+"LIN",
+"BGY"
+],
+"ROM": [
+"FCO",
+"CIA"
+],
+"MOW": [
+"SVO",
+"DME",
+"VKO"
+],
+"SAO": [
+"GRU",
+"CGH",
+"VCP"
+],
+"RIO": [
+"GIG",
+"SDU"
+],
+"BUE": [
+"EZE",
+"AEP"
+],
+"YTO": [
+"YYZ",
+"YTZ",
+"YHM"
+],
+"YMQ": [
+"YUL",
+"YHU",
+"YMX"
+],
+"SEL": [
+"ICN",
+"GMP"
+],
+"OSA": [
+"KIX",
+"ITM"
+],
+"BJS": [
+"PEK",
+"PKX"
+],
+"SHA": [
+"PVG",
+"SHA"
+],
+"BKK": [
+"BKK",
+"DMK"
+],
+"JKT": [
+"CGK",
+"HLP"
+],
+"DXB": [
+"DXB",
+"DWC"
+],
+"STO": [
+"ARN",
+"BMA",
+"NYO"
+],
+"BER": [
+"BER"
+],
+"HOU": [
+"IAH",
+"HOU"
+],
+"DFW": [
+"DFW",
+"DAL"
+],
+"SFO": [
+"SFO",
+"OAK",
+"SJC"
+],
+"LAX": [
+"LAX",
+"BUR",
+"LGB",
+"SNA",
+"ONT"
+],
+"MIA": [
+"MIA",
+"FLL"
+],
+"IST": [
+"IST",
+"SAW"
+],
+"TCI": [
+"TFN",
+"TFS"
+],
+"BHZ": [
+"CNF",
+"PLU"
+],
+"MEX": [
+"MEX",
+"NLU"
+]
+}

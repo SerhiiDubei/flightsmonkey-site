@@ -1,0 +1,3720 @@
+<html lang="en">
+<head>
+  
+  <title>Search Results {{ORIGIN}}-{{DEST}} | {{SITE_NAME}}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta property="og:title" content="Search Results {{ORIGIN}}-{{DEST}}" />
+  <meta property="og:images" content="" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/logo-mark.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png?v=46">
+  <meta name="theme-color" content="#0c3b33">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta property="og:url" content="/airline/searchflight" />
+  <meta property="og:description" content="" />
+  <link rel="canonical" href="/airline/searchflight" />
+  <meta CHARSET="UTF-8">
+  <script src="/assets/js/jquery.min.js"></script>
+ 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><style>.fa-sharp{font-family:"Font Awesome 6 Free" !important}</style>
+  <link href="/assets/css/fonts.css?v=46" rel="stylesheet" />
+  <link href="/assets/css/app.css?v=46" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+</head>
+<body>
+  
+    <header id="headnav" class="closeonclick">
+    <nav class="navbar navbar-expand-lg navetwo new-desk">
+      <div class="container">
+        <a class="navbar-brand" href="/"><span class="brandmark">{{SITE_NAME}}</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa-sharp fa-solid fa-bars" id="closeoncloseluist"></i>
+          <i class="fa-solid fa-xmark" id="closeonclose"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active_menu">
+              <a class="nav-link " href="/"><span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ai ai-HomeAlt1"><path d="M21 19v-6.733a4 4 0 0 0-1.245-2.9L13.378 3.31a2 2 0 0 0-2.755 0L4.245 9.367A4 4 0 0 0 3 12.267V19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/><path d="M9 15a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6H9v-6z"/></svg></span> Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="/about"><span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ai ai-Person"><circle cx="12" cy="7" r="5"/><path d="M17 14h.352a3 3 0 0 1 2.976 2.628l.391 3.124A2 2 0 0 1 18.734 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7"/></svg></span> About us</a>
+            </li>           
+            <li class="nav-item" >
+              <a style="padding-right:0;" class="nav-link   " href="/contact"> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ai ai-Phone"><path d="M10.554 6.24L7.171 2.335c-.39-.45-1.105-.448-1.558.006L2.831 5.128c-.828.829-1.065 2.06-.586 3.047a29.207 29.207 0 0 0 13.561 13.58c.986.479 2.216.242 3.044-.587l2.808-2.813c.455-.455.456-1.174.002-1.564l-3.92-3.365c-.41-.352-1.047-.306-1.458.106l-1.364 1.366a.462.462 0 0 1-.553.088 14.557 14.557 0 0 1-5.36-5.367.463.463 0 0 1 .088-.554l1.36-1.361c.412-.414.457-1.054.101-1.465z"/></svg></span> Contact us/Dispute Resolution</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+<button onclick="topFunction()" id="myBtn1" title="Go to top"><i class="fa-sharp fa-solid fa-arrow-up"></i></button>
+
+
+<div class="collapse " id="collapseExample">
+
+    <div class="card card-body collapse_searchform">
+        <div class="container">
+
+            <form method="POST" class="frn srch_apres" id="searchbox " action="/airline/searchflight">
+                <div class="close-btn row12"><i class="fa fa-times" aria-hidden="true" data-toggle="collapse"
+                        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></i></div>
+                <div class="traw listingradiobtn">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="triptype" id="round" value="round" {{ROUND_CHECKED}}>
+                        <label class="form-check-label" for="round">Round trip</label>
+                    </div>
+                    <div class="form-check form-check-inline r2">
+                        <input class="form-check-input" type="radio" name="triptype" id="oneway" value="oneway" {{ONEWAY_CHECKED}}>
+                        <label class="form-check-label" for="oneway">Oneway</label>
+                    </div>
+                </div>
+                <div class="mt-2 modified-ser mobile-ser">
+                    <div class="form-row">
+
+
+
+                        <div class="frm-width origin_focus">
+                            <div class="textlng">
+                                <i class="fa-sharp fa-solid fa-circle-xmark" id="blank1" style="cursor:pointer;"></i>
+                                <label>from</label>
+                                <div class="map-icon"><img src="/assets/images/origin-new.svg" /></div>
+                                <input type="text" id="origin2" name="origin"
+                                    class="form-control origin_value frommarg2" value="{{ORIGIN}}"
+                                    placeholder="FROM" autocomplete="off">
+                                <p id="check1">{{ORIGIN_LABEL}}</p>
+                                <div class="listsearchlist">
+                                    <div class='deporg' style="text-align:left;background:#3b3b3b;">
+                                        <h4 style="font-size:18px;"><i
+                                                style="color:#cc0000 !important;position:relative !important;top:0 !important;left:0 !important;margin-right:10px !important;"
+                                                id='depclickclose' onclick='dpclose1()' class='fa-solid fa-xmark'></i>
+                                            From Where?</h4>
+                                    </div>
+                                    <input type="text" id="origin"
+                                        style="border: 1px solid #ccc !important;margin-bottom: 3px; margin-top: 16px;width: 104%;"
+                                        class="form-control mobileorigin" placeholder="FROM" autocomplete="off">
+                                    <ul id="mysearchlist" type="cirlce"></ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="frm-width-sm">
+                            <i class="fa-solid fa-arrow-right-arrow-left" id="exchange2"></i>
+                        </div>
+
+
+
+
+
+                        <input type="hidden" name="from_air" class="from_air" value="{{ORIGIN_LABEL}}">
+                        <input type="hidden" name="dest_air" class="dest_air" value="{{DEST_LABEL}}">
+                        <input type="hidden" name="dp_date" class="dp_date_air"
+                            value="{{DEP_ISO}}">
+                        <input type="hidden" name="ar_date" class="ar_date_air"
+                            value="{{RET_ISO}}">
+                        <input type="hidden" name="class_air" class="class_air"
+                            value="{{CABIN_LABEL}}">
+                        <div class="frm-width destination_focus">
+                            <div class="textlng">
+                                <i class="fa-sharp fa-solid fa-circle-xmark" id="blank2" style="cursor:pointer;"></i>
+                                <label>To</label>
+                                <div class="map-icon"><img src="/assets/images/destination.svg" /></div>
+                                <input type="text" class="form-control destination_value frommarg2" id="destination2"
+                                    value="{{DEST}}" name="destination" placeholder="TO"
+                                    autocomplete="off">
+                                <p id="check2" class="destination_focus">{{DEST_LABEL}}</p>
+                                <div class="listsearchlistdes">
+                                    <div class='deporg' style="text-align:left;background:#3b3b3b;">
+                                        <h4 style="font-size:18px;"><i
+                                                style="color:#cc0000 !important;position:relative !important;top:0 !important;left:0 !important;margin-right:10px !important;"
+                                                id='depclickclose' onclick='dpclose2()' class='fa-solid fa-xmark'></i>
+                                            Where To?</h4>
+                                    </div>
+                                    <input type="text" class="form-control mobiledestination"
+                                        style="border: 1px solid #ccc !important;margin-bottom: 3px; margin-top: 16px;    width: 104%;"
+                                        id="destination" placeholder="TO" autocomplete="off">
+                                    <ul id="mysearchlistdestination" type="cirlce"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="res-mobiletxtview ">
+
+                            <div class="search-smallinput dp_date_focus">
+                                <div class="textlng myreturnbox">
+                                    <label>Departure</label>
+                                    <div class="map-icon icon12"><img
+                                            src="/assets/images/calender-icon.svg" /></div><input
+                                        type="text" class="form-control" placeholder="Select"
+                                        value="{{DEP_US}}" id="depfield" name="depart_date"
+                                        autocomplete="off">
+                                    <p id="dp_date" class="dp_date">{{DEP_ISO}}</p>
+
+
+
+                                    <div class="desktop_view_calaender">
+                                        <div class="topViewbar">
+                                            <div class="row" style="margin: auto; ">
+                                                <div class="col-sm-6">
+                                                    <select class="form-control newfunction12" style="width: 50%;"
+                                                        name="title13">
+                                                        <option value="round" {{ROUND_SELECTED}}>
+                                                            Round Trip</option>
+                                                        <option value="oneway" {{ONEWAY_SELECTED}}>
+                                                            One Way</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="row" style="margin: auto;">
+                                                        <div class="col-sm-2 mobred">
+                                                            <a href="#" class="resertdate">Reset</a>
+                                                        </div>
+                                                        <div class="col-sm-10">
+                                                            <div class="row" style="margin: auto;">
+                                                                <div class="col-sm-6"><input type="text"
+                                                                        class="form-control depclpop"
+                                                                        placeholder="Departure" /></div>
+                                                                <div class="col-sm-6"><input type="text"
+                                                                        class="form-control arclpop"
+                                                                        placeholder="Return" /></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div id="from"></div>
+                                        <div id="to"></div>
+                                        <hr />
+                                        <div class="confirm-cal"><a id="deskreset" class="resertdate"
+                                                href="#"><span><svg xmlns="http://www.w3.org/2000/svg" width="12"
+                                                        height="12" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round" class="ai ai-ArrowCycle">
+                                                        <path d="M22 12c0 6-4.39 10-9.806 10C7.792 22 4.24 19.665 3 16">
+                                                        </path>
+                                                        <path d="M2 12C2 6 6.39 2 11.806 2 16.209 2 19.76 4.335 21 8">
+                                                        </path>
+                                                        <path d="M7 17l-4-1-1 4"></path>
+                                                        <path d="M17 7l4 1 1-4"></path>
+                                                    </svg></span> Reset</a>
+                                            <button type="button" class="btn btn-primary calbtn"><span><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="ai ai-ThumbsUp thm-cls">
+                                                        <path
+                                                            d="M11.605 5.782l.23-2.369c.091-.952.98-1.598 1.878-1.366 1.351.35 2.3 1.605 2.3 3.044v3.035c0 .675 0 1.013.146 1.26.083.141.197.26.333.345.24.151.567.151 1.22.151h.396c1.703 0 2.554 0 3.078.39.393.293.67.722.78 1.208.146.65-.181 1.463-.836 3.087l-.326.81a3.261 3.261 0 0 0-.226 1.48c.232 2.874-2.047 5.295-4.833 5.136l-10.424-.599c-1.139-.065-1.708-.098-2.222-.553-.515-.455-.612-.924-.805-1.861a14.324 14.324 0 0 1 .055-6.037c.283-1.248 1.475-1.92 2.706-1.76 3.264.42 6.223-2.019 6.55-5.4z">
+                                                        </path>
+                                                        <path d="M7 11.5l-.137.457A14.983 14.983 0 0 0 7 21"></path>
+                                                    </svg></span> Done</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <style>
+                                #datepickerreturn .ui-widget.ui-widget-content {
+                                    width: 100% !important;
+                                    position: relative;
+                                    right: 17px;
+                                    border: 0px;
+                                }
+
+                                #datepickerdeparture .ui-widget.ui-widget-content {
+                                    width: 100% !important;
+                                    position: relative;
+                                    right: 17px;
+                                    border: 0px;
+                                }
+                            </style>
+                            <div class="search-smallinput mobile-mrg ar_date_focus" id="ar_date_focus">
+                                <div class="textlng to_error">
+                                    <label>Return</label>
+                                    <div class="map-icon icon12"><img
+                                            src="/assets/images/destination-cal-icon.svg" /></div><input
+                                        type="text" class="form-control" placeholder="Select" id="arrfield"
+                                        value="{{RET_US}}"
+                                        name="return_date" autocomplete="off">
+                                    <p id="dr_date">{{RET_ISO}}</p>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="frm-width3 ">
+                            <div class="textlng">
+                                <div class="traveller_focus">
+                                    <label>Travellers</label>
+                                    <div class="map-icon traveliconmap"><img
+                                            src="/assets/images/user-new.svg" /></div> <input type="text"
+                                        class="form-control" id="popover" value="{{PAX_LABEL}}">
+                                    <p class="class_type_name ">{{CABIN_LABEL}}</p>
+                                </div>
+                                <input type="hidden" name="adult" value="{{ADULTS}}" id="adult"
+                                    readonly />
+                                <input type="hidden" name="child" id="child" value="{{CHILDREN}}"
+                                    readonly />
+                                <input type="hidden" name="infant" id="infant" value="{{INFANTS}}"
+                                    readonly />
+                                <input type="hidden" value="{{NONSTOP}}" name="nonstop" id="nonstop" />
+                                <div id="pop" class="myfrm arrow-top">
+                                    <div class="repbackhighttr">
+                                        <h4><i id="sfclickclose" class="fa-solid fa-arrow-left"></i> Traveller Details
+                                            </h2>
+                                    </div>
+                                    <div class="travllerbox-mbl">
+                                        <div class="row" id="index_style_mar">
+
+
+
+                                            <div class="col-sm-4">
+                                                <p><span class="adult">{{ADULTS}} </span> Adults
+                                                    <small>(Aged 12+ yrs)</small>
+                                                </p>
+
+                                                <div class="btn-group popplusap" role="group"
+                                                    aria-label="Basic example">
+                                                    <button type="button" class="btn btn-secondary minus_adult"><img
+                                                            src="/assets/image/ico/minus-icon.png" /></button>
+                                                    <span class="adultop">{{ADULTS}} </span>
+                                                    <button type="button" class="btn btn-secondary plus_adult"><img
+                                                            src="/assets/image/ico/plus-icon.png" /></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p><span class="child">{{CHILDREN}}</span> Child
+                                                    <small>(Aged 2-12 yrs)</small>
+                                                </p>
+
+                                                <div class="btn-group popplusap" role="group"
+                                                    aria-label="Basic example">
+                                                    <button type="button" class="btn btn-secondary minus_child"><img
+                                                            src="/assets/image/ico/minus-icon.png" /></button>
+                                                    <span class="childpop">{{CHILDREN}}</span>
+                                                    <button type="button" class="btn btn-secondary plus_child"><img
+                                                            src="/assets/image/ico/plus-icon.png" /></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <p><span class="infant">{{INFANTS}}</span>
+                                                    Infant<small>(Below 2 yrs)</small></p>
+
+                                                <div class="btn-group popplusap" role="group"
+                                                    aria-label="Basic example">
+                                                    <button type="button" class="btn btn-secondary minus_infant"><img
+                                                            src="/assets/image/ico/minus-icon.png" /></button>
+                                                    <span class="infantpop">{{INFANTS}}</span>
+                                                    <button type="button" class="btn btn-secondary plus_infant"><img
+                                                            src="/assets/image/ico/plus-icon.png" /></button>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                    <p class="model_heading">Travel Class</p>
+
+
+
+                                    <input type="hidden" name="class_type" value="{{CABIN_LABEL}}"
+                                        id="class_type" />
+                                    <ul id="cont_index_marleft">
+
+                                        <li> <input type="radio" name="type" id="a25" value="Economy" class="class"
+                                                {{ECONOMY_CHECKED}} />
+                                            <label for="a25"> Economy</label>
+                                        </li>
+                                        <li id="premclas"> <input type="radio" id="a50" name="type"
+                                                value="Premium Economy" class="class" {{PREMIUM_CHECKED}} />
+                                            <label for="a50">Premium Economy</label>
+                                        </li>
+                                        <li><input type="radio" name="type" id="a75" value="Business" class="class" {{BUSINESS_CHECKED}} />
+                                            <label for="a75">Business</label>
+                                        </li>
+                                        <li><input type="radio" name="type" id="a100" value="First" class="class" {{FIRST_CHECKED}} />
+                                            <label for="a100">First </label>
+                                        </li>
+                                    </ul>
+
+
+                                    <div id="optionbtn">
+                                        <a href="javascript:void(0);" onclick="func(0)" id="btn-cancel"
+                                            class="btncommin "><i class="fa-sharp fa-solid fa-circle-xmark "></i>
+                                            Cancel</a>
+                                        <a href="javascript:void(0);" onclick="func(0)" id="btn-done"
+                                            class="btncommin "> <i class="fa-regular fa-thumbs-up"></i> Done</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <script>
+                            function func() {
+                                $('#pop').hide();
+                            }
+                        </script>
+
+
+
+                        <div class="frm-width4">
+
+
+
+                            <button type="submit" id="search22" value="Search"><i class="fa fa-search"
+                                    aria-hidden="true"></i> SEARCH</button>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="formcontainer">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-9">
+                <h4>{{ORIGIN}} TO {{DEST}}</h4>
+                <p>{{DEP_US}} - {{RET_US}},
+                    {{PAX}}                    Passenger(s) | {{CABIN_LABEL}}                </p>
+            </div>
+            <div class="col-sm-3">
+                <img src="/assets/image/round-arrow.png" id="arrowms" />
+                <div class="modifiedser-btnbox">
+                    <button class="btn btn-modifysearch" type="button" data-toggle="collapse"
+                        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> <span><svg
+                                xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="ai ai-Edit">
+                                <path
+                                    d="M16.474 5.408l2.118 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621z">
+                                </path>
+                                <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"></path>
+                            </svg></span> MODIFY SEARCH</button>
+                </div>
+                <button class="btn btn-editsearch" type="button" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample"><i
+                        class="fa-sharp fa-regular fa-pen-to-square"></i> Edit</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+
+        <div class="fixedsort" id="fixedsort">
+            <div class="row">
+                <div class="col-sm-5">
+            <button class="btn btn-sm btn-filter-mobile btn-success"><i
+                    class="fa-solid fa-filter mr-2"></i>Filter</button>
+                        
+                    </div>
+                    <div class="col-sm-2" style="width: 12px !important;">
+                    |
+                        </div>
+                    <div class="col-sm-5">
+                           <button class="btn-sort"> <i class="fa fa-sort-amount-asc " aria-hidden="true"></i> Sort by</button>
+           </div>
+                    </div>
+                    </div>
+                    <div class="sortbynav">
+                        <h4 class="mbl-txt">Sort By</h4>
+                    <div class="sortdata">
+                        </div>
+
+                        <div class="mobfilterclose sortbyapply">
+                  Apply
+                </div>
+                    </div>
+            <div class="filter-mobile">
+                <div class="mobfilterclose">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="closefilter" viewBox="0 0 384 512">
+                        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path
+                            d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                    </svg>
+                </div>
+                <div class="filterbox">
+
+                </div>
+            </div>
+            <div class="filterbox">
+
+            </div>
+            <div class="filterbox-shimmer">
+                <div class="headingbar">
+                    <h4>Filter Your Results </h4>
+
+
+                </div>
+
+                <div class="main-filtersection">
+
+                    <div class="white-border-box">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="hed">
+                                    <h3>Stops</h3>
+                                    <div class="filterborder"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="checkbox_stops">
+                            <div class="fullw shine w-100 mt-3"></div>
+                            <div class="fullw shine w-100"></div>
+                        </div>
+                    </div>
+
+                    <!-- <div>
+      <label for="">Shorting</label>
+      <select name="Shorting" id="Shorting" class="Shorting">
+
+      <option value="">--select--</option>
+      <option value="LowerPrice">Lower Price</option>
+      <option value="HighPrice">High Price</option>
+       <option value="">ghfh</option>
+      <option value="">ghfh</option>
+      </select>
+    </div> -->
+                    <div class="white-border-box">
+                        <div class="hed">
+                            <h3>Departure From {{ORIGIN}}</h3>
+                            <div class="filterborder"></div>
+
+                        </div>
+                        <div id="depfrmval">
+                            <button type="button" class="btn btn-light btncallval a shine"
+                                onclick="getTxt(this);"></button>
+                            <button type="button" class="btn btn-light btncallval b shine"
+                                onclick="getTxt(this);"></button>
+                            <button type="button" class="btn btn-light btncallval c shine"
+                                onclick="getTxt(this);"></button>
+                            <button type="button" class="btn btn-light btncallval d shine"
+                                onclick="getTxt(this);"></button>
+                        </div>
+                    </div>
+                    <div class="white-border-box flightbrdiv">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="hed">
+                                    <h3>Preferred Airlines</h3>
+                                    <div class="filterborder"></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="fullw shine w-100 mt-3"></div>
+                        <div class="fullw shine w-100 "></div>
+                        <div class="fullw shine w-100 mb-0"></div>
+                    </div>
+                    <div class="white-border-box">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="hed">
+                                    <h3>Price</h3>
+                                    <div class="filterborder"></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="fullw shine w-100 mt-3"></div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="listcontainer">
+
+                <div class="sortdata">
+                    <div class="overpricefilter">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="overviewprice erestclickfare">
+                                    <div class="shortone shine mb-3 mt-2 w-50"></div>
+                                    <div class="shortone shine mb-3"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="overviewprice ovpricechepestcont">
+                                    <div class="shortone shine mb-3 mt-2 w-50"></div>
+                                    <div class="shortone shine mb-3"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="overviewprice findshortestflight">
+                                    <div class="shortone shine mb-3 mt-2 w-50"></div>
+                                    <div class="shortone shine mb-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="text-center textalert p-0 m-0"></h4>
+                <div class="shimmerround">
+                    
+                        <div class="divdata">
+                            <div class="dataShoww">
+                                <div class="listcont">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <div class="row" style="margin: auto;">
+                                                <div class="col-sm-3">
+                                                    <center>
+                                                        <div class="imgmain">
+                                                            <div class="imgbox shine"></div>
+                                                            <div class="fullw shine imgtxt"></div>
+                                                            <div class="shortone shine deskshort"></div>
+                                                        </div>
+                                                        <div class="pricer shine"></div>
+                                                    </center>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="fullw shine desk"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 pricemain">
+                                                    <br /><br />
+                                                    <center>
+                                                        <div class="shortonebtn shine deskshortbtn"></div>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="row " style="margin: auto;">
+                                                <div class="col-sm-3">
+                                                    <center>
+                                                        <div class="imgmain">
+                                                            <div class="imgbox shine"></div>
+                                                            <div class="fullw shine imgtxt"></div>
+                                                        </div>
+                                                        <div class="shortone shine"></div>
+                                                    </center>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="fullw shine desk"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <br />
+                                            <center>
+                                                <div class="shortone shine mobileshort mt-5"></div>
+                                                <div class="shortone shine mobileshort small-size float-right"></div>
+                                                <div class="shortonebtn shine"></div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divdata">
+                            <div class="dataShoww">
+                                <div class="listcont">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <div class="row" style="margin: auto;">
+                                                <div class="col-sm-3">
+                                                    <center>
+                                                        <div class="imgmain">
+                                                            <div class="imgbox shine"></div>
+                                                            <div class="fullw shine imgtxt"></div>
+                                                            <div class="shortone shine deskshort"></div>
+                                                        </div>
+                                                        <div class="pricer shine"></div>
+                                                    </center>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="fullw shine desk"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 pricemain">
+                                                    <br /><br />
+                                                    <center>
+                                                        <div class="shortonebtn shine deskshortbtn"></div>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="row " style="margin: auto;">
+                                                <div class="col-sm-3">
+                                                    <center>
+                                                        <div class="imgmain">
+                                                            <div class="imgbox shine"></div>
+                                                            <div class="fullw shine imgtxt"></div>
+                                                        </div>
+                                                        <div class="shortone shine"></div>
+                                                    </center>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="fullw shine desk"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <br />
+                                            <center>
+                                                <div class="shortone shine mobileshort mt-5"></div>
+                                                <div class="shortone shine mobileshort small-size float-right"></div>
+                                                <div class="shortonebtn shine"></div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divdata">
+                            <div class="dataShoww">
+                                <div class="listcont">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <div class="row" style="margin: auto;">
+                                                <div class="col-sm-3">
+                                                    <center>
+                                                        <div class="imgmain">
+                                                            <div class="imgbox shine"></div>
+                                                            <div class="fullw shine imgtxt"></div>
+                                                            <div class="shortone shine deskshort"></div>
+                                                        </div>
+                                                        <div class="pricer shine"></div>
+                                                    </center>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="fullw shine desk"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 pricemain">
+                                                    <br /><br />
+                                                    <center>
+                                                        <div class="shortonebtn shine deskshortbtn"></div>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="row " style="margin: auto;">
+                                                <div class="col-sm-3">
+                                                    <center>
+                                                        <div class="imgmain">
+                                                            <div class="imgbox shine"></div>
+                                                            <div class="fullw shine imgtxt"></div>
+                                                        </div>
+                                                        <div class="shortone shine"></div>
+                                                    </center>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="shortone shine mb-3"></div>
+                                                    <div class="fullw shine desk"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                                <div class="col-sm-3 desktopview">
+                                                    <div class="contl fullw shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                    <div class="shortone shine"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <br />
+                                            <center>
+                                                <div class="shortone shine mobileshort mt-5"></div>
+                                                <div class="shortone shine mobileshort small-size float-right"></div>
+                                                <div class="shortonebtn shine"></div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                        </div>
+                <div class="mainshimmer">
+
+                </div>
+
+                <center>
+                    <div class="spinner-border spin text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </center>
+
+            </div>
+
+            <center class="viewmore">
+
+
+            </center>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+ if (window.matchMedia('(max-width: 600px)').matches) {
+jQuery(function($){
+    
+    $(window).bind('scroll', function(e){
+        if($(window).scrollTop() + window.innerHeight >= $('footer').offset().top)
+        {
+           $('.fixedsort').hide();
+        }
+        else
+        {
+            $('.fixedsort').show();
+        }
+    });
+});
+ }
+
+
+    $('.spin').hide();
+
+    $('.btn-filter-mobile').click(function () {
+        $('.filter-mobile').css("transition","0.5s");
+        $('.filter-mobile').css("transform","translateY(0)");
+    });
+    $('.btn-sort').click(function () {
+        $('.sortbynav').css("transition","0.5s");
+        $('.sortbynav').css("transform","translateY(0)");
+    });
+    $('.filter-mobile .mobfilterclose').click(function () {
+        $('.filter-mobile').css("transform","translateY(100%)");
+       
+        
+    });
+    $('.sortbyapply').click(function () {
+       
+        $('.sortbynav').css("transform","translateY(100%)");
+        
+    });
+    
+    var airlinevalue1="";
+    var fprice="";
+    var imp = "";
+    var sortval = 2;
+    var sortairclickval = 0;
+    //$('.textalert').hide();
+    var fval1 = "";
+    var fval2 = "";
+    var fval3 = "";
+    var fval4 = "";
+    var timefilter = '';
+    var filterpricee = '';
+    var min_price = '';
+    var max_price = '';
+    var p_a = "";
+    var fastest = '';
+    var earliest = '';
+    var cheapest = '';
+    var getstopsd = '';
+    var getairlinesd = '';
+    var multiple_filter1 = '';
+    var stop_scrolling = '';
+    var filter_airlines = [];
+
+    let array = [];
+
+getresult2('flightResponse/' + 0);
+
+
+    $('.holdcssfont').hide();
+
+function getresult2(url) {
+    //alert('flightResponse');
+   // $('.spin').show();
+    $.ajax({
+        method: 'GET',
+        url: url,
+        beforeSend: function() {
+
+                $('.shimmerround').show();
+
+        },
+            
+        success: function(response) {
+            //$('.mainshimmer').show();
+            // console.log(response);
+         
+            $('.shimmerround').hide();
+            $('.mainshimmer').html(response);
+            $('.spin').hide();
+            //$('.shimmerround').hide();
+           // $('.filterbox-shimmer').hide();
+           if($('.mainshimmer .no-search h3').text() == 'No Flights ! Restart Search.'){
+                        
+                        $('.viewmore').hide();
+                        $('.sortdata').hide();
+                          //getresult('flightResponse/'+0);
+                          
+                        }
+
+            },
+
+            complete: function (response) {
+                $('.viewmore').html(
+                    '<button class="btn btn-success vmoredatalist" >Load More Results</button>');
+                    filterall();
+sortdataall();
+
+
+            } //EINDE complete
+        }); //EINDE ajax
+
+}
+function getresult(url) {
+   // $('.spin').show();
+    $.ajax({
+        method: 'GET',
+        url: url,
+        beforeSend: function() {
+
+                $('.shimmerround').show();
+
+            },
+
+            success: function (response) {
+                var myArray = url.split("/");
+
+                //alert(parseInt(myArray[1]));
+                i = parseInt(myArray[1]);
+                // console.log(response);
+                $('.mainshimmer').append(response);
+                $('.shimmerround').hide();
+                $('.filterbox-shimmer').hide();
+                $('.spin').hide();
+                var inputs = $(".list_" + i).find($("form"));
+                //  console.log('hi');
+                 console.log(inputs.length);
+                //alert(inputs.length);
+                if (parseInt(inputs.length) < 10) {
+
+                    $(".resultcountvar").html(i + inputs.length);
+                    stop_scrolling = 1;
+                } else {
+
+
+                    if (i + 10 > parseInt($('#mainresultcountvar').text())) {
+                        $(".resultcountvar").html(i + inputs.length);
+                    } else {
+                        //alert('ok3');
+
+                        $(".resultcountvar").html(i + 10);
+
+
+                    }
+                }
+
+
+            },
+
+            complete: function (response) {
+                $('.viewmore').html(
+                    '<button class="btn btn-success vmoredatalist" >Load More Results</button>');
+
+            } //EINDE complete
+        }); //EINDE ajax
+
+    }
+
+    function air(i) {
+        getstopsd = "";
+        timefilter = "";
+
+        array = [];
+
+
+        $("input:checkbox[name=airlines]:checked").each(function () {
+
+            array.push($(this).val());
+
+
+        });
+
+        //  console.log(array);
+
+        $.ajax({
+            method: 'POST',
+            url: "getairlineFilter",
+            data: { val: array, sortval: sortval, i: i },
+            beforeSend: function () {
+                //$('.mainshimmer').hide();
+                $('.shimmerround').show();
+
+
+            },
+
+            success: function (response) {
+                $('.shimmerround').hide();
+                //$('.mainshimmer').show();
+                //  console.log(response);
+                //alert('vhj');
+                // p_a=1;
+                $('.mainshimmer').append(response);
+                var inputs = $(".list_" + i).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if (parseInt(inputs.length) < 10) {
+
+                    $(".resultcountvar").html(i + inputs.length);
+                    stop_scrolling = 1;
+                    if(parseInt(inputs.length)==0){
+                $('.textalert').html('No Result Found For Your Search Criteria !');
+                  //getresult('flightResponse/'+0);
+                  
+                }else{
+                  $('.textalert').html('');
+                }
+                } else {
+                    if (i + 10 > parseInt($('#mainresultcountvar').text())) {
+                        $(".resultcountvar").html(i + inputs.length);
+
+                    } else {
+                        $(".resultcountvar").html(i + 10);
+
+
+                    }
+                }
+                //$(".resultcountvar").html(inputs.length);
+            }
+            //             });
+
+
+        });
+        // $('.shimmerround').show();
+        if (array.length === 0) {
+            // console.log('fg');
+
+            getresult('flightResponse/' + 0);
+
+        }
+        array = [];
+
+    }
+
+    function fastest_flights(vc, i, imp) {
+
+        $('.spin').show();
+        $.ajax({
+            method: 'POST',
+            url: 'resultsortdata',
+            data: { vc: vc, i: i, sortval: sortval },
+
+
+
+
+            success: function (response) {
+
+
+                //$('.mainshimmer').show();
+
+                //p_a=1;
+
+                //fastest=1;
+
+                if (imp == 'scroll') {
+                    $('.mainshimmer').append(response);
+                } else {
+                    $('.mainshimmer').html(response);
+                }
+
+
+                var inputs = $(".list_" + i).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if (parseInt(inputs.length) < 10) {
+
+                    $(".resultcountvar").html(i + inputs.length);
+                    stop_scrolling = 1;
+                } else {
+                    if (i + 10 > parseInt($('#mainresultcountvar').text())) {
+                        $(".resultcountvar").html(i + inputs.length);
+
+                    } else {
+                        $(".resultcountvar").html(i + 10);
+
+
+                    }
+                }
+                //console.log(inputs.length);
+                //$('.resultcountvar').html(i+10);
+                $('.spin').hide();
+
+
+                //   getresult('flightResponse/'+0);
+
+
+
+                //                   window.onscroll = function(ev) {
+                //   if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+                //     alert('jhgjh');
+
+
+
+
+
+                //   }
+                // };
+            }
+
+        });
+    }
+
+
+    var i = parseInt(0);
+    $(document).on("click", ".vmoredatalist", function () {
+        //alert(timefilter);
+        var this_s = $(this);
+
+        var imp = "scroll";
+
+
+        // window.onscroll = function(ev) {
+        //if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        //alert("hi");
+
+        if (p_a == 1) {
+            //alert("hi");
+            return false;
+        }
+        // if(filterpricee==1){
+        //     multiple_filter1="";
+        //     fastest = '';
+        //     earliest = '';
+        //     cheapest = '';
+        //     getairlinesd="";
+        //     getstopsd="";
+        //     timefilter="";
+        // }
+
+        if (multiple_filter1 == 1) {
+            timefilter = '';
+            filterpricee = '';
+
+            fastest = '';
+            earliest = '';
+            cheapest = '';
+            getstopsd = '';
+            getairlinesd = '';
+        }
+        if (getairlinesd == 1) {
+            fastest = '';
+            earliest = '';
+            cheapest = '';
+
+        }
+        i = i + parseInt(10);
+        i = parseInt(i);
+        // you're at the bottom of the page
+        var m = $("#mainresultcountvar").text();
+        var r = parseInt($(".resultcountvar").text());
+        var mf = $(".list_" + (i - 10)).find($("form"));
+
+        //console.log(parseInt(m)-i);
+        //alert(parseInt(m)-parseInt(i+10));
+        //alert(mf.length);
+
+        if (stop_scrolling == 1) {
+            //alert('a');
+            $('.spin').show();
+
+            //  jQuery("#preloader").delay(5000).fadeOut("slow");
+
+
+
+            $('.vmoredatalist').css('visibility', 'hidden', '!important');
+            setTimeout(
+                function () {
+                    $('.spin').hide();
+
+                }, 1500);
+
+
+        }
+        else if (timefilter == 1) {
+            if ($("#depfrmval").find('button.activefil').length == 1) {
+                //alert();
+                var v = $("#depfrmval").find('button.activefil').text();
+                getTxt1(v, i);
+
+            }
+        } else if ((mf.length != '') && mf.length < 10) {
+            $(".resultcountvar").html(i - 10 + mf.length);
+            // alert('b');
+            //alert(i-10+mf.length);
+            return false;
+        } else if (parseInt(m) - parseInt(i) < 10 && parseInt(m) - parseInt(i) < 0) {
+            //alert('c');
+            $('.resultcountvar').html(parseInt(m));
+            return false;
+        } else if (p_a == "" && fastest == "" && earliest == "" && cheapest == "" && getstopsd == "" && getairlinesd == "" && timefilter == "" && filterpricee == "" && multiple_filter1 == "") {
+           
+            getresult('flightResponse/' + i);
+
+        } else if (multiple_filter1 == 1) {
+            //$('.resultcountvar').html(i+10);
+
+            f_multiple_filter1(i);
+
+        } else if (fastest == 1 && earliest == "" && cheapest == "" && getstopsd == '') {
+            //alert('hello fastest');
+            var vc = $('.shortest_value').val();
+            $('.resultcountvar').html(i + 10);
+            fastest_flights(vc, i, imp);
+
+
+        } else if (earliest == 1 && fastest == "" && cheapest == "" && getstopsd == '') {
+            //alert('hello fastestas');
+            $('.resultcountvar').html(i + 10);
+            var vc = $('.earliest_value').val();
+            fastest_flights(vc, i, imp);
+
+
+        } else if (earliest == "" && fastest == "" && cheapest == 1 && getstopsd == '') {
+            //alert('hello gaye');
+            $('.resultcountvar').html(i + 10);
+            var vc = $('.cheapest_value').val();
+            fastest_flights(vc, i, imp);
+
+
+        } else if (getstopsd == 1) {
+            //$('.resultcountvar').html(i+10);
+            //alert(fastest);
+            var val = $("input.mystopsradio:checked").val();
+            getstops1(val, i);
+
+        } else if (getairlinesd == 1) {
+            air(i);
+
+        }  else if (filterpricee == 1) {
+
+            filter_price(min_price, max_price, i, imp);
+
+        }
+
+
+
+    });
+
+    // }
+    //};
+
+
+    function f_multiple_filter1(i) {
+
+
+
+
+        array = [];
+
+        $("input:checkbox[name=airlines]:checked").each(function () {
+
+            array.push($(this).val());
+
+
+        });
+
+        if (array.length === 0) {
+            var airlinevalue = '';
+        } else {
+            var airlinevalue = 1;
+
+        }
+
+        if ($("#depfrmval").find('button.activefil').length == 1) {
+            var dep = $("#depfrmval").find('button.activefil').text();
+            //alert(dep);
+        } else {
+            var dep = '';
+
+        }
+        if ($('input[name="priceOrder"]:checked').length > 0) {
+            var stp = $('input[name="priceOrder"]:checked').val();
+        } else {
+            var stp = '';
+
+        }
+
+        if ((airlinevalue != '' && dep != '' && stp != '') || (stp != '' && dep != '') || (dep != '' && airlinevalue !=
+            '') || (airlinevalue != '' && stp != '')|| airlinevalue!=''||stp!=''||dep!='') {
+
+            $('.spin').show();
+
+            $.ajax({
+                method: 'POST',
+                url: '/multiple_filter',
+                data: { airline: array, departure: dep, stops: stp, sortval: sortval, i_f: i, min_price: min_price, max_price: max_price },
+                // beforeSend: function() {
+
+                // $('.shimmerround').show();
+                // //$('.mainshimmer').hide();
+                // },
+
+                success: function (response) {
+                    $('.shimmerround').hide();
+                    //$('.mainshimmer').show();
+
+                // earliest=1;
+                // cheapest="";
+                // fastest="";
+if(i==0){
+$('.mainshimmer').html(response);
+}else{
+$('.mainshimmer').append(response);
+}
+
+var inputs = $(".list_"+i).find($("form") );
+                    //  console.log('hi');
+                    // console.log(inputs.length);
+                    //alert(inputs.length);
+                    if(parseInt(inputs.length)<10){
+                     
+                      $(".resultcountvar").html(i+inputs.length);
+                      
+                      stop_scrolling=1;
+                      if(parseInt(inputs.length)==0){
+                $('.textalert').html('No Result Found For Your Search Criteria !');
+                  //getresult('flightResponse/'+0);
+                  
+                }else{
+                  $('.textalert').html('');
+                }
+
+                    }else{
+                      $(".resultcountvar").html(i+10);
+                    }
+                    $('.shimmerround').hide();
+                    $('.spin').hide();
+
+                    // if(isEmpty($('#list'))){
+                    //                $('.textalert').html('No Result Found For Your Search Criteria !');
+                    //                  //getresult('flightResponse/'+0);
+                    //                  setTimeout(function () {
+
+                    //                 }, 3000);
+                    //                }
+
+                    //  getresult('flightResponse/'+0);
+
+
+
+
+
+                }
+
+
+            });
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    //               function air(v){
+
+
+    // var val=$('#check_'+v).val();
+    //                 $('#check_'+v).prop('checked',true);
+    //                 alert(v);
+
+
+    //                 $.ajax({
+    //                 method: 'POST',
+    //                 url: "getairlineFilter",
+    //                 data: {val:array},
+    //                 beforeSend: function() {
+
+    //            $('.shimmerround').show();
+
+    //          },
+    //          complete: function() {
+    //            $('.shimmerround').hide();
+
+    //          },
+    //                 success: function(response){
+    //                 //  console.log(response);
+    //                   $('.mainshimmer').html(response);
+    //                 }
+    //   //             });
+
+    //             });
+
+    //               }
+
+    $(document).on('click', '.uncheck_1', function (e) {
+        //$('.mainshimmer').html('');
+        fprice=1;
+        stop_scrolling = '';
+        multiple_filter1 = "";
+        $('.vmoredatalist').css('visibility', 'visible', '!important');
+        $('.textalert').html('');
+        var this_s = $(this);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        setTimeout(function () {
+        }, 3000);
+
+
+
+
+
+        i = 0;
+
+        array = [];
+
+        $("input:checkbox[name=airlines]:checked").each(function () {
+
+            array.push($(this).val());
+
+
+        });
+
+        if (array.length === 0) {
+            var airlinevalue = '';
+
+
+
+
+
+
+
+
+        } else {
+            var airlinevalue = 1;
+
+        }
+        if ($("#depfrmval").find('button.activefil').length == 1) {
+            var dep = $("#depfrmval").find('button.activefil').text();
+            //alert(dep);
+        } else {
+            var dep = '';
+
+        }
+        if ($('input[name="priceOrder"]:checked').length > 0) {
+            var stp = $('input[name="priceOrder"]:checked').val();
+        } else {
+            var stp = '';
+
+        }
+        //alert(stp);
+        if (array.length != 0 || (stp != '' || dep != '')) {
+            if ((airlinevalue != '' && dep != '' && stp != '') || (stp != '' && dep != '') || (dep != '' &&
+                airlinevalue != '') || (airlinevalue != '' && stp != '')) {
+                multiple_filter1 = 1;
+                $('.spin').show();
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/multiple_filter',
+                    data: { airline: array, departure: dep, stops: stp, sortval: sortval, i_f: i, min_price: min_price, max_price: max_price },
+                    //beforeSend: function() {
+
+                    // $('.shimmerround').show();
+                    // $('.mainshimmer').hide();
+                    // },
+                    //},
+
+                    success: function (response) {
+                        $('.shimmerround').hide();
+                        $('.mainshimmer').show();
+
+                        // earliest=1;
+                        // cheapest="";
+                        // fastest="";
+
+                        $('.mainshimmer').html(response);
+
+                        $('.shimmerround').hide();
+                        $('.spin').hide();
+
+                        var inputs = $(".list_" + i).find($("form"));
+                        console.log('lol0');
+                        console.log(i);
+                        console.log(inputs.length);
+                        //alert(inputs.length);
+                        if (parseInt(inputs.length) < 10) {
+
+                            $(".resultcountvar").html(i + inputs.length);
+                            // alert('lolp0');
+                            stop_scrolling = 1;
+                            if (parseInt(inputs.length) == 0) {
+                                $('.textalert').html('No Result Found For Your Search Criteria !');
+                                //getresult('flightResponse/'+0);
+
+                            } else {
+                                $('.textalert').html('');
+
+                            }
+
+
+                        } else {
+                            $(".resultcountvar").html(i + 10);
+                        }
+                        //  getresult('flightResponse/'+0);
+
+
+
+
+
+                    },
+
+
+                });
+
+
+            } else if (airlinevalue == 1 && dep == '' && stp == '') {
+
+
+                $('.spin').show();
+                multiple_filter1 = "";
+                getairlinesd = 1;
+
+                // $("input:checkbox[name=airlines]:checked").each(function() {
+
+                //     array.push($(this).val()); 
+
+
+                //           });             
+
+                //  console.log(array);
+
+                $.ajax({
+                    method: 'POST',
+                    url: "getairlineFilter",
+                    data: { val: array, sortval: sortval, i: i },
+                    //         beforeSend: function() {
+                    //           $('.mainshimmer').hide();
+                    //    $('.shimmerround').show();
+
+                    //  },
+
+                    success: function (response) {
+                        $('.shimmerround').hide();
+                        //$('.mainshimmer').show();
+                        //  console.log(response);
+                        //alert('vhj');
+                        //p_a=1;
+                        $('.mainshimmer').html(response);
+                        $('.spin').hide();
+                        var inputs = $(".list_" + i).find($("form"));
+                        console.log(inputs.length);
+                        //alert(inputs.length);
+                        if (parseInt(inputs.length) < 10) {
+
+                            $(".resultcountvar").html(i + inputs.length);
+                            stop_scrolling = 1;
+                            if (parseInt(inputs.length) == 0) {
+                                $('.textalert').html('No Result Found For Your Search Criteria !');
+                                //getresult('flightResponse/'+0);
+
+                            } else {
+                                $('.textalert').html('');
+
+                            }
+                        } else {
+                            $(".resultcountvar").html(i + 10);
+                        }
+                    }
+                    //             });
+
+                });
+
+            } else if (dep != '' && airlinevalue == '' && stp == '') {
+                timefilter = 1;
+                multiple_filter1 = "";
+                stop_scrolling = "";
+                $('.spin').show();
+
+                i = 0;
+                $.ajax({
+                    method: 'POST',
+                    url: "getdepvalFilter",
+                    data: { depval: dep, sortval: sortval, i: i },
+                    //         beforeSend: function() {
+                    //           //$('.mainshimmer').hide();
+                    //    $('.shimmerround').show();
+
+                    //     },
+
+                    success: function (response) {
+                        $('.mainshimmer').show();
+                        $('.shimmerround').hide();
+
+                        // console.log('hi');
+                        $('.mainshimmer').html(response);
+                        $('.spin').hide();
+                        function isEmpty(el) {
+                            return !$.trim(el.html())
+                        }
+                        //   if(isEmpty($('#list'))){
+                        // $('.textalert').html('No Result Found For Your Search Criteria !');
+                        //   //getresult('flightResponse/'+0);
+                        //   setTimeout(function () {
+                        //      $('.textalert').html('');
+                        //  }, 3000);
+                        // }
+                        $('.textalert').html('');
+                        var inputs = $(".list_" + i).find($("form"));
+                        console.log(inputs.length);
+                        //alert(inputs.length);
+                        if (parseInt(inputs.length) < 10) {
+
+                            $(".resultcountvar").html(i + inputs.length);
+                            stop_scrolling = 1;
+                            if (parseInt(inputs.length) == 0) {
+                                $('.textalert').html('No Result Found For Your Search Criteria !');
+                                //getresult('flightResponse/'+0);
+
+                            } else {
+                                $('.textalert').html('');
+
+
+                            }
+                        } else {
+                            $(".resultcountvar").html(i + 10);
+                        }
+                        //p_a=1;
+
+                        // console.log(response);
+                        //alert(response);
+
+
+                    }
+                    //             });
+
+                });
+
+            } else if (stp != '' && airlinevalue == '' && dep == '') {
+                i = 0;
+                multiple_filter1 = 1;
+                $('.spin').show();
+                getstopsd = 1;
+                $.ajax({
+                    method: 'POST',
+                    url: "getstopFilter",
+                    data: { val: stp, i: i, sortval: sortval },
+                    //         beforeSend: function() {
+
+                    //    $('.mainshimmer').hide();
+                    //    $('.shimmerround').show();
+
+
+                    //  },
+
+                    success: function (response) {
+                        $('.shimmerround').hide();
+                        $('.mainshimmer').show();
+                        $('.mainshimmer').html(response);
+
+                        var inputs = $(".list_" + i).find($("form"));
+                        // console.log('hi');
+                        console.log(inputs.length);
+                        //alert(inputs.length);
+                        if (parseInt(inputs.length) < 10) {
+
+                            $(".resultcountvar").html(i + inputs.length);
+                            stop_scrolling = 1;
+                            if (parseInt(inputs.length) == 0) {
+                                $('.textalert').html('No Result Found For Your Search Criteria !');
+                                //getresult('flightResponse/'+0);
+
+                            } else {
+                                $('.textalert').html('');
+
+
+                            }
+                        } else {
+                            $(".resultcountvar").html(i + 10);
+                        }
+
+                        //   console.log(response);
+                        //p_a=1;
+                        $('.mainshimmer').html(response);
+                        $('.spin').hide();
+                    }
+                });
+
+            }
+        } else {
+
+            stop_scrolling = "";
+            getresult2('flightResponse/' + 0);
+            array = [];
+        }
+
+        // $('.shimmerround').show();
+
+        // if (array.length == 0) {
+
+
+        //     getresult('flightResponse/' + 0);
+        // }
+
+
+        array = [];
+    });
+
+    function combination_filter(fval1, fval2, fval3, fval4) {
+        $.ajax({
+            method: 'POST',
+            url: "getcombinationFilter",
+            data: {
+                fval1: fval1,
+                fval2: fval2,
+                fval3: fval3,
+                fval4: fval4
+            },
+            beforeSend: function () {
+
+                $('.mainshimmer').hide();
+                $('.shimmerround').show();
+
+
+            },
+            complete: function () {
+                var forms = $("#list").find($("form"));
+                console.log(forms.length);
+                $(".resultcountvar").html(forms.length);
+                $('.shimmerround').hide();
+                $('.mainshimmer').show();
+            },
+            success: function (response) {
+                //   console.log(response);
+                p_a = 1;
+                $('.mainshimmer').html(response);
+            }
+        });
+
+    }
+    function getstops(val) {
+        fprice=1;
+        getairlinesd = "";
+        $('.vmoredatalist').css('visibility', 'visible', '!important');
+        stop_scrolling = '';
+        $('.textalert').html('');
+        //alert("getstops");
+        //  if($("#depfrmval").find('button.activefil').length==1){
+        //alert($("#depfrmval").find('button.activefil').text());
+        //   fval1=val;
+        //   fval2=$("#depfrmval").find('button.activefil').text();
+        //combination_filter(fval1,fval2,fval3,fval4);
+        //}
+        i = 0;
+
+
+
+        array = [];
+
+        $("input:checkbox[name=airlines]:checked").each(function () {
+
+            array.push($(this).val());
+
+
+        });
+
+        if (array.length === 0) {
+            var airlinevalue = '';
+        } else {
+            var airlinevalue = 1;
+
+        }
+
+        var dep = $('#depfrmval').find('.activefil').text();
+        //alert(dep);
+        var stp = $('input[name="priceOrder"]:checked').val();
+        // alert(stp);
+
+        if ((airlinevalue != '' && dep != '' && stp != '') || (stp != '' && dep != '') || (dep != '' && airlinevalue !=
+            '') || (airlinevalue != '' && stp != '')) {
+            multiple_filter1 = 1;
+
+            $('.spin').show();
+            $.ajax({
+                method: 'POST',
+                url: '/multiple_filter',
+                data: { airline: array, departure: dep, stops: stp, sortval: sortval, i_f: 0, min_price: min_price, max_price: max_price },
+                //  beforeSend: function() {
+
+                // $('.shimmerround').show();
+                // //$('.mainshimmer').hide();
+                // $('.textalert').html('');
+                // },
+
+                success: function (response) {
+                    $('.shimmerround').hide();
+                    $('.mainshimmer').show();
+
+                    // earliest=1;
+                    // cheapest="";
+                    // fastest="";
+
+                    $('.mainshimmer').html(response);
+                    var inputs = $(".list_" + i).find($("form"));
+                    // console.log('hi');
+                    console.log(inputs.length);
+                    //alert(inputs.length);
+                    if (parseInt(inputs.length) < 10) {
+
+                        $(".resultcountvar").html(i + inputs.length);
+                        stop_scrolling = 1;
+                        if (parseInt(inputs.length) == 0) {
+                            $('.textalert').html('No Result Found For Your Search Criteria !');
+                            //getresult('flightResponse/'+0);
+
+                        } else {
+                            $('.textalert').html('');
+
+
+                        }
+                    } else {
+                        $(".resultcountvar").html(i + 10);
+                    }
+                    $('.shimmerround').hide();
+                    $('.spin').hide();
+
+                    // if(isEmpty($('#list'))){
+                    //                 $('.textalert').html('No Result Found For Your Search Criteria !');
+                    //                   //getresult('flightResponse/'+0);
+                    //                   setTimeout(function () {
+                    //                      $('.textalert').html('');
+                    //                  }, 3000);
+                    //                 }
+
+                    //  getresult('flightResponse/'+0);
+
+
+
+
+
+                }
+
+
+            });
+
+
+        } else {
+            $('.spin').show();
+            getstopsd = 1;
+            $.ajax({
+                method: 'POST',
+                url: "getstopFilter",
+                data: { val: val, i: i, sortval: sortval },
+                //         beforeSend: function() {
+
+                //    $('.mainshimmer').hide();
+                //    $('.shimmerround').show();
+
+
+                //  },
+
+                success: function (response) {
+                    $('.shimmerround').hide();
+                    $('.mainshimmer').show();
+                    $('.mainshimmer').html(response);
+
+                    var inputs = $(".list_" + i).find($("form"));
+                    // console.log('hi');
+                    console.log(inputs.length);
+                    //alert(inputs.length);
+                    if (parseInt(inputs.length) < 10) {
+
+                        $(".resultcountvar").html(i + inputs.length);
+                        stop_scrolling = 1;
+                        if (parseInt(inputs.length) == 0) {
+                            $('.textalert').html('No Result Found For Your Search Criteria !');
+                            //getresult('flightResponse/'+0);
+
+                        } else {
+                            $('.textalert').html('');
+
+
+                        }
+                    } else {
+                        $(".resultcountvar").html(i + 10);
+                    }
+
+                    //   console.log(response);
+                    //p_a=1;
+                    $('.mainshimmer').html(response);
+                    $('.spin').hide();
+                }
+            });
+        }
+    }
+
+    function getstops1(val, i) {
+        //  if($("#depfrmval").find('button.activefil').length==1){
+        //alert($("#depfrmval").find('button.activefil').text());
+        //   fval1=val;
+        //   fval2=$("#depfrmval").find('button.activefil').text();
+        //combination_filter(fval1,fval2,fval3,fval4);
+        //}
+
+
+
+        $.ajax({
+            method: 'POST',
+            url: "getstopFilter",
+            data: {
+                val: val,
+                i: i,
+                sortval: sortval
+            },
+            beforeSend: function () {
+
+                // $('.mainshimmer').hide();
+                $('.shimmerround').show();
+
+
+            },
+
+            success: function (response) {
+                $('.mainshimmer').append(response);
+                var inputs = $(".list_" + i).find($("form"));
+                console.log('hi');
+                console.log(inputs.length);
+                //alert(inputs.length);
+                if (parseInt(inputs.length) < 10) {
+                    if (parseInt(inputs.length) == 0) {
+                        $('.textalert').html('No Result Found For Your Search Criteria !');
+                        //getresult('flightResponse/'+0);
+
+                    } else {
+                        $('.textalert').html('');
+
+
+                    }
+                    stop_scrolling = 1;
+                    $(".resultcountvar").html(i + inputs.length);
+                } else {
+                    if (i + 10 > parseInt($('#mainresultcountvar').text())) {
+                        $(".resultcountvar").html(i + inputs.length);
+
+                    } else {
+
+
+                        $(".resultcountvar").text(i + 10);
+
+
+                    }
+                }
+                //$(".resultcountvar").html(i+10);
+
+                $('.shimmerround').hide();
+                // $('.mainshimmer').show();
+                //   console.log(response);
+                // p_a=1;
+
+            }
+        });
+    }
+
+
+
+ function filterall()
+ {
+    $.ajax({
+                method: 'GET',
+                url: "getFilter",
+                cache: false,
+                beforeSend: function() {
+           
+           $('.shimmerround').show();
+           $('.filterbox').hide();
+            $('.filterbox-shimmer').show();
+         },
+         
+                success: function(response){
+                  
+                  $('.shimmerround').hide();
+                  $('.filterbox-shimmer').hide();
+                    $('.filterbox').show();
+                    $('.filterbox').html(response);
+                    stop_scrolling='';
+                    $('.uncheckreset_2').click(function(){
+                      //alert('hemant');
+                      earliest="";
+                      cheapest="";
+                      fastest="";
+                      stop_scrolling="";
+                      multiple_filter1="";
+                      $('.textalert').html('');
+                      
+
+
+
+                $('.mainshimmer').html('');
+
+
+
+
+
+                //          }); 
+                p_a = "";
+                getresult2('flightResponse/' + 0);
+
+                $('input:checkbox').prop('checked', false);
+                $('input:radio').prop('checked', false);
+                //console.log($("#depfrmval").find("button.activefil").index());
+                var index = $("#depfrmval").find("button.activefil").index();
+                if (index == 0) {
+
+                    $(".a").removeClass("activefil");
+                }
+                if (index == 1) {
+
+                    $(".b").removeClass("activefil");
+                }
+                if (index == 2) {
+
+                    $(".c").removeClass("activefil");
+                }
+
+                if (index == 3) {
+
+                    $(".d").removeClass("activefil");
+                }
+
+                $('.callonclickfilterborder').addClass('hero');
+                $('.callonclickfilterborder-er').removeClass('hero');
+                $('.callonclickfilterborder-erest').removeClass('hero');
+            });
+            var main = $(".all");
+            min_price = ($('#min_price').val() - 1);
+            max_price = $('#max_price').val();
+            
+
+
+
+            $('.callonclickfilterborder-er').removeClass('hero');
+            $('.callonclickfilterborder-erest').removeClass('hero');
+
+
+
+
+
+                    $(".js-range-slider").ionRangeSlider({
+type: "double",
+min: min_price,
+max: max_price,
+from: min_price,
+to: max_price,
+grid: false,
+onFinish: function (data) {
+min_price =  data.from;
+max_price = data.to;
+i=0;
+filterpricee=1;
+$(".textalert").html(''); 
+//$('.mainshimmer').html('');
+getstopsd="";
+getairlinesd="";
+timefilter="";
+stop_scrolling="";
+var array1=[];
+$('.vmoredatalist').css('visibility','visible','!important');
+
+
+
+$("input:checkbox[name=airlines]:checked").each(function () {
+
+array1.push($(this).val());
+
+
+});
+console.log('hi');
+console.log(array1);
+//f_multiple_filter1(i);
+var airlinevalue=''
+if (array1.length == 0) {
+    airlinevalue1 = '';
+} else {
+   airlinevalue1 = 1;
+   //alert("hello");
+   //getstops(0);
+  
+}
+
+console.log(airlinevalue);
+var dep='';
+if ($("#depfrmval").find('button.activefil').length == 1) {
+                //alert();
+                 dep = $("#depfrmval").find('button.activefil').text();
+}else{
+     dep='';
+}
+console.log(dep);
+var stp='';
+if ($('input[name="priceOrder"]:checked').length > 0) {
+ stp = $('input[name="priceOrder"]:checked').val();
+} else {
+ stp = '';
+
+}
+console.log(stp);
+
+
+if(multiple_filter1==1 || airlinevalue1==1 ||stp==1||dep==1){
+multiple_filter1=1;
+filterpricee='';
+    f_multiple_filter1(i);
+
+}else{
+    filter_pricee=1;
+    multiple_filter1='';
+    filter_price(min_price,max_price,i,imp);
+}
+
+}
+
+
+            });
+
+
+
+
+            $(document).on("click", "#depfrmval .a", function () {
+
+                $('.a').addClass('activefil');
+                $('.b').removeClass('activefil');
+                $('.c').removeClass('activefil');
+                $('.d').removeClass('activefil');
+            });
+            $(document).on("click", "#depfrmval .b", function () {
+                $('.b').addClass('activefil');
+                $('.a').removeClass('activefil');
+                $('.c').removeClass('activefil');
+                $('.d').removeClass('activefil');
+            });
+            $(document).on("click", "#depfrmval .c", function () {
+                $('.c').addClass('activefil');
+                $('.b').removeClass('activefil');
+                $('.a').removeClass('activefil');
+                $('.d').removeClass('activefil');
+            });
+            $(document).on("click", "#depfrmval .d", function () {
+                $('.d').addClass('activefil');
+                $('.b').removeClass('activefil');
+                $('.c').removeClass('activefil');
+                $('.a').removeClass('activefil');
+            });
+
+
+        }
+
+
+});
+ }
+
+
+
+
+    function getTxt(x) {
+        fprice=1;
+        getstopsd = "";
+        getairlinesd = "";
+        $('.vmoredatalist').css('visibility', 'visible', '!important');
+        $('.textalert').html('');
+        stop_scrolling = '';
+
+        $('.mainshimmer').html();
+        i = 0;
+        array = [];
+
+        $("input:checkbox[name=airlines]:checked").each(function () {
+
+            array.push($(this).val());
+
+
+        });
+
+        if (array.length === 0) {
+            var airlinevalue = '';
+        } else {
+            var airlinevalue = 1;
+
+        }
+
+        var dep = x.innerText;
+
+        if ($('input[name="priceOrder"]:checked').length > 0) {
+            var stp = $('input[name="priceOrder"]:checked').val();
+        } else {
+            var stp = '';
+
+        }
+
+
+        if ((airlinevalue != '' && dep != '' && stp != '') || (stp != '' && dep != '') || (dep != '' && airlinevalue != '') || (airlinevalue != '' && stp != '')) {
+            $('.spin').show();
+
+            multiple_filter1 = 1;
+
+            $.ajax({
+                method: 'POST',
+                url: '/multiple_filter',
+                data: { airline: array, departure: dep, stops: stp, sortval: sortval, i_f: 0, min_price: min_price, max_price: max_price },
+                // beforeSend: function() {
+
+                // $('.shimmerround').show();
+                // $('.textalert').html('');
+                // //$('.mainshimmer').hide();
+                // },
+
+                success: function (response) {
+                    $('.shimmerround').hide();
+                    $('.mainshimmer').show();
+
+                    // earliest = 1;
+                    // cheapest = "";
+                    // fastest = "";
+
+                    $('.mainshimmer').html(response);
+
+                    var inputs = $(".list_" + i).find($("form"));
+                    // console.log('hi');
+                    //console.log(inputs.length);
+                    //alert(inputs.length);
+                    if (parseInt(inputs.length) < 10) {
+                        //alert("ko");
+                        $(".resultcountvar").html(i + inputs.length);
+                        stop_scrolling = 1;
+                        if (parseInt(inputs.length) == 0) {
+                            $('.textalert').html('No Result Found For Your Search Criteria !');
+                            //getresult('flightResponse/'+0);
+
+                        } else {
+                            $('.textalert').html('');
+
+                        }
+                    } else {
+
+                        $(".resultcountvar").html(i + 10);
+                    }
+
+                    $('.shimmerround').hide();
+                    $('.spin').hide();
+                    //  getresult('flightResponse/'+0);
+
+
+
+
+
+                }
+
+
+            });
+            return false;
+
+        } else {
+
+            timefilter = 1;
+
+            $('.spin').show();
+
+            //alert('filter');
+            var depval = x.innerText;
+            //alert(depval);
+            if ($('input.mystopsradio:checked').length == 1) {
+                //alert($('input.mystopsradio:checked').attr('id'));
+                fval1 = $('input.mystopsradio:checked').attr('id');
+                fval2 = depval;
+                //combination_filter(fval1,fval2,fval3,fval4);
+
+            }
+
+
+
+            $.ajax({
+                method: 'POST',
+                url: "getdepvalFilter",
+                data: { depval: depval, sortval: sortval, i: i },
+                //         beforeSend: function() {
+                //           //$('.mainshimmer').hide();
+                //    $('.shimmerround').show();
+
+                //     },
+
+                success: function (response) {
+                    $('.mainshimmer').show();
+                    $('.shimmerround').hide();
+
+                    // console.log('hi');
+                    $('.mainshimmer').html(response);
+                    $('.spin').hide();
+                    function isEmpty(el) {
+                        return !$.trim(el.html())
+                    }
+                    //   if(isEmpty($('#list'))){
+                    // $('.textalert').html('No Result Found For Your Search Criteria !');
+                    //   //getresult('flightResponse/'+0);
+                    //   setTimeout(function () {
+                    //      $('.textalert').html('');
+                    //  }, 3000);
+                    // }
+                    $('.textalert').html('');
+                    var inputs = $(".list_" + i).find($("form"));
+                    console.log(inputs.length);
+                    //alert(inputs.length);
+                    if (parseInt(inputs.length) < 10) {
+
+                        $(".resultcountvar").html(i + inputs.length);
+                        stop_scrolling = 1;
+                        if (parseInt(inputs.length) == 0) {
+                            $('.textalert').html('No Result Found For Your Search Criteria !');
+                            //getresult('flightResponse/'+0);
+
+                        } else {
+                            $('.textalert').html('');
+
+
+                        }
+                    } else {
+                        $(".resultcountvar").html(i + 10);
+                    }
+                    //p_a=1;
+
+                    // console.log(response);
+                    //alert(response);
+
+
+                }
+                //             });
+
+            });
+        }
+
+    }
+    function isEmpty(el) {
+        return !$.trim(el.html())
+    }
+    function getTxt1(v, i) {
+
+        $('.spin').show();
+
+
+
+        timefilter = 1;
+
+
+
+
+        $.ajax({
+            method: 'POST',
+            url: "getdepvalFilter",
+            data: { depval: v, sortval: sortval, i: i },
+            //         beforeSend: function() {
+            //           //$('.mainshimmer').hide();
+            //    $('.shimmerround').show();
+
+            //  },
+
+            success: function (response) {
+                $('.mainshimmer').show();
+                $('.shimmerround').hide();
+
+                //p_a=1;
+                $('.textalert').html('');
+                // console.log(response);
+                
+
+                $('.mainshimmer').append(response);
+                $('.spin').hide();
+                var inputs = $(".list_" + i).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                // alert(inputs.length);
+                if (parseInt(inputs.length) < 10) {
+                    if (parseInt(inputs.length) == 0) {
+                        $('.textalert').html('No Result Found For Your Search Criteria !');
+                        //getresult('flightResponse/'+0);
+
+                    } else {
+                        $('.textalert').html('');
+
+                    }
+                    $(".resultcountvar").html(i + inputs.length);
+                    stop_scrolling = 1;
+                } else {
+                    if (i + 10 > parseInt($('#mainresultcountvar').text())) {
+                        $(".resultcountvar").html(i + inputs.length);
+
+                    } else {
+                        $(".resultcountvar").html(i + 10);
+
+
+                    }
+                }
+                function isEmpty(el) {
+                    return !$.trim(el.html())
+                }
+                // if (isEmpty($('#list'))) {
+                //     $('.textalert').html('No Result Found For Your Search Criteria !');
+                //     //getresult('flightResponse/'+0);
+                //     //   setTimeout(function () {
+                //     //      $('.textalert').html('');
+                //     //  }, 3000);
+                // } else {
+                //     $('.textalert').html('');
+
+
+                // }
+            }
+            //             });
+
+        });
+
+    }
+
+    function filter_price(min_price, max_price, i, imp) {
+        //alert('kjhjk');
+        $('.spin').show();
+        filterpricee = 1;
+        $.ajax({
+            method: 'POST',
+            url: "getpriceFilter",
+            data: { min_price: min_price, max_price: max_price, i: i,sortval:sortval },
+            //         beforeSend: function() {
+
+            //          // $('.mainshimmer').hide();
+            //    $('.shimmerround').show();
+
+            //  },
+
+            success: function (response) {
+                var inputs = $(".mainshimmer").find($("form"));
+                console.log(inputs.length);
+                $(".resultcountvar").html(inputs.length);
+                $('.shimmerround').hide();
+                //$('.mainshimmer').show();
+                // console.log(response);
+                //p_a=1;
+                if (imp == 'scroll') {
+                    $('.mainshimmer').append(response);
+                } else {
+                    $('.mainshimmer').html(response);
+                }
+                var inputs = $(".list_" + i).find($("form"));
+                // console.log('hi');
+                //console.log(inputs.length);
+                //alert(inputs.length);
+                if (parseInt(inputs.length) < 10) {
+                    //alert("ko");
+                    $(".resultcountvar").html(i + inputs.length);
+                    stop_scrolling = 1;
+                    if (parseInt(inputs.length) == 0) {
+                        $('.textalert').html('No Result Found For Your Search Criteria !');
+                        //getresult('flightResponse/'+0);
+
+                    } else {
+                        $('.textalert').html('');
+
+                    }
+                } else {
+
+                    $(".resultcountvar").html(i + 10);
+                }
+                $('.spin').hide();
+            }
+            //             });
+
+        });
+    }
+
+
+
+
+
+
+function sortdataall()
+{
+    
+    $.ajax({
+
+method: 'GET',
+url: 'getsortdata',
+beforeSend: function() {
+
+    $('.shimmerround').show();
+    $('.mainshimmer').show();
+},
+
+
+success: function(response) {
+   
+    $('.shimmerround').hide();
+    $('.mainshimmer').show();
+    //console.log(response);
+    $('.sortdata').html(response);
+    // Filter markup is loaded by getresult2's completion handler; avoid a
+    // second concurrent getFilter request from the sort response.
+
+
+                $('.erestclickfare').click(function(){
+                    $('.ovpricechepestcont ').removeClass('erest_active');
+                    $('.findshortestflight').removeClass('erest_active');
+                    $('.erestclickfare').addClass('erest_active');
+                    fprice=1;
+                  $('.vmoredatalist').css('visibility','visible','!important');
+                  i=0;
+                  stop_scrolling='';
+                  filterpricee='';
+                  
+                  $('.callonclickfilterborder').removeClass('hero');
+$('.callonclickfilterborder-er').removeClass('hero');
+$('.callonclickfilterborder-erest').addClass('hero');
+                  sortval=1;
+                  array=[];                      
+
+
+
+        $("input:checkbox[name=airlines]:checked").each(function() {
+
+            array.push($(this).val());
+
+
+        });
+
+        if (array.length === 0) {
+            var airlinevalue = '';
+        } else {
+            var airlinevalue = 1;
+
+        }
+
+        var dep=$('#depfrmval').find('.activefil').text().substring(0,5);
+        //alert(dep);
+        if ($('input[name="priceOrder"]:checked').length > 0) {
+            var stp = $('input[name="priceOrder"]:checked').val();
+
+        } else {
+            var stp = '';
+        }
+        // alert(stp);
+
+        if((airlinevalue !='' && dep !='' && stp !='')||(stp !='' && dep !='')||(dep !='' && airlinevalue !='' )||(airlinevalue !='' && stp !=''))
+        {
+          multiple_filter1=1;
+          $('.spin').show();
+
+
+          $.ajax({
+            method: 'POST',
+            url: '/multiple_filter',
+            data:{airline:array,departure:dep,stops:stp,sortval:sortval,i_f:0,min_price:min_price,max_price:max_price},
+            beforeSend: function() {
+       
+    //    $('.shimmerround').show();
+    //    $('.mainshimmer').hide();
+      },
+  
+            success: function(response){
+              $('.shimmerround').hide();
+       $('.mainshimmer').show();
+            
+            earliest=1;
+            cheapest="";
+            fastest="";
+            
+              $('.mainshimmer').html(response);
+              $('.shimmerround').hide();
+              $('.spin').hide();
+              var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                   stop_scrolling=1;
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+            //  getresult('flightResponse/'+0);
+
+
+
+
+
+                }
+
+
+            });
+            //return false;
+
+        } else if (airlinevalue == '' && dep == '' && stp != '' && filterpricee=="") {
+
+
+
+            getstopsd=1;
+            var val = $("input.mystopsradio:checked").val();
+            getstops(val, i);
+
+
+
+
+        } else if (airlinevalue != '' && dep == '' && stp == '' && filterpricee=="") {
+
+                    //air(i);
+                    getairlinesd = 1;
+                    $('.spin').show();
+
+$.ajax({
+            method: 'POST',
+            url: "getairlineFilter",
+            data: {val:array,sortval:sortval,i:0},
+    //         beforeSend: function() {
+    //           //$('.mainshimmer').hide();
+    //    $('.shimmerround').show();
+       
+    //  },
+    
+            success: function(response){
+              $('.shimmerround').hide();
+       //$('.mainshimmer').show();
+            //  console.log(response);
+              //alert('vhj');
+             // p_a=1;
+              $('.mainshimmer').html(response);
+              $('.spin').hide();
+              var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                 
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+              //$(".resultcountvar").html(inputs.length);
+            }
+//             });
+
+            });
+
+
+
+
+}else if(airlinevalue =='' && dep !='' && stp =='' && filterpricee==""){
+$('.spin').show();
+timefilter=1;
+$.ajax({
+            method: 'POST',
+            url: "getdepvalFilter",
+            data: {depval:dep,sortval:sortval,i:0},
+    //         beforeSend: function() {
+    //           $('.mainshimmer').hide();
+    //    $('.shimmerround').show();
+       
+    //   },
+   
+            success: function(response){
+              $('.mainshimmer').show();
+       $('.shimmerround').hide();
+       var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                 
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+              //p_a=1;
+              $('.textalert').html('');
+            // console.log(response);
+            //alert(response);
+            
+              $('.mainshimmer').html(response);
+              $('.spin').hide();
+              function isEmpty( el ){
+  return !$.trim(el.html())
+}
+            //   if(isEmpty($('#list'))){
+            // $('.textalert').html('No Result Found For Your Search Criteria !');
+            //   //getresult('flightResponse/'+0);
+            //   setTimeout(function () {
+            //      $('.textalert').html('');
+            //  }, 3000);
+            // }else{
+            //   $('.textalert').html('');
+
+            // }
+            }
+//             });
+
+            });
+
+        }else if(filterpricee==1){
+            i=0;
+            filter_price(min_price,max_price,i,imp);
+        } else {
+
+
+
+
+            //alert('hutch');      
+                
+                  
+
+                    i = 0;
+                    //$(".mainshimmer").html("");
+                    //alert('hello');
+
+$('.spin').show();
+var vc=$('.earliest_value').val();
+earliest=1;
+cheapest="";
+fastest="";
+getstopsd="";
+timefilter="";
+getairlinesd="";
+$.ajax({
+            method: 'POST',
+            url: 'resultsortdata',
+            data:{vc:vc,i:i,sortval:sortval},
+    //         beforeSend: function() {
+       
+    //   // $('.shimmerround').show();
+   
+    //    $('.mainshimmer').hide();
+    //  },
+  
+            success: function(response){
+             // $('.shimmerround').hide();
+             
+      // $('.mainshimmer').show();
+            
+            earliest=1;
+            cheapest="";
+            fastest="";
+            
+              $('.mainshimmer').html(response);
+              $('.spin').hide();
+             // $('.spin').hide();
+            //  $('.shimmerround').hide();
+            //  getresult('flightResponse/'+0);
+            var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                 
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+
+
+
+
+
+                }
+            });
+
+        }
+
+            });
+
+
+
+    $('.ovpricechepestcont').click(function() {
+        $('.ovpricechepestcont ').addClass('erest_active');
+                    $('.findshortestflight').removeClass('erest_active');
+                    $('.erestclickfare').removeClass('erest_active');
+        fprice=1;
+        $('.vmoredatalist').css('visibility','visible','!important');
+        $('.callonclickfilterborder').addClass('hero');
+        $('.callonclickfilterborder-er').removeClass('hero');
+        $('.callonclickfilterborder-erest').removeClass('hero');
+
+        sortval = 2;
+        filterpricee='';
+        stop_scrolling='';
+
+
+
+        i = 0;
+
+        array = [];
+
+        $("input:checkbox[name=airlines]:checked").each(function() {
+
+            array.push($(this).val());
+
+
+        });
+
+        if (array.length === 0) {
+            var airlinevalue = '';
+        } else {
+            var airlinevalue = 1;
+
+        }
+
+                var dep = $('#depfrmval').find('.activefil').text().substring(0, 5);
+                //alert(dep);
+
+        if ($('input[name="priceOrder"]:checked').length > 0) {
+            var stp = $('input[name="priceOrder"]:checked').val();
+
+        } else {
+            var stp = '';
+        }
+        // alert(stp);
+
+                if ((airlinevalue != '' && dep != '' && stp != '') || (stp != '' && dep != '') || (dep != '' && airlinevalue != '') || (airlinevalue != '' && stp != '')) {
+                    multiple_filter1 = 1;
+                    $('.spin').show();
+
+
+                    $.ajax({
+                        method: 'POST',
+                        url: '/multiple_filter',
+                        data: { airline: array, departure: dep, stops: stp, sortval: sortval, i_f: 0, min_price: min_price, max_price: max_price },
+                        beforeSend: function () {
+
+// $('.shimmerround').show();
+// $('.mainshimmer').hide();
+},
+
+                success: function(response) {
+                    $('.shimmerround').hide();
+                    $('.mainshimmer').show();
+
+                    earliest = 1;
+                    cheapest = "";
+                    fastest = "";
+
+$('.mainshimmer').html(response);
+$('.shimmerround').hide();
+$('.spin').hide();
+var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                   stop_scrolling=1;
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+//  getresult('flightResponse/'+0);
+
+
+
+
+
+                }
+
+
+            });
+            return false;
+
+        } else if (airlinevalue == '' && dep == '' && stp != '' && filterpricee=="") {
+
+
+           getstopsd=1;
+
+            var val = $("input.mystopsradio:checked").val();
+            getstops(val, i);
+
+
+
+
+        } else if (airlinevalue != '' && dep == '' && stp == '' && filterpricee=="") {
+            getairlinesd=1;
+$.ajax({
+            method: 'POST',
+            url: "getairlineFilter",
+            data: {val:array,sortval:sortval,i:0},
+    //         beforeSend: function() {
+    //           //$('.mainshimmer').hide();
+    //    $('.shimmerround').show();
+       
+    //  },
+    
+            success: function(response){
+              $('.shimmerround').hide();
+       //$('.mainshimmer').show();
+            //  console.log(response);
+              //alert('vhj');
+             // p_a=1;
+              $('.mainshimmer').html(response);
+              var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                 
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+                $('.spin').hide();
+            }
+//             });
+
+        });
+
+                    // $('.spin').show();
+
+// $.ajax({
+//                 method: 'POST',
+//                 url: "getairlineFilter",
+//                 data: {val:array,sortval:sortval,i:0},
+//         //         beforeSend: function() {
+//         //           //$('.mainshimmer').hide();
+//         //    $('.shimmerround').show();
+       
+//         //  },
+    
+//                 success: function(response){
+//                   $('.shimmerround').hide();
+//            //$('.mainshimmer').show();
+//                 //  console.log(response);
+//                   //alert('vhj');
+//                  // p_a=1;
+//                   $('.mainshimmer').html(response);
+//                   var inputs = $(".list_"+0).find($("form"));
+//                     //  console.log('hi');
+//                     // console.log(inputs.length);
+//                     //alert(inputs.length);
+//                     if(parseInt(inputs.length)<10){
+                 
+//                       $(".resultcountvar").html(0+inputs.length);
+//                     }else{
+//                       $(".resultcountvar").html(0+10);
+//                     }
+//                 }
+//   //             });
+
+                    //                 });
+
+
+}else if(airlinevalue =='' && dep !='' && stp =='' && filterpricee==""){
+$('.spin').show();
+timefilter=1;
+$.ajax({
+            method: 'POST',
+            url: "getdepvalFilter",
+            data: {depval:dep,sortval:sortval,i:i},
+    //         beforeSend: function() {
+    //           $('.mainshimmer').hide();
+    //    $('.shimmerround').show();
+       
+    //  },
+   
+            success: function(response){
+              $('.mainshimmer').show();
+       $('.shimmerround').hide();
+       
+              //p_a=1;
+              $('.textalert').html('');
+            // console.log(response);
+            //alert(response);
+            
+              $('.mainshimmer').html(response);
+              $('.spin').hide();
+              var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                 
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+              function isEmpty( el ){
+  return !$.trim(el.html())
+}
+            //   if(isEmpty($('#list'))){
+            // $('.textalert').html('No Result Found For Your Search Criteria !');
+            //   //getresult('flightResponse/'+0);
+            //   setTimeout(function () {
+            //      $('.textalert').html('');
+            //  }, 3000);
+            // }else{
+            //   $('.textalert').html(''); 
+            // }
+            }
+//             });
+
+            });
+
+
+
+}else if(filterpricee==1){
+            i=0;
+            filter_price(min_price,max_price,i,imp);
+} else{
+//$(".mainshimmer").html("");
+
+earliest="";
+cheapest=1;
+fastest="";
+getstopsd="";
+timefilter="";
+getairlinesd="";
+var vc=$('.cheapest_value').val();
+fastest_flights(vc,i,imp);
+//  $.ajax({
+//                 method: 'POST',
+//                 url: 'resultsortdata',
+//                 data:{vc:vc},
+//                 beforeSend: function() {
+       
+    //    $('.shimmerround').show();
+    //    $('.mainshimmer').hide();
+    //  },
+   
+    //         success: function(response){
+    //           $('.shimmerround').hide();
+    //    $('.mainshimmer').show();
+    //           p_a=1;
+            
+//                   $('.mainshimmer').html(response);
+//                   $('.resultcountvar').html($('#mainresultcountvar').text());
+//                 }
+//               });
+    }
+});
+
+
+
+    $('.findshortestflight').click(function() {
+        $('.ovpricechepestcont ').removeClass('erest_active');
+                    $('.findshortestflight').addClass('erest_active');
+                    $('.erestclickfare').removeClass('erest_active');
+        fprice=1;
+$('.vmoredatalist').css('visibility','visible','!important');
+$('.callonclickfilterborder').removeClass('hero');
+$('.callonclickfilterborder-erest').removeClass('hero');
+$('.callonclickfilterborder-er').addClass('hero');
+sortval=3;
+i=0;
+stop_scrolling='';
+filterpricee='';
+
+
+        array = [];
+
+        $("input:checkbox[name=airlines]:checked").each(function() {
+
+            array.push($(this).val());
+
+
+        });
+
+        if (array.length === 0) {
+            var airlinevalue = '';
+        } else {
+            var airlinevalue = 1;
+
+        }
+
+        var dep=$('#depfrmval').find('.activefil').text().substring(0,5);
+        //alert(dep);
+        if ($('input[name="priceOrder"]:checked').length > 0) {
+            var stp = $('input[name="priceOrder"]:checked').val();
+
+        } else {
+            var stp = '';
+        }
+        // alert(stp);
+
+        if((airlinevalue !='' && dep !='' && stp !='')||(stp !='' && dep !='')||(dep !='' && airlinevalue !='' )||(airlinevalue !='' && stp !=''))
+        {
+          
+        multiple_filter1=1;
+        $('.spin').show();
+
+          $.ajax({
+            method: 'POST',
+            url: '/multiple_filter',
+            data:{airline:array,departure:dep,stops:stp,sortval:sortval,i_f:i,min_price:min_price,max_price:max_price},
+    //         beforeSend: function() {
+       
+    //    $('.shimmerround').show();
+    //    $('.mainshimmer').hide();
+    //    $('.textalert').html('');
+       
+    //  },
+  
+            success: function(response){
+              $('.shimmerround').hide();
+       $('.mainshimmer').show();
+            
+            earliest=1;
+            cheapest="";
+            fastest="";
+            
+              $('.mainshimmer').html(response);
+              $('.shimmerround').hide();
+              $('.spin').hide();
+            //  getresult('flightResponse/'+0);
+            var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                  stop_scrolling=1;
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+
+            
+
+
+       
+            }
+            
+
+          });
+          
+
+        } else if (airlinevalue == '' && dep == '' && stp != '' && filterpricee=="") {
+
+
+            getstopsd=1;
+
+            var val = $("input.mystopsradio:checked").val();
+            getstops(val, i);
+
+
+
+
+        } else if (airlinevalue != '' && dep == '' && stp == '' && filterpricee=="") {
+getairlinesd=1;
+            //alert('gello');
+
+//air(i);
+$('.spin').show();
+$.ajax({
+            method: 'POST',
+            url: "getairlineFilter",
+            data: {val:array,sortval:sortval,i:0},
+    //         beforeSend: function() {
+    //           //$('.mainshimmer').hide();
+    //    $('.shimmerround').show();
+       
+    //  },
+    
+            success: function(response){
+              $('.shimmerround').hide();
+       //$('.mainshimmer').show();
+            //  console.log(response);
+              //alert('vhj');
+             // p_a=1;
+              $('.mainshimmer').html(response);
+              $('.spin').hide();
+              var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                 
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+            }
+//             });
+
+            });
+
+
+
+        }
+        else if(airlinevalue =='' && dep !='' && stp =='' && filterpricee==""){
+timefilter=1;
+//getTxt1(dep,i);
+$('.spin').show();
+
+$.ajax({
+            method: 'POST',
+            url: "getdepvalFilter",
+            data: {depval:dep,sortval:sortval,i:i},
+    //         beforeSend: function() {
+    //           $('.mainshimmer').hide();
+    //    $('.shimmerround').show();
+       
+    //  },
+   
+            success: function(response){
+              $('.mainshimmer').show();
+       $('.shimmerround').hide();
+       $('.mainshimmer').html(response);
+
+       var inputs = $(".list_"+0).find($("form"));
+                //  console.log('hi');
+                // console.log(inputs.length);
+                //alert(inputs.length);
+                if(parseInt(inputs.length)<10){
+                 
+                  $(".resultcountvar").html(0+inputs.length);
+                  if(parseInt(inputs.length)==0){
+                    $('.textalert').html('No Result Found For Your Search Criteria !');
+                    
+                  }else{
+                    $('.textalert').html('');
+                  }
+                }else{
+                  $(".resultcountvar").html(0+10);
+                }
+       
+              //p_a=1;
+              $('.textalert').html('');
+            // console.log(response);
+            //alert(response);
+            
+              $('.spin').hide();
+              function isEmpty( el ){
+  return !$.trim(el.html())
+}
+            //   if(isEmpty($('#list'))){
+            // $('.textalert').html('No Result Found For Your Search Criteria !');
+            //   //getresult('flightResponse/'+0);
+            //   setTimeout(function () {
+            //      $('.textalert').html('');
+            //  }, 3000);
+            // }else{
+            // $('.textalert').html('');
+
+
+            // }
+            }
+//             });
+
+            });
+
+}else if(filterpricee==1){
+            i=0;
+            filter_price(min_price,max_price,i,imp);
+        }else{
+
+
+earliest="";
+cheapest="";
+fastest=1;
+// $('.mainshimmer').html('');
+getstopsd="";
+timefilter="";
+getairlinesd="";
+var vc=$('.shortest_value').val();
+fastest_flights(vc,i,imp);
+//  $.ajax({
+//                 method: 'POST',
+//                 url: 'resultsortdata',
+//                 data:{vc:vc},
+//                 beforeSend: function() {
+       
+//            $('.shimmerround').show();
+//            $('.mainshimmer').hide();
+//          },
+//          complete: function() {
+//            $('.shimmerround').hide();
+//            $('.mainshimmer').show();
+//           // getresult('flightResponse/'+0);
+//          },
+//                 success: function(response){
+              
+              
+//                   //p_a=1;
+//                   i=0;
+//                   fastest=1;
+
+            //                   $('.mainshimmer').html(response);
+
+            //                   $('#resultcountvar').html($('#mainresultcountvar').text());
+
+
+            //                   //   getresult('flightResponse/'+0);
+
+
+
+            // //                   window.onscroll = function(ev) {
+            // //   if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+            // //     alert('jhgjh');
+
+
+
+
+
+            // //   }
+            // // };
+            //                 }
+            //               });
+        }
+    });
+
+
+}
+});
+
+}
+
+    $(document).ready(function () {
+        $('#arrowms').hide();
+    });
+    $('.btn-modifysearch').click(function () {
+        //alert('hjihj');
+        var classname1 = [];
+        classname1 = document.getElementById('collapseExample').getAttribute('class');
+        //alert(classname1);
+        if (classname1 == 'collapse show') {
+            $('#arrowms').hide();
+        } else {
+            $('#arrowms').show();
+        }
+        //$('#blank1').hide();
+        //Some code
+    });
+
+
+    $('.row12').click(function () {
+
+        $('#arrowms').hide();
+
+    //Some code
+});
+
+// if (isEmpty($('.sortdata'))) {
+//     $('.shimmerround').show();
+  
+//     sortdataall();
+    
+// }
+// if (isEmpty($('.filterbox'))) {
+//     $('.filterbox-shimmer').show();
+//     $('.shimmerround').show();
+   
+//     filterall();
+
+//     if (isEmpty($('.sortdata'))) {
+   
+//     sortdataall();
+    
+// }
+
+// if (isEmpty($('.mainshimmer'))) {
+//     $('.shimmerround').show();
+  
+//     getresult2('flightResponse/' + 0);
+//     sortdataall();
+  
+// }
+
+    
+// }
+
+</script>
+<footer>
+    <div class="footerr">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5 > The fine print</h5>
+                    <ul class="finfo">
+                        <li> <a href="/privacy"><i class="fa-solid fa-caret-right"></i> Privacy Policy
+                            </a></li>
+                        <li> <a href="/cookie"><i class="fa-solid fa-caret-right"></i> Cookies Policy </a>
+                        </li>
+                        <li> <a href="/charges-fees"><i class="fa-solid fa-caret-right"></i> Charges &
+                                Fees </a></li>
+                        <li> <a href="/terms-condition"><i class="fa-solid fa-caret-right"></i> Terms &
+                                Conditions </a></li>
+                        <li> <a href="/refund-cancellation"><i class="fa-solid fa-caret-right"></i>
+                                Refunds & Cancellation </a> </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5> Before you fly</h5>
+                    <ul class="finfo">
+                        <li><a href="/faq"> <i class="fa-solid fa-caret-right"></i> FAQ</a> </li>
+                        <li> <a href="/how-to-book"><i
+                                    class="fa-solid fa-caret-right"></i> How to Book </a></li>
+                        <li> <a href="/hotel-booking-tips"><i class="fa-solid fa-caret-right"></i> Booking
+                                Tips </a></li>
+						 <li> <a href="/contact"><i class="fa-solid fa-caret-right"></i> EU's Online Dispute Resolutions </a></li>
+                         <li> <a href="tel:{{SITE_PHONE}}"><i class="fa-solid fa-caret-right"></i> Call us </a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 mrg-lt15">
+                    <h5 class="stay">
+                        Keep in touch</h5>
+                    <div class="input-group mb-3 stay-top">
+                        <input type="email" class="form-control" id="emailnews" placeholder="Enter your email address"
+                            aria-describedby="basic-addon2" required="">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btnnewsletter" id="nresletter"
+                                type="button">Go</button>
+                        </div>
+                        <div class="mes_newsletter">
+                            <p id="subp">Fare drops and route news. A few emails a month, unsubscribe any time.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 padd-lt40">
+                    <h5> Reach us</h5>
+                    <div class="finfo">
+                        <h6><Span class="fhome"><i class="fa-solid fa-house"></i> </Span>
+                            <p>{{SITE_ADDRESS}}</p>
+                        </h6>
+                                                 
+                         <h6 class="margtop"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone
+                            No: <a id="tel14" href="tel:{{SITE_PHONE}}">{{SITE_PHONE}}</a></h6>
+                        <h6>
+                        
+                        <h6 class="margtop" style="margin-top: -6%;"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone
+                            No: <a id="tel14" href="tel:{{SITE_PHONE_3}}">{{SITE_PHONE_3}}</a></h6>
+                        <h6>
+                        <h6 class="margtop" style="margin-top: -6%;"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone
+                            No: <a id="tel14" href="tel:{{SITE_PHONE_2}}">{{SITE_PHONE_2}}</a></h6>
+                        <h6>
+                         
+                                                 
+                            <spam class="fhome"> <i class="fa-solid fa-envelope"></i> </spam>Email: <a id="tel15" href="mailto:{{SITE_EMAIL}}">{{SITE_EMAIL}}</a></span>
+                        </h6>
+                    </div>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="footerr-res">
+        <div class="container">
+            <div class="fqqqqa">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                    The fine print
+                                </a>
+                            </h4>
+                            <hr />
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse show" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <ul class="finfo">
+                                    <li> <a href="/privacy" class="active"><i
+                                                class="fa-solid fa-caret-right"></i> Privacy Policy </a></li>
+                                    <li> <a href="/cookie"><i class="fa-solid fa-caret-right"></i> Cookies
+                                            Policy </a></li>
+                                    <li> <a href="/charges-fees"><i class="fa-solid fa-caret-right"></i>
+                                            Charges & Fees </a></li>
+                                    <li> <a href="/terms-condition"><i
+                                                class="fa-solid fa-caret-right"></i> Terms & Conditions </a></li>
+                                    <li> <a href="/refund-cancellation"><i
+                                                class="fa-solid fa-caret-right"></i> Refunds & Cancellation </a> </li>
+                                </ul>
+                                <hr id="idbarbr" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                    href="#collapseOne_help" aria-expanded="true" aria-controls="collapseOne_help">
+                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                    Before you fly
+                                </a>
+                            </h4>
+                            <hr />
+                        </div>
+                        <div id="collapseOne_help" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <ul class="finfo">
+                                    <li><a href="/faq"> <i class="fa-solid fa-caret-right"></i> FAQ</a>
+                                    </li>
+                                    <li> <a href="/how-to-book"><i
+                                                class="fa-solid fa-caret-right"></i> How to Book </a></li>
+                                    <li> <a href="/hotel-booking-tips"><i
+                                                class="fa-solid fa-caret-right"></i> Booking Tips </a></li>
+                                                <li> <a href="/contact"><i class="fa-solid fa-caret-right"></i> EU's Online Dispute Resolutions </a></li>
+                         <li> <a href="tel:{{SITE_PHONE}}"><i class="fa-solid fa-caret-right"></i> Call us </a></li>
+                                </ul>
+                                <hr id="idbarbr" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                    href="#collapseOne_asd" aria-expanded="true" aria-controls="collapseOne_asd">
+                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                    Reach us
+                                </a>
+                            </h4>
+                            <hr />
+                        </div>
+                        <div id="collapseOne_asd" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="finfo">
+                                    <Span class="fhome"><i class="fa-solid fa-house"></i> </Span>
+                                    <p>{{SITE_ADDRESS}}</p>
+
+<span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone No:
+                                    {{SITE_PHONE}}<br>
+<span class="fline"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone No: <span>{{SITE_PHONE_3}}</span><br></span>
+<span class="fline"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone No: <span>{{SITE_PHONE_2}}</span><br></span>
+
+                                    
+                                    
+                                    <spam class="fhome"> <i class="fa-solid fa-envelope"></i> </spam>Email:
+                                    {{SITE_EMAIL}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="txxt">
+        <section>
+            <div class="brandlogo">
+                <div class="container">
+                </div>
+            </div>
+            <div class="container-fluid bor-top">
+                <div class=' text-center'>
+                    <small> <span class="finalft"> &copy; 2023-{{YEAR}},</span> <span class="final">{{SITE_LEGAL}}</span><span class="fein">, EIN <span>{{SITE_EIN}}</span></span><span class="finaltw">. All Rights Reserved.</span>
+                    </small>
+                </div>
+            </div>
+    </div>
+    <!-- <div id="cookyGotItBtnBox" data-wow-duration="0.5s" data-wow-delay="5s" role="dialog"
+        class="wow fadeIn cc-window cc-banner cc-type-info cc-theme-block cc-color-override--1961008818 ">
+        <div class="container">
+            <div id="box-cookie">
+                <div class="cokicontent">
+                    <p>
+                        We use cookies to keep the site working and to see which pages are useful. <a
+                            id="cookiethebtnindexfooter" href="/cookie" target="_blank">Learn more</a></p>
+                </div>
+                <div class="cokicontentright">
+                    <button aria-label="dismiss cookie message" role="button" tabindex="0" class="cc-btn cc-dismiss"
+                        onclick="cookyGotItBtn()">Got it!</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    </div>
+                    
+      
+
+
+ 
+
+      
+               
+                                      
+  
+`	
+	<div class="fixcn" id="fixcn">
+    <center><h4>
+	<a href="tel:{{SITE_PHONE}}"><i class="fa-solid fa-phone-volume " style="font-size: 28px;color:#fff;" aria-hidden="true"></i>
+	<span class="deal-wrap">
+          <span class="deal-text">Fares you will not find online</span><br>
+          <div style="font-size: 26px;">{{SITE_PHONE_DISPLAY}}</div>
+        </span>
+	</a>
+	</h4></center>
+    </div>  
+	
+	
+
+	<script>
+window.addEventListener("scroll", function() {
+  const bar = document.getElementById("fixcn");
+  if (window.scrollY > 450) { // show after scrolling 200px
+    bar.classList.add("show");
+  } else {
+    bar.classList.remove("show");
+  }
+});
+</script>
+   
+    <script src="/ajax/else.js"></script>
+    <script src="/ajax/search.js?v=46"></script>
+<script src="/ajax/fixes.js"></script>
+    <script src="/assets/js/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/motion.js?v=46"></script>
+    </body>
+    </html>
+    <!-- html endfgfg -->

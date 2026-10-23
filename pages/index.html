@@ -1,0 +1,1385 @@
+<html lang="en">
+<head>
+  
+  <title>
+    Flights, booked with a person on the line | {{SITE_NAME}}  </title>
+  <meta name="description" content="Compare fares from hundreds of airlines, then book with someone who picks up the phone.">
+  <meta name="keywords" content="flight booking, cheap flights, airline tickets, travel agent, phone booking">
+  <meta property="og:title" content="Flights, booked with a person on the line | {{SITE_NAME}}" />
+  <meta property="og:images" content="" />
+  <link rel="icon" type="image/svg+xml" href="/assets/images/logo-mark.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png?v=46">
+  <meta name="theme-color" content="#0c3b33">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta property="og:url" content="/" />
+  <meta property="og:description" content="Compare fares from hundreds of airlines, then book with someone who picks up the phone." />
+  <link rel="canonical" href="/" />
+  <meta CHARSET="UTF-8">
+  <script src="/assets/js/jquery.min.js"></script>
+ 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><style>.fa-sharp{font-family:"Font Awesome 6 Free" !important}</style>
+  <link href="/assets/css/fonts.css?v=46" rel="stylesheet" />
+  <link href="/assets/css/app.css?v=46" rel="stylesheet" />
+  <link href="/assets/css/app.css?v=46" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+</head>
+<body>
+  
+    <header id="headnav" class="closeonclick">
+    <nav class="navbar navbar-expand-lg navetwo new-desk">
+      <div class="container">
+        <a class="navbar-brand" href="/"><span class="brandmark">{{SITE_NAME}}</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa-sharp fa-solid fa-bars" id="closeoncloseluist"></i>
+          <i class="fa-solid fa-xmark" id="closeonclose"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active_menu">
+              <a class="nav-link highlight_1" href="/"><span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ai ai-HomeAlt1"><path d="M21 19v-6.733a4 4 0 0 0-1.245-2.9L13.378 3.31a2 2 0 0 0-2.755 0L4.245 9.367A4 4 0 0 0 3 12.267V19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/><path d="M9 15a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6H9v-6z"/></svg></span> Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="/about"><span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ai ai-Person"><circle cx="12" cy="7" r="5"/><path d="M17 14h.352a3 3 0 0 1 2.976 2.628l.391 3.124A2 2 0 0 1 18.734 22H5.266a2 2 0 0 1-1.985-2.248l.39-3.124A3 3 0 0 1 6.649 14H7"/></svg></span> About us</a>
+            </li>           
+            <li class="nav-item" >
+              <a style="padding-right:0;" class="nav-link   " href="/contact"> <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ai ai-Phone"><path d="M10.554 6.24L7.171 2.335c-.39-.45-1.105-.448-1.558.006L2.831 5.128c-.828.829-1.065 2.06-.586 3.047a29.207 29.207 0 0 0 13.561 13.58c.986.479 2.216.242 3.044-.587l2.808-2.813c.455-.455.456-1.174.002-1.564l-3.92-3.365c-.41-.352-1.047-.306-1.458.106l-1.364 1.366a.462.462 0 0 1-.553.088 14.557 14.557 0 0 1-5.36-5.367.463.463 0 0 1 .088-.554l1.36-1.361c.412-.414.457-1.054.101-1.465z"/></svg></span> Contact us/Dispute Resolution</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header><!-- Mobile Support Section -->
+<section class="mobile-support">
+  <!-- Replace with your single-person image -->
+  <center><img src="/assets/images/agent.bf4ac55b.jpg" alt="A booking agent on the phone" class="agent"></center>
+
+  <div class="support-content">
+    <h4>Would you rather just talk to someone?</h4>
+   
+
+
+ <a href="tel:{{SITE_PHONE}}" class="phone-number">{{SITE_PHONE_DISPLAY}}</a>
+
+
+    <p>Open around the clock, every day of the year</p>
+
+    <div class="features">
+      <div class="feature-card">
+        <i class="fa-solid fa-phone"></i>
+        <span>New booking</span>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-right-left"></i>
+        <span>Change a flight</span>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-star"></i>
+        <span>Upgrades</span>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-suitcase-rolling"></i>
+        <span>Baggage</span>
+      </div>
+    </div>
+
+    <p class="mt-3"><span style="color:#f0b429;">⚡</span> A person picks up. No phone menu, no ticket number.</p>
+  </div>
+</section>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 flight-iconbox"><img src="/assets/images/plane-icon.png"
+                    alt="plane-icon" />
+                <h3>Where are you headed - <spam id="colortext">Anywhere we fly</spam>
+                </h3>
+                <div class="three-box">
+                    <h3><span><img src="/assets/image/icon-book.svg?v=46" alt="airplane" /></span> Book in minutes
+                    </h3>
+                    <h3><span><img src="/assets/image/icon-cancel.svg?v=46" alt="file" /></span> Cancel without a fight
+                    </h3>
+                    <h3><span><img class="call-icon" src="/assets/image/icon-support.svg?v=46"
+                                alt="support" /></span> Someone always on</h3>
+                </div>
+            </div>
+            <div class="col-md-7">
+
+                <div class="sercheform homepage">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab">
+                            <form method="POST" class="frn" id="searchbox" action="/airline/searchflight">
+                                <div class="card new1">
+
+                                    <div class="switch-field">
+                                        <input type="radio" id="round" name="triptype" value="round" checked />
+                                        <label for="round">Round Trip</label>
+                                        <input type="radio" id="oneway" name="triptype" value="oneway" />
+                                        <label for="oneway">One Way</label>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="form-row">
+                                            <div class="search-biginput  origin_focus ">
+                                                <div class="textlng  origin_error">
+                                                    <i class="fa-sharp fa-solid fa-circle-xmark new2" id="blank1"></i>
+                                                    <label>Origin</label>
+                                                    <div class="map-icon">
+                                                        <img src="/assets/images/origin-new.svg"
+                                                            alt="origin" />
+                                                    </div>
+                                                    <input type="text" id="origin2" name="origin"
+                                                        class="form-control origin_value frommarg" placeholder="FROM"
+                                                        autocomplete="off" value="">
+                                                    <div class="spinner-border spinner-border-sm text-dark spinorg"
+                                                        role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <p class="new3" id="check1">Origin Airport </p>
+                                                    <div class="listsearchlist">
+                                                        <div class='deporg new4'>
+                                                            <h4 class="new5"><i id='depclickclose' onclick='dpclose1()'
+                                                                    class='fa-solid fa-xmark new6'></i> From Where?</h4>
+                                                        </div>
+                                                        <input type="text" id="origin"
+                                                            class="form-control mobileorigin new7" placeholder="FROM"
+                                                            autocomplete="off">
+                                                        <ul id="mysearchlist" type="cirlce"></ul>
+                                                    </div>
+                                                </div>
+                                                <div class="exchange-box"><i class="fa fa-exchange" aria-hidden="true"
+                                                        id="exchange2"></i></div>
+                                            </div>
+                                            <input type="hidden" name="from_air" class="from_air">
+                                            <input type="hidden" name="dest_air" class="dest_air">
+                                            <input type="hidden" name="dp_date" class="dp_date_air">
+                                            <input type="hidden" name="ar_date" class="ar_date_air">
+                                            <input type="hidden" name="class_air" class="class_air" value="Economy">
+                                            <div class="search-biginput destination_focus">
+                                                <div class="textlng destination_error">
+                                                    <i class="fa-sharp fa-solid fa-circle-xmark" id="blank2"></i>
+                                                    <label>Destination</label>
+                                                    <div class="map-icon"><img
+                                                            src="/assets/images/destination.svg"
+                                                            alt="destination" /></div>
+                                                    <input type="text" class="form-control destination_value frommarg"
+                                                        id="destination2" name="destination" placeholder="TO"
+                                                        autocomplete="off">
+                                                    <div class="spinner-border spinner-border-sm text-dark spindest mt-3"
+                                                        role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <p id="check2" class="destination_focus">Destination Airport</p>
+                                                    <div class="listsearchlistdes">
+                                                        <div class='deporg'>
+                                                            <h4 class="new8"><i id='depclickclose' onclick='dpclose2()'
+                                                                    class='fa-solid fa-xmark'></i> Where To?</h4>
+                                                        </div>
+                                                        <input type="text" class="form-control mobiledestination new9"
+                                                            id="destination" placeholder="TO" autocomplete="off"
+                                                            autofocus>
+                                                        <ul id="mysearchlistdestination" type="cirlce"></ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="res-mobiletxtview">
+                                                <div class="search-smallinput dp_date_focus">
+                                                    <div class="textlng from_error">
+                                                        <label>Departure</label>
+                                                        <div class="map-icon"><img
+                                                                src="/assets/images/calender-icon.svg"
+                                                                alt="calender" /></div>
+                                                        <input type="text" class="form-control " placeholder="Select"
+                                                            id="depfield" name="depart_date" autocomplete="off"
+                                                            readonly="readonly">
+                                                        <p id="dp_date" class="dp_date">Date</p>
+                                                        <div class="repbackhight">
+                                                            <h4><i class="fa-solid fa-arrow-left"></i> Departure Date
+                                                            </h4>
+                                                        </div>
+                                                        <div class="desktop_view_calaender">
+                                                            <div class="topViewbar">
+                                                                <div class="row new10">
+                                                                    <div class="col-sm-6">
+                                                                        <select class="form-control newfunction12"
+                                                                            name="title13">
+                                                                            <option value="round">Round Trip</option>
+                                                                            <option value="oneway">One Way</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <div class="row new11 m-0">
+                                                                            <div class="col-sm-2 mobred">
+                                                                                <!-- <a href="#" class="resertdate">Reset</a> -->
+                                                                            </div>
+                                                                            <div class="col-sm-10">
+                                                                                <div class="row new11 m-0">
+                                                                                    <div class="col-sm-6">
+                                                                                        <input
+                                                                                            class="form-control depclpop"
+                                                                                            placeholder="Departure" />
+                                                                                    </div>
+                                                                                    <div class="col-sm-6">
+                                                                                        <input type="text"
+                                                                                            class="form-control arclpop"
+                                                                                            placeholder="Return" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="from"></div>
+                                                            <div id="to"></div>
+                                                            <hr>
+                                                            <div class="confirm-cal">
+                                                                <a id="deskreset" class="resertdate" href="#"><span><svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="14" height="14" viewBox="0 0 24 24"
+                                                                            fill="none" stroke="currentColor"
+                                                                            stroke-width="2" stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            class="ai ai-ArrowCycle">
+                                                                            <path
+                                                                                d="M22 12c0 6-4.39 10-9.806 10C7.792 22 4.24 19.665 3 16" />
+                                                                            <path
+                                                                                d="M2 12C2 6 6.39 2 11.806 2 16.209 2 19.76 4.335 21 8" />
+                                                                            <path d="M7 17l-4-1-1 4" />
+                                                                            <path d="M17 7l4 1 1-4" />
+                                                                        </svg></span> Reset
+                                                                </a>
+                                                                <button type="button"
+                                                                    class="btn btn-primary calbtn"><span><svg
+                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                            width="14" height="14" viewBox="0 0 24 24"
+                                                                            fill="none" stroke="currentColor"
+                                                                            stroke-width="2" stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            class="ai ai-ThumbsUp thm-cls">
+                                                                            <path
+                                                                                d="M11.605 5.782l.23-2.369c.091-.952.98-1.598 1.878-1.366 1.351.35 2.3 1.605 2.3 3.044v3.035c0 .675 0 1.013.146 1.26.083.141.197.26.333.345.24.151.567.151 1.22.151h.396c1.703 0 2.554 0 3.078.39.393.293.67.722.78 1.208.146.65-.181 1.463-.836 3.087l-.326.81a3.261 3.261 0 0 0-.226 1.48c.232 2.874-2.047 5.295-4.833 5.136l-10.424-.599c-1.139-.065-1.708-.098-2.222-.553-.515-.455-.612-.924-.805-1.861a14.324 14.324 0 0 1 .055-6.037c.283-1.248 1.475-1.92 2.706-1.76 3.264.42 6.223-2.019 6.55-5.4z" />
+                                                                            <path
+                                                                                d="M7 11.5l-.137.457A14.983 14.983 0 0 0 7 21" />
+                                                                        </svg></span> Done</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-smallinput mobile-mrg ar_date_focus"
+                                                    id="ar_date_focus">
+                                                    <div class="textlng to_error">
+                                                        <label>Return</label>
+                                                        <div class="map-icon"><img
+                                                                src="/assets/images/destination-cal-icon.svg"
+                                                                alt="icon" /></div>
+                                                        <input type="text" class="form-control redloc"
+                                                            placeholder="Select" id="arrfield" name="return_date"
+                                                            autocomplete="off" readonly="readonly">
+                                                        <p id="dr_date">Date</p>
+                                                        <div class="scrolmain">
+                                                            <div id="datepickerreturn">
+                                                                <div class='mainheaddate'>
+                                                                    <div class='deporg'>
+                                                                        <h4><i id='retclickclose' onclick='dpclose3()'
+                                                                                class='fa-solid fa-arrow-left'></i></h4>
+                                                                        <i class='fa-sharp fa-solid fa-circle-xmark new12'
+                                                                            onclick='dpclose3()'></i>
+                                                                    </div>
+                                                                    <div class='thedatepickfield'>
+                                                                        <div class='row new14'>
+                                                                            <div class='col-sm-6 new13'>
+                                                                                <input type='text'
+                                                                                    class='depdatefi form-control'
+                                                                                    id="depdatefi" value=""
+                                                                                    placeholder='Depature Date' />
+                                                                            </div>
+                                                                            <div class='col-sm-6 new13'>
+                                                                                <input type='text'
+                                                                                    class='retdatefi form-control'
+                                                                                    id="retdatefi"
+                                                                                    placeholder='Return Date' />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div><br /><br /><br />
+                                                                <div class="fixfix-btn">
+                                                                    <button
+                                                                        class="btn btn-sm btn-danger btnresreset resertdate"
+                                                                        type="button">Reset</button>
+                                                                    <button
+                                                                        class="btn btn-sm btn-primary btnresreset confirmbtndate"
+                                                                        type="button">Done</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-smallinput input-ful ">
+                                                <div class="textlng">
+                                                    <div class="traveller_focus">
+                                                        <label>Travelers</label>
+                                                        <div class="map-icon traveliconmap">
+                                                            <img src="/assets/images/user-new.svg"
+                                                                alt="user-new" />
+                                                        </div>
+                                                        <input type="text" class="form-control" autocomplete="off"
+                                                            id="popover" placeholder=" 1 ADULT" readonly>
+                                                        <p class="class_type_name">Economy</p>
+                                                    </div>
+                                                    <input type="hidden" name="adult" value="1" id="adult" readonly />
+                                                    <input type="hidden" name="child" id="child" value="0" readonly />
+                                                    <input type="hidden" name="infant" id="infant" value="0" readonly />
+                                                    <div id="pop" class="myfrm arrow-top">
+                                                        <div class="repbackhighttr">
+                                                            <h4><i id="sfclickclose"
+                                                                    class="fa-solid fa-arrow-left"></i>Traveller Details
+                                                            </h4>
+                                                        </div>
+                                                        <div class="travllerbox-mbl">
+                                                            <div class="row" id="index_style_mar">
+                                                                <div class="col-sm-4">
+                                                                    <p><span class="adult">1 </span> Adults <small>(Aged
+                                                                            12+ yrs)</small></p>
+                                                                    <div class="btn-group popplusap" role="group"
+                                                                        aria-label="Basic example">
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary minus_adult"><img
+                                                                                id="iconpl"
+                                                                                src="/assets/image/ico/minus-icon.png"
+                                                                                alt="minus" /></button>
+                                                                        <span class="adultop">1</span>
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary plus_adult">
+                                                                            <img id="iconpl"
+                                                                                src="/assets/image/ico/plus-icon.png"
+                                                                                alt="plus" /></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <p><span class="child">0</span> Child <small>(Aged
+                                                                            2-12 yrs)</small></p>
+                                                                    <div class="btn-group popplusap" role="group"
+                                                                        aria-label="Basic example">
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary minus_child"><img
+                                                                                id="iconpl"
+                                                                                src="/assets/image/ico/minus-icon.png"
+                                                                                alt="mius-icon" /></button>
+                                                                        <span class="childpop">0</span>
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary plus_child"><img
+                                                                                id="iconpl"
+                                                                                src="/assets/image/ico/plus-icon.png"
+                                                                                alt="plus-icon" /></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <p><span class="infant">0</span> Infant<small>(Below
+                                                                            2 yrs)</small></p>
+                                                                    <div class="btn-group popplusap" role="group"
+                                                                        aria-label="Basic example">
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary minus_infant"><img
+                                                                                id="iconpl"
+                                                                                src="/assets/image/ico/minus-icon.png"
+                                                                                alt="minus-icon" /></button>
+                                                                        <span class="infantpop">0</span>
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary plus_infant"><img
+                                                                                id="iconpl"
+                                                                                src="/assets/image/ico/plus-icon.png"
+                                                                                alt="plus-icon" /></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <p class="model_heading">Travel Class</p>
+                                                        <input type="hidden" name="class_type" value="Economy"
+                                                            id="class_type" />
+                                                        <ul id="cont_index_marleft">
+
+                                                            <li> <input type="radio" name="type" id="a25"
+                                                                    value="Economy" class="class" checked /> <label
+                                                                    for="a25"> Economy</label> </li>
+                                                            <li id="premclas"> <input type="radio" id="a50" name="type"
+                                                                    value="Premium Economy" class="class" /> <label
+                                                                    for="a50">Premium Economy</label> </li>
+                                                            <li><input type="radio" name="type" id="a75"
+                                                                    value="Business" class="class" /> <label
+                                                                    for="a75">Business</label> </li>
+                                                            <li><input type="radio" name="type" id="a100" value="First"
+                                                                    class="class" /> <label for="a100">First </label>
+                                                            </li>
+                                                        </ul>
+                                                        <div id="optionbtn">
+                                                            <a href="#" id="btn-cancel" class="btncommin "><i
+                                                                    class="fa-sharp fa-solid fa-circle-xmark "></i>
+                                                                Cancel</a>
+                                                            <a href="#" id="btn-done" class="btncommin "> <i
+                                                                    class="fa-regular fa-thumbs-up"></i> Done</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-btnbox">
+                                                <div class="textbtn">
+                                                    <button type="submit" id="search22" value="Search"
+                                                        class="btn btn-fbtn hvr-bounce-to-right">
+                                                        <span><svg xmlns="http://www.w3.org/2000/svg" width="18"
+                                                                height="18" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="3"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="ai ai-Search">
+                                                                <path
+                                                                    d="M21 21l-4.486-4.494M19 10.5a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0z" />
+                                                            </svg></span> SEARCH FLIGHTS</button>
+
+
+                                                </div>
+                                                <div class="quick-result"><span><svg xmlns="http://www.w3.org/2000/svg"
+                                                            width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="ai ai-Check">
+                                                            <path d="M4 12l6 6L20 6" />
+                                                        </svg></span>Quick Results</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class=" row prefferair">
+                                    <div class="search-checkbox">
+
+                                        <div class="form-check non_stop new15">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                value="true" autocomplete="off" name="nonstop">
+                                            <label class="form-check-label labelnonst" for="inlineCheckbox1">Non
+                                                stop</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="pair">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                            <input class="form-control" type="text" placeholder="Preferred Airlines"
+                                                name="prefferedairline" id="prefred" autocomplete="off">
+                                            <ul id="pair"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="lefttr"></div>
+            <div id="righttr"></div>
+        </div>
+    </div>
+</div>
+<!-- card start of flights -->
+<div class="container-newbox">
+    <div class="row ful-border">
+        <div class="col-sm-4">
+            <div class="whyxtreme-box">
+                <div class="whyxtreme-imgbox"><img src="/assets/image/lense-icon.png" alt="lense"></div>
+                <div class="whyxtreme-txtbox">
+                    <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Every fare, one search</h3>
+                    <p scrolls scrolls-anim="fade-down" scrolls-duration="1000">Hundreds of airlines compared in a single pass, so you see the real cheapest route, not the first one.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="whyxtreme-box">
+                <div class="whyxtreme-imgbox"><img src="/assets/image/customer-call-icon.png" alt="money"></div>
+                <div class="whyxtreme-txtbox">
+                    <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Help after you book</h3>
+                    <p scrolls scrolls-anim="fade-down" scrolls-duration="1000">Move a date, add a bag, fix a misspelled name. Call any hour and it gets sorted.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="whyxtreme-box">
+                <div class="whyxtreme-imgbox"><img src="/assets/image/ticket-icon.png" alt="ticket"></div>
+                <div class="whyxtreme-txtbox">
+                    <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Fares held back from the web</h3>
+                    <p scrolls scrolls-anim="fade-down" scrolls-duration="1000">Airlines release some seats to agents only. Ask on the phone and we will check those too.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="photss new-row">
+        <h1 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Where people are flying</h1>
+        <div class="row">
+            <div class="india-popularbox">
+                <div class="row">
+                    <div class="col-sm-3 wdt50 innerpopularbox">
+                        <a href="/explore-niagara-falls">
+                            <div class="popular-inbox">
+                                <div class="popular-imgbox"><img src="/assets/image/cdestination/niagrafalls.96890267.jpg"
+                                        class="fassets/image" alt="niagara falls"></div>
+                                <div class="popular-imgtxtbox">
+                                    <div class="citybox">
+                                        <h3>Niagara Falls </h3>
+                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                                class="ai ai-CircleChevronRightFill">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z" />
+                                            </svg></span>
+                                    </div>
+                                    <div class="tripsbox"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 wdt50 innerpopularbox">
+                        <a href="/discover-miami">
+                            <div class="popular-inbox">
+                                <div class="popular-imgbox"><img src="/assets/image/cdestination/miami.4dd0e31b.jpg"
+                                        class="fassets/image" alt="miami"></div>
+                                <div class="popular-imgtxtbox">
+                                    <div class="citybox">
+                                        <h3>Miami </h3>
+                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                                class="ai ai-CircleChevronRightFill">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z" />
+                                            </svg></span>
+                                    </div>
+                                    <div class="tripsbox"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 wdt50 innerpopularbox">
+                        <a href="/fly-to-montreal">
+                            <div class="popular-inbox">
+                                <div class="popular-imgbox"><img src="/assets/image/cdestination/montreal.b38cd0cf.jpg"
+                                        class="fassets/image" alt="montreal"></div>
+                                <div class="popular-imgtxtbox">
+                                    <div class="citybox">
+                                        <h3>Montreal </h3>
+                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                                class="ai ai-CircleChevronRightFill">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z" />
+                                            </svg></span>
+                                    </div>
+                                    <div class="tripsbox"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 wdt50 innerpopularbox">
+                        <a href="/explore-halifax">
+                            <div class="popular-inbox">
+                                <div class="popular-imgbox"><img src="/assets/image/cdestination/halifax.dfce0193.jpg"
+                                        class="fassets/image" alt="halifax"></div>
+                                <div class="popular-imgtxtbox">
+                                    <div class="citybox">
+                                        <h3>Halifax </h3>
+                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                                class="ai ai-CircleChevronRightFill">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z" />
+                                            </svg></span>
+                                    </div>
+                                    <div class="tripsbox"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 wdt50 innerpopularbox">
+                        <a href="/fly-to-mexico">
+                            <div class="popular-inbox">
+                                <div class="popular-imgbox"><img src="/assets/image/cdestination/mexico.9e059a16.jpg"
+                                        class="fassets/image" alt="mexico"></div>
+                                <div class="popular-imgtxtbox">
+                                    <div class="citybox">
+                                        <h3>Mexico </h3>
+                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                                class="ai ai-CircleChevronRightFill">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z" />
+                                            </svg></span>
+                                    </div>
+                                    <div class="tripsbox"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 wdt50 innerpopularbox">
+                        <a href="/fly-to-bangkok">
+                            <div class="popular-inbox">
+                                <div class="popular-imgbox"><img src="/assets/image/cdestination/bankok.4c9cd0e0.jpg"
+                                        class="fassets/image" alt="bangkok"></div>
+                                <div class="popular-imgtxtbox">
+                                    <div class="citybox">
+                                        <h3>Bangkok </h3>
+                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                                class="ai ai-CircleChevronRightFill">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z" />
+                                            </svg></span>
+                                    </div>
+                                    <div class="tripsbox"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 wdt50 innerpopularbox">
+                        <a href="/discover-costa-rica">
+                            <div class="popular-inbox">
+                                <div class="popular-imgbox"><img src="/assets/image/cdestination/costarica.4f30d6e2.jpg"
+                                        class="fassets/image" alt="costa rica"></div>
+                                <div class="popular-imgtxtbox">
+                                    <div class="citybox">
+                                        <h3>Costa Rica </h3>
+                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                                class="ai ai-CircleChevronRightFill">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z" />
+                                            </svg></span>
+                                    </div>
+                                    <div class="tripsbox"></div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3 wdt50 innerpopularbox browsebox">
+                        <div class="popular-inbox bluedest">
+                            <div class="popular-imgtxtbox">
+                                <h2 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Somewhere else in mind?
+                                </h2>
+                                <p scrolls scrolls-anim="fade-down" scrolls-duration="1000">Open the map and see what it costs to reach anywhere we fly.
+                                </p>
+                                <a href="/destinations">Click More <svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
+                                        class="ai ai-CircleChevronRightFill">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM9.793 8.707a1 1 0 0 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414l-4 4a1 1 0 0 1-1.414-1.414L13.086 12 9.793 8.707z">
+                                        </path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="holiday-fullwdth">
+    <div class="container-newbox">
+        <!-- <div class="holidaybox">
+            <h1 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Trips worth the time off</h1>
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row mlrgt">
+                            <div class="col-sm-3 wdt50 ca-img">
+                                <a href="/tour/canadian-eastcoast" style="padding:0 !important;">
+                                    <div class="holiday-imgbox">
+                                      <img src="/assets/image/cdestination/canadian-img.154f5347.jpg" class="fassets/image" alt="canadian-img">
+                                        <div class="holiday-txtbox">
+                                            <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Canadian East Coast
+                                                <span><a href="/tour/canadian-eastcoast" class="chek-btnbox">Check Now</a></span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-sm-3 wdt50">
+
+                                <a href="/tour/atlantic-canada" style="padding:0 !important;">
+                                    <div class="holiday-imgbox"><img
+                                            src="/assets/image/cdestination/atlantic-canada-img.c302f591.jpg"
+                                            class="fassets/image" alt="atlantic canada">
+                                        <div class="holiday-txtbox">
+                                            <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Atlantic Canada
+                                                <span><a href="/tour/atlantic-canada"
+                                                        class="chek-btnbox">Check Now</a></span>
+                                            </h3>
+
+
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </div>
+                            <div class="col-sm-3 wdt50">
+                                <a href="/mexican-celebration" style="padding:0 !important;">
+                                    <div class="holiday-imgbox"><img
+                                            src="/assets/image/cdestination/mexican-celebration-img.37e52e58.jpg" class="fassets/image" alt="mexican celebration">
+                                        <div class="holiday-txtbox">
+                                            <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Mexican Celebration
+                                                <span><a href="/mexican-celebration" class="chek-btnbox">Check Now</a></span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-sm-3 wdt50">
+                                <a href="/tour/phuket-celebration" style="padding:0 !important;">
+                                    <div class="holiday-imgbox">
+                                      <img src="/assets/image/cdestination/phuket-celebration-img.9721fccc.jpg" class="fassets/image" alt="phuket-celebration">
+                                        <div class="holiday-txtbox">
+                                            <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Phuket Celebration with...
+                                                <span><a href="/tour/phuket-celebration" class="chek-btnbox">Check Now</a></span>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="ai ai-ChevronLeftSmall">
+                            <path d="M14 6l-6 6 6 6" />
+                        </svg></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="ai ai-ChevronRightSmall">
+                            <path d="M9 6l6 6-6 6" />
+                        </svg></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div> -->
+
+
+
+
+
+        <div class="holidaybox">
+            <h1 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Trips worth the time off</h1>
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row mlrgt">
+                            <div class="col-sm-3 wdt50">
+                                <!-- <a href="/tour/canadian-eastcoast" style="padding:0 !important;"> -->
+                                <div class="holiday-imgbox ca-img">
+                                    <!-- <img src="/assets/image/cdestination/canadian-img.154f5347.jpg" class="fassets/image" alt="canadian-img"> -->
+                                    <div class="holiday-txtbox">
+                                        <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Canadian East Coast
+                                            <span><a href="/tour/canadian-eastcoast"
+                                                    class="chek-btnbox">Check Now</a></span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="col-sm-3 wdt50">
+
+                                <!-- <a href="/tour/atlantic-canada" style="padding:0 !important;"> -->
+                                <div class="holiday-imgbox alca-img">
+                                    <!-- <img src="/assets/image/cdestination/atlantic-canada-img.c302f591.jpg"
+                                            class="fassets/image" alt="atlantic canada"> -->
+                                    <div class="holiday-txtbox">
+                                        <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Atlantic Canada
+                                            <span><a href="/tour/atlantic-canada"
+                                                    class="chek-btnbox">Check Now</a></span>
+                                        </h3>
+
+
+                                    </div>
+                                </div>
+                                </a>
+
+                            </div>
+                            <div class="col-sm-3 wdt50">
+                                <!-- <a href="/mexican-celebration" style="padding:0 !important;"> -->
+                                <div class="holiday-imgbox maxica-img">
+                                    <!--<img
+                                            src="/assets/image/cdestination/mexican-celebration-img.37e52e58.jpg" class="fassets/image" alt="mexican celebration"> -->
+                                    <div class="holiday-txtbox">
+                                        <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Mexican Celebration
+                                            <span><a href="/mexican-celebration" class="chek-btnbox">Check
+                                                    Now</a></span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <div class="col-sm-3 wdt50">
+                                <!-- <a href="/tour/phuket-celebration" style="padding:0 !important;"> -->
+                                <div class="holiday-imgbox phuket-img">
+                                    <!-- <img src="/assets/image/cdestination/phuket-celebration-img.9721fccc.jpg" class="fassets/image" alt="phuket-celebration"> -->
+                                    <div class="holiday-txtbox">
+                                        <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Phuket Celebration
+                                            with...
+                                            <span><a href="/tour/phuket-celebration"
+                                                    class="chek-btnbox">Check Now</a></span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="ai ai-ChevronLeftSmall">
+                            <path d="M14 6l-6 6 6 6" />
+                        </svg></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                            width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="ai ai-ChevronRightSmall">
+                            <path d="M9 6l6 6-6 6" />
+                        </svg></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!-- fourthe section strat-->
+<div class="explo">
+    <div class="container">
+        <div class="mequery faqs-com">
+            <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000"> Questions we get asked</h3>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h4 class="mb-0">
+                                <button class="btn btn-link faq-btn collapsed" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    How do I book? <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="ai ai-ChevronDown">
+                                            <path d="M4 9l8 8 8-8" />
+                                        </svg></span>
+                                </button>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                Search from the box at the top of this page, pick the flight that suits you and pay on the confirmation screen. If you would rather not do it yourself, call <a href="tel:{{SITE_PHONE}}">{{SITE_PHONE_DISPLAY}}</a> and an agent will book it while you are on the line.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h4 class="mb-0">
+                                <button class="btn btn-link faq-btn collapsed" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    What can I pay with? <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="ai ai-ChevronDown">
+                                            <path d="M4 9l8 8 8-8" />
+                                        </svg></span>
+                                </button>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                Major credit and debit cards. The exact list depends on the airline and shows on the payment step before anything is charged.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingThree">
+                            <h4 class="mb-0">
+                                <button class="btn btn-link faq-btn collapsed" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Can I change or cancel a booking? <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="ai ai-ChevronDown">
+                                            <path d="M4 9l8 8 8-8" />
+                                        </svg></span>
+                                </button>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                            data-parent="#accordion">
+                            <div class="card-body">
+                                Usually yes, though what it costs is set by the airline and by the fare you bought. The rules for your specific ticket are shown before you pay, and we will walk you through them on the phone.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="headingFour">
+                            <h4 class="mb-0">
+                                <button class="btn btn-link faq-btn collapsed" data-toggle="collapse"
+                                    data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    How do I reach a human? <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="ai ai-ChevronDown">
+                                            <path d="M4 9l8 8 8-8" />
+                                        </svg></span>
+                                </button>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                            <div class="card-body">
+                                Call <a href="tel:{{SITE_PHONE}}">{{SITE_PHONE_DISPLAY}}</a> or write to <a href="mailto:{{SITE_EMAIL}}">{{SITE_EMAIL}}</a>. The phone is answered around the clock. Email replies come back the same day.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingFive">
+                            <h4 class="mb-0">
+                                <button class="btn btn-link  faq-btn collapsed" data-toggle="collapse"
+                                    data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    Is it safe to pay here?
+                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="ai ai-ChevronDown">
+                                            <path d="M4 9l8 8 8-8" />
+                                        </svg></span>
+                                </button>
+                            </h4>
+                        </div>
+                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                            <div class="card-body">
+                                Payment pages run over an encrypted connection and card details go straight to the payment processor. We never see or store your full card number.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="headingSix">
+                            <h4 class="mb-0">
+                                <button class="btn btn-link faq-btn  collapsed" data-toggle="collapse"
+                                    data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                    Do you sell travel insurance?
+                                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="ai ai-ChevronDown">
+                                            <path d="M4 9l8 8 8-8" />
+                                        </svg></span>
+                                </button>
+                            </h4>
+                        </div>
+                        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                            <div class="card-body">
+                                No, we do not sell it ourselves. We do think it is worth having, and an agent can point you at what typically covers cancellation, medical care abroad and lost bags.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="circle"></div>
+</div>
+
+<footer>
+    <div class="footerr">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h5 > The fine print</h5>
+                    <ul class="finfo">
+                        <li> <a href="/privacy"><i class="fa-solid fa-caret-right"></i> Privacy Policy
+                            </a></li>
+                        <li> <a href="/cookie"><i class="fa-solid fa-caret-right"></i> Cookies Policy </a>
+                        </li>
+                        <li> <a href="/charges-fees"><i class="fa-solid fa-caret-right"></i> Charges &
+                                Fees </a></li>
+                        <li> <a href="/terms-condition"><i class="fa-solid fa-caret-right"></i> Terms &
+                                Conditions </a></li>
+                        <li> <a href="/refund-cancellation"><i class="fa-solid fa-caret-right"></i>
+                                Refunds & Cancellation </a> </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h5> Before you fly</h5>
+                    <ul class="finfo">
+                        <li><a href="/faq"> <i class="fa-solid fa-caret-right"></i> FAQ</a> </li>
+                        <li> <a href="/how-to-book"><i
+                                    class="fa-solid fa-caret-right"></i> How to Book </a></li>
+                        <li> <a href="/hotel-booking-tips"><i class="fa-solid fa-caret-right"></i> Booking
+                                Tips </a></li>
+						 <li> <a href="/contact"><i class="fa-solid fa-caret-right"></i> EU's Online Dispute Resolutions </a></li>
+                         <li> <a href="tel:{{SITE_PHONE}}"><i class="fa-solid fa-caret-right"></i> Call us </a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 mrg-lt15">
+                    <h5 class="stay">
+                        Keep in touch</h5>
+                    <div class="input-group mb-3 stay-top">
+                        <input type="email" class="form-control" id="emailnews" placeholder="Enter your email address"
+                            aria-describedby="basic-addon2" required="">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btnnewsletter" id="nresletter"
+                                type="button">Go</button>
+                        </div>
+                        <div class="mes_newsletter">
+                            <p id="subp">Fare drops and route news. A few emails a month, unsubscribe any time.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 padd-lt40">
+                    <h5> Reach us</h5>
+                    <div class="finfo">
+                        <h6><Span class="fhome"><i class="fa-solid fa-house"></i> </Span>
+                            <p>{{SITE_ADDRESS}}</p>
+                        </h6>
+                                                 
+                         <h6 class="margtop"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone
+                            No: <a id="tel14" href="tel:{{SITE_PHONE}}">{{SITE_PHONE}}</a></h6>
+                        <h6>
+                        
+                        <h6 class="margtop" style="margin-top: -6%;"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone
+                            No: <a id="tel14" href="tel:{{SITE_PHONE_3}}">{{SITE_PHONE_3}}</a></h6>
+                        <h6>
+                        <h6 class="margtop" style="margin-top: -6%;"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone
+                            No: <a id="tel14" href="tel:{{SITE_PHONE_2}}">{{SITE_PHONE_2}}</a></h6>
+                        <h6>
+                         
+                                                 
+                            <spam class="fhome"> <i class="fa-solid fa-envelope"></i> </spam>Email: <a id="tel15" href="mailto:{{SITE_EMAIL}}">{{SITE_EMAIL}}</a></span>
+                        </h6>
+                    </div>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="footerr-res">
+        <div class="container">
+            <div class="fqqqqa">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                    href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                    The fine print
+                                </a>
+                            </h4>
+                            <hr />
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse show" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <ul class="finfo">
+                                    <li> <a href="/privacy" class="active"><i
+                                                class="fa-solid fa-caret-right"></i> Privacy Policy </a></li>
+                                    <li> <a href="/cookie"><i class="fa-solid fa-caret-right"></i> Cookies
+                                            Policy </a></li>
+                                    <li> <a href="/charges-fees"><i class="fa-solid fa-caret-right"></i>
+                                            Charges & Fees </a></li>
+                                    <li> <a href="/terms-condition"><i
+                                                class="fa-solid fa-caret-right"></i> Terms & Conditions </a></li>
+                                    <li> <a href="/refund-cancellation"><i
+                                                class="fa-solid fa-caret-right"></i> Refunds & Cancellation </a> </li>
+                                </ul>
+                                <hr id="idbarbr" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                    href="#collapseOne_help" aria-expanded="true" aria-controls="collapseOne_help">
+                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                    Before you fly
+                                </a>
+                            </h4>
+                            <hr />
+                        </div>
+                        <div id="collapseOne_help" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <ul class="finfo">
+                                    <li><a href="/faq"> <i class="fa-solid fa-caret-right"></i> FAQ</a>
+                                    </li>
+                                    <li> <a href="/how-to-book"><i
+                                                class="fa-solid fa-caret-right"></i> How to Book </a></li>
+                                    <li> <a href="/hotel-booking-tips"><i
+                                                class="fa-solid fa-caret-right"></i> Booking Tips </a></li>
+                                                <li> <a href="/contact"><i class="fa-solid fa-caret-right"></i> EU's Online Dispute Resolutions </a></li>
+                         <li> <a href="tel:{{SITE_PHONE}}"><i class="fa-solid fa-caret-right"></i> Call us </a></li>
+                                </ul>
+                                <hr id="idbarbr" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                                    href="#collapseOne_asd" aria-expanded="true" aria-controls="collapseOne_asd">
+                                    <i class="more-less glyphicon glyphicon-plus"></i>
+                                    Reach us
+                                </a>
+                            </h4>
+                            <hr />
+                        </div>
+                        <div id="collapseOne_asd" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="finfo">
+                                    <Span class="fhome"><i class="fa-solid fa-house"></i> </Span>
+                                    <p>{{SITE_ADDRESS}}</p>
+
+<span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone No:
+                                    {{SITE_PHONE}}<br>
+<span class="fline"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone No: <span>{{SITE_PHONE_3}}</span><br></span>
+<span class="fline"><span class="fhome sec-row"> <i class="fa-solid fa-phone"></i></span> Phone No: <span>{{SITE_PHONE_2}}</span><br></span>
+
+                                    
+                                    
+                                    <spam class="fhome"> <i class="fa-solid fa-envelope"></i> </spam>Email:
+                                    {{SITE_EMAIL}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="txxt">
+        <section>
+            <div class="brandlogo">
+                <div class="container">
+                </div>
+            </div>
+            <div class="container-fluid bor-top">
+                <div class=' text-center'>
+                    <small> <span class="finalft"> &copy; 2023-{{YEAR}},</span> <span class="final">{{SITE_LEGAL}}</span><span class="fein">, EIN <span>{{SITE_EIN}}</span></span><span class="finaltw">. All Rights Reserved.</span>
+                    </small>
+                </div>
+            </div>
+    </div>
+    <!-- <div id="cookyGotItBtnBox" data-wow-duration="0.5s" data-wow-delay="5s" role="dialog"
+        class="wow fadeIn cc-window cc-banner cc-type-info cc-theme-block cc-color-override--1961008818 ">
+        <div class="container">
+            <div id="box-cookie">
+                <div class="cokicontent">
+                    <p>
+                        We use cookies to keep the site working and to see which pages are useful. <a
+                            id="cookiethebtnindexfooter" href="/cookie" target="_blank">Learn more</a></p>
+                </div>
+                <div class="cokicontentright">
+                    <button aria-label="dismiss cookie message" role="button" tabindex="0" class="cc-btn cc-dismiss"
+                        onclick="cookyGotItBtn()">Got it!</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    </div>
+                    
+                    
+                    
+     <div class="overllllay">
+<div id="onloadshowpop">
+<i id="closebvtn" class="fas fa-times-circle fa-1x" aria-hidden="true" style="padding: 1%;"></i>
+<center>  
+<style>
+    #mainbutcl {
+        //border-radius: 65px;
+        //color: #ffffff;
+        //padding: 10px;
+        //border: 4px solid #ffffff;
+        //font-size: 21px;
+        margin-right: 11px;
+    }
+    .Phone { animation: ringing 4s ease-in-out infinite; }
+ 
+      @keyframes ringing {
+        20% { transform: rotate(0deg); }
+        21% { transform: rotate(10deg); }
+        22% { transform: rotate(-10deg); }
+        23% { transform: rotate(12deg); }
+        24% { transform: rotate(-12deg); }
+        25% { transform: rotate(12deg); }
+        26% { transform: rotate(-12deg); }
+        28% { transform: rotate(10deg); }
+        30% { transform: rotate(-10deg); }
+        32% { transform: rotate(5deg); }
+        34% { transform: rotate(-5deg); }
+        36% { transform: rotate(2deg); }
+        38% { transform: rotate(0deg); }
+      }
+
+      #popmenu {
+        position: unset !important;
+        display: flex;
+        flex-wrap: wrap;
+        color: #ffffff;
+        width: 100%;
+        font-size: 16px;
+        padding: 20px 0 20px 0 !important;
+        margin-top: 28px !important;
+        margin-bottom: -36px !important;
+    }
+    #popmenu li{
+      margin: 0 5px 0 0 !important;
+    color: #fff !important;
+    background: #0c3b33 !important;
+    padding: 5px 13px !important;
+    width: 43% !important;
+    margin-bottom: 14px !important;
+    border-radius: 35px !important;
+    //font-weight: 200 !important;
+    font-size: 13px;
+    margin-left: 12px !important;
+    text-transform: uppercase;
+    }
+    #onloadshowpop h1 {
+   color: #ffffff;
+    font-size: 21px;
+    margin-top: 10px;
+    font-weight: 500;
+    background: #0c3b33;
+    height: 5%;
+    padding-top: 2%;
+    }
+    .posbot{
+      position: absolute;
+    //bottom: 0px;
+    left: 0;
+    right: 0;
+    width: 92%;
+    margin: auto;
+    margin-top: 4%;
+    }
+
+.imgpp{
+	width: 22%;
+    margin: 35% auto;
+}
+
+@media (max-height: 860px) { /* Adjust threshold as needed */
+   .imgpp{
+	width: 18%;
+    margin: 4% auto;
+	}
+}
+   
+</style>
+
+
+<h2 style="color: #14564a;font-weight: 800;font-size: 36px;    letter-spacing: -1px;"><span class="brandmark brandmark--ink">{{SITE_NAME}}</span></h2>
+
+
+<h1>Talk to a booking agent</h1>
+
+
+<div><img src="/assets/images/agent.bf4ac55b.jpg" alt="A booking agent on the phone" style="width:100%"></div>
+
+  
+    <div class="posbot">
+
+<h3 style="    display: flex;
+    
+    justify-content: center;
+    align-items: center;font-size: 22px;
+    margin-right: 6%;"><i style="margin-right: 9px;" class="fas fa-dot-circle blink-hard" ></i> Call Now</h3>
+
+
+
+
+<a href="tel:{{SITE_PHONE}}">
+<h2 style="background: #f0b429;
+    color: #07231e;
+    font-size: 26px;
+    padding: 7px 0 7px 0;
+    border-radius: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;"> <i class="fa-solid fa-phone-volume fa-shake"  id="mainbutcl"></i> {{SITE_PHONE_DISPLAY}}</h2>
+<p id="cwtd">Straight through to a booking agent.</p>
+<p style="
+    color: #000;
+    font-weight: 600;
+    margin-top:7%;
+">Reservations desk, open now
+</p></a>
+
+
+
+
+</center>
+</div></div>
+
+
+ 
+
+      
+               
+                                      
+  
+`	
+	<div class="fixcn" id="fixcn">
+    <center><h4>
+	<a href="tel:{{SITE_PHONE}}"><i class="fa-solid fa-phone-volume " style="font-size: 28px;color:#fff;" aria-hidden="true"></i>
+	<span class="deal-wrap">
+          <span class="deal-text">Fares you will not find online</span><br>
+          <div style="font-size: 26px;">{{SITE_PHONE_DISPLAY}}</div>
+        </span>
+	</a>
+	</h4></center>
+    </div>  
+	
+	
+
+	<script>
+window.addEventListener("scroll", function() {
+  const bar = document.getElementById("fixcn");
+  if (window.scrollY > 450) { // show after scrolling 200px
+    bar.classList.add("show");
+  } else {
+    bar.classList.remove("show");
+  }
+});
+</script>
+   
+    <script src="/ajax/else.js"></script>
+    <script src="/ajax/search.js?v=46"></script>
+<script src="/ajax/fixes.js"></script>
+    <script src="/assets/js/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/motion.js?v=46"></script>
+    </body>
+    </html>
+    <!-- html endfgfg -->

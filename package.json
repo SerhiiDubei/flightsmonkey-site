@@ -1,0 +1,20 @@
+{
+  "name": "xtremefares-v3",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Flight booking site: Express server, brandable from .env, wired to a pluggable flight supplier (Duffel / TripJack / mock)",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node tests/http.test.js && node tests/assets.test.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

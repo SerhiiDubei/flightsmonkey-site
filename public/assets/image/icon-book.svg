@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Book in minutes">
+  <g fill="none" stroke="#eaf3ef" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 26.5 41 12l-6.5 15.5L20 31z"/>
+    <path d="M20 31v8l5.5-6"/>
+  </g>
+  <circle cx="38.5" cy="33.5" r="6.5" fill="#f0b429"/>
+  <path d="M35.6 33.6l2.1 2.1 4.1-4.2" fill="none" stroke="#07231e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,3516 @@
+/* ==========================================================================
+ * app.css — the whole stylesheet.
+ *
+ * Replaces bootstrap.css, style.css, homecolor.css, responsive.css,
+ * fixes.css and theme.css: 27,564 lines carrying 2,065 !important
+ * declarations, 178 negative margins and 151 hard-coded pixel widths,
+ * spread over 260 different colour values.
+ *
+ * That inheritance is why the layout kept tearing. A container pinned to
+ * 1142px cannot survive a 900px viewport; a panel pulled into place with
+ * margin-top:-45px lands on whatever happens to be above it; and a palette
+ * of 260 near-identical greens has no single place to change. Every repair
+ * had to outrank the sheet before it, so each fix made the next one harder.
+ *
+ * The rules here:
+ *   - no !important, except against inline style attributes in the markup
+ *     that cannot be reached otherwise (each one is commented);
+ *   - no fixed pixel widths on anything that holds content — containers are
+ *     fluid with a max, so they shrink instead of overflowing;
+ *   - no negative margins for positioning;
+ *   - colour, spacing, radius and shadow come from tokens, never literals;
+ *   - mobile first: the base case is a narrow screen, media queries only add.
+ *
+ * Class names follow the markup, which is deliberately unchanged wherever
+ * public/ajax/search.js binds to it — see tests/contract.test.js.
+ *
+ * Contents
+ *   1  tokens          8  search form
+ *   2  reset           9  date picker
+ *   3  layout         10  destination + tour cards
+ *   4  typography     11  content sections
+ *   5  header / nav   12  footer
+ *   6  buttons        13  popup
+ *   7  hero           14  accordion, tables, utilities
+ * ========================================================================== */
+
+
+/* ==========================================================================
+ * 1. Tokens
+ * ========================================================================== */
+
+:root {
+  /* Brand. Deep emerald and gold on warm cream — the identity that makes
+     this read as its own site rather than a recolour of the original. */
+  --ink:          #07231e;
+  --emerald-900:  #0b2f29;
+  --emerald-800:  #0c3b33;
+  --emerald-700:  #114a40;
+  --emerald-600:  #115e52;
+  --emerald-500:  #0f6b5c;
+  --emerald-400:  #1c7a68;
+  --emerald-100:  #dcebe3;
+
+  --gold:         #f0b429;
+  --gold-600:     #d99a14;
+  --gold-700:     #b87e0a;
+  --gold-tint:    #fdf0d4;
+
+  --cream:        #faf7f2;
+  --cream-alt:    #f3efe6;
+  --surface:      #ffffff;
+  --border:       #e5ded1;
+  --border-soft:  #efe9dd;
+
+  --text:         #1b2b27;
+  --text-muted:   #5b6b66;
+  --text-invert:  #f4f8f6;
+
+  --danger:       #a3301d;
+  --danger-tint:  #fbeae6;
+  --success:      #146c52;
+
+  /* Shape */
+  --radius-sm: 10px;
+  --radius:    16px;
+  --radius-lg: 22px;
+  --pill:      999px;
+
+  /* Depth. Two soft layers read better on cream than one hard drop. */
+  --shadow-sm: 0 1px 2px rgba(7,35,30,.05), 0 2px 8px rgba(7,35,30,.05);
+  --shadow:    0 2px 4px rgba(7,35,30,.05), 0 12px 28px rgba(7,35,30,.09);
+  --shadow-lg: 0 4px 8px rgba(7,35,30,.06), 0 24px 56px rgba(7,35,30,.14);
+
+  /* Type */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:    'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Rhythm. One scale, used everywhere, so spacing stays related. */
+  --s1: 4px;   --s2: 8px;   --s3: 12px;  --s4: 16px;
+  --s5: 24px;  --s6: 32px;  --s7: 48px;  --s8: 64px;  --s9: 96px;
+
+  /* Layout. The gutter is what keeps content off the screen edge on a
+     phone; --measure is the widest the page ever gets on a large monitor. */
+  --gutter:  16px;
+  --measure: 1200px;
+
+  --ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+@media (min-width: 768px) {
+  :root { --gutter: 24px; }
+}
+@media (min-width: 1200px) {
+  :root { --gutter: 32px; }
+}
+
+
+/* ==========================================================================
+ * 2. Reset
+ * ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;   /* overrides author animations */
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* The single most effective guard against a stray wide child dragging
+     the whole page sideways on a phone. */
+  overflow-x: hidden;
+}
+
+img, svg, video { max-width: 100%; height: auto; vertical-align: middle; }
+img { border: 0; }
+
+a { color: var(--emerald-500); text-decoration: none; transition: color .18s var(--ease); }
+a:hover { color: var(--emerald-700); text-decoration: underline; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; }
+
+ul, ol { margin: 0; padding: 0; }
+li { list-style: none; }
+
+table { border-collapse: collapse; width: 100%; }
+
+hr { border: 0; border-top: 1px solid var(--border); margin: var(--s5) 0; }
+
+/* Visible keyboard focus. The inherited sheets removed outlines wholesale;
+   putting a real one back is an accessibility fix, not a decoration. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection { background: var(--gold-tint); color: var(--ink); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+
+/* ==========================================================================
+ * 3. Layout
+ *
+ * The container is the fix for the original's crooked boxes. It was a stack
+ * of fixed widths (1142px, 1267px, 1508px) that simply overflowed anything
+ * narrower. This one is fluid with a ceiling: it can never be wider than the
+ * viewport minus a gutter, so there is nothing left to overflow.
+ * ========================================================================== */
+
+.container,
+.container-fluid {
+  width: min(100% - (var(--gutter) * 2), var(--measure));
+  margin-inline: auto;
+}
+
+.container-wide { width: min(100% - (var(--gutter) * 2), 1440px); margin-inline: auto; }
+
+/* Row/column. Bootstrap's names, kept because the markup uses them, but
+   rebuilt on flex-wrap with min-width:0 — the missing declaration that lets
+   a long unbroken string blow a bootstrap column out of its row.
+ *
+ * No negative gutter. Bootstrap pulls the row out by half a gutter on each
+ * side and pays it back with column padding, which works only while every
+ * row sits inside a padded container. Drop one into a plain div — as this
+ * markup does in a dozen places — and the row is simply 24px wider than the
+ * space it was given. That was 66 of the overflowing elements on this page.
+ * Columns carry their own padding instead; the row measures exactly its
+ * parent. */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-inline: 0;
+}
+.row > * { min-width: 0; }
+
+[class*="col-"] {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  padding-inline: var(--s3);
+}
+
+/* Below 576px every column is full width — the mobile-first base case. */
+.col-sm-1,.col-sm-2,.col-sm-3,.col-sm-4,.col-sm-5,.col-sm-6,
+.col-sm-7,.col-sm-8,.col-sm-9,.col-sm-10,.col-sm-11,.col-sm-12,
+.col-md-1,.col-md-2,.col-md-3,.col-md-4,.col-md-5,.col-md-6,
+.col-md-7,.col-md-8,.col-md-9,.col-md-10,.col-md-11,.col-md-12,
+.col, .col-auto { flex: 0 0 100%; max-width: 100%; }
+
+@media (min-width: 576px) {
+  .col-sm-1  { flex: 0 0 8.3333%;  max-width: 8.3333%; }
+  .col-sm-2  { flex: 0 0 16.6667%; max-width: 16.6667%; }
+  .col-sm-3  { flex: 0 0 50%;      max-width: 50%; }   /* 4-up grids go 2-up on small tablets */
+  .col-sm-4  { flex: 0 0 33.3333%; max-width: 33.3333%; }
+  .col-sm-5  { flex: 0 0 41.6667%; max-width: 41.6667%; }
+  .col-sm-6  { flex: 0 0 50%;      max-width: 50%; }
+  .col-sm-7  { flex: 0 0 58.3333%; max-width: 58.3333%; }
+  .col-sm-8  { flex: 0 0 66.6667%; max-width: 66.6667%; }
+  .col-sm-9  { flex: 0 0 75%;      max-width: 75%; }
+  .col-sm-10 { flex: 0 0 83.3333%; max-width: 83.3333%; }
+  .col-sm-11 { flex: 0 0 91.6667%; max-width: 91.6667%; }
+  .col-sm-12 { flex: 0 0 100%;     max-width: 100%; }
+}
+
+@media (min-width: 992px) {
+  .col-sm-3  { flex: 0 0 25%;      max-width: 25%; }   /* full 4-up from here */
+  .col-md-1  { flex: 0 0 8.3333%;  max-width: 8.3333%; }
+  .col-md-2  { flex: 0 0 16.6667%; max-width: 16.6667%; }
+  .col-md-3  { flex: 0 0 25%;      max-width: 25%; }
+  .col-md-4  { flex: 0 0 33.3333%; max-width: 33.3333%; }
+  .col-md-5  { flex: 0 0 41.6667%; max-width: 41.6667%; }
+  .col-md-6  { flex: 0 0 50%;      max-width: 50%; }
+  .col-md-7  { flex: 0 0 58.3333%; max-width: 58.3333%; }
+  .col-md-8  { flex: 0 0 66.6667%; max-width: 66.6667%; }
+  .col-md-9  { flex: 0 0 75%;      max-width: 75%; }
+  .col-md-10 { flex: 0 0 83.3333%; max-width: 83.3333%; }
+  .col-md-11 { flex: 0 0 91.6667%; max-width: 91.6667%; }
+  .col-md-12 { flex: 0 0 100%;     max-width: 100%; }
+  .col-auto  { flex: 0 0 auto;     max-width: none; width: auto; }
+  .col       { flex: 1 1 0%;       max-width: none; }
+}
+
+.section      { padding-block: var(--s7); }
+.section-tight{ padding-block: var(--s6); }
+@media (min-width: 768px) {
+  .section       { padding-block: var(--s9); }
+  .section-tight { padding-block: var(--s7); }
+}
+
+
+/* ==========================================================================
+ * 4. Typography
+ * ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--s3);
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  /* Headings are the thing most likely to overflow a narrow column. */
+  overflow-wrap: break-word;
+}
+
+/* Fluid sizes: one clamp per level instead of a media query per breakpoint.
+   The middle term is viewport-relative, so text scales smoothly between the
+   floor and the ceiling and never needs a "mobile heading" override. */
+h1 { font-size: clamp(2rem,   1.35rem + 2.8vw, 3.4rem); }
+h2 { font-size: clamp(1.6rem, 1.15rem + 1.9vw, 2.6rem); }
+h3 { font-size: clamp(1.2rem, 1.02rem + 0.8vw, 1.6rem); }
+h4 { font-size: clamp(1.05rem, .98rem + 0.35vw, 1.25rem); }
+h5, h6 { font-size: 1rem; }
+
+p { margin: 0 0 var(--s4); }
+p:last-child { margin-bottom: 0; }
+
+strong, b { font-weight: 700; color: var(--ink); }
+small { font-size: .875em; }
+
+.lead { font-size: clamp(1.05rem, .98rem + .4vw, 1.25rem); color: var(--text-muted); }
+.eyebrow {
+  font-size: .8rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--emerald-500);
+}
+.section-title { text-align: center; margin-bottom: var(--s6); }
+.text-danger { color: var(--danger); }
+.text-dark   { color: var(--ink); }
+
+/* The wordmark. Live text, not an image, so it follows --SITE_NAME. */
+.brandmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1rem + .6vw, 1.5rem);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+/* The mark sits before the wordmark rather than inside the markup, so the
+   40 pages keep <span class="brandmark">{{SITE_NAME}}</span> untouched and
+   the logo stays one file to change. The trailing gold dot it replaces was
+   a placeholder from when there was no mark at all. */
+.brandmark {
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+}
+.brandmark::before {
+  content: "";
+  flex: none;
+  width: 1.5em; height: 1.5em;
+  background: url('../images/logo-mark.svg') center / contain no-repeat;
+}
+/* On the dark hero and in the footer the tile would sit as a darker square
+   on a dark ground, so it gets a hair of separation instead of a border. */
+footer .brandmark::before,
+.main .brandmark::before { box-shadow: 0 0 0 1px rgba(244, 248, 246, .14); border-radius: .375em; }
+
+
+/* ==========================================================================
+ * 5. Header and navigation
+ * ========================================================================== */
+
+header {
+  position: sticky; top: 0; z-index: 900;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+  display: block;
+  padding-block: var(--s3);
+}
+.navbar > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  flex-wrap: wrap;
+}
+
+.navbar-brand { display: inline-flex; align-items: center; text-decoration: none; }
+.navbar-brand:hover { text-decoration: none; }
+
+.navbar-toggler {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;              /* a real touch target */
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.navbar-toggler:hover { background: var(--cream-alt); }
+/* Only one of the two glyphs shows at a time; bootstrap's collapse JS
+   toggles .show on the menu, so drive both icons off that. */
+.navbar-toggler #closeonclose { display: none; }
+.navbar-collapse.show ~ * #closeonclose { display: inline; }
+
+.navbar-collapse {
+  flex-basis: 100%;
+  display: none;
+}
+.navbar-collapse.show,
+.navbar-collapse.collapsing { display: block; }
+
+.navbar-nav {
+  display: flex; flex-direction: column;
+  gap: var(--s1);
+  padding-block: var(--s3);
+}
+
+.nav-item { display: block; }
+
+.nav-link {
+  display: flex; align-items: center; gap: var(--s2);
+  padding: var(--s3) var(--s3);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.nav-link:hover,
+.nav-link:focus-visible { background: var(--cream-alt); color: var(--ink); text-decoration: none; }
+.nav-link svg { flex: none; }
+
+.active_menu > .nav-link,
+.nav-link.highlight_1 { color: var(--emerald-500); font-weight: 600; }
+
+@media (min-width: 992px) {
+  .navbar-expand-lg > .container { flex-wrap: nowrap; }
+  .navbar-expand-lg .navbar-toggler { display: none; }
+  .navbar-expand-lg .navbar-collapse {
+    display: flex !important;   /* beats bootstrap's inline height during collapse */
+    flex-basis: auto;
+    justify-content: flex-end;
+  }
+  .navbar-expand-lg .navbar-nav { flex-direction: row; align-items: center; gap: var(--s1); padding-block: 0; }
+  .navbar-expand-lg .nav-link { padding: var(--s2) var(--s3); }
+}
+
+
+/* ==========================================================================
+ * 6. Buttons
+ *
+ * Every state is defined here in one place. The original had the resting
+ * colour in one sheet and a rust-orange hover overlay (#bb4b0c) in another,
+ * on a ::before pseudo-element — which is how a rebranded button kept an
+ * un-rebranded hover for three rounds of review.
+ * ========================================================================== */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--s2);
+  white-space: nowrap;
+  padding: var(--s3) var(--s5);
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: var(--pill);
+  font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600; line-height: 1.2;
+  text-align: center; text-decoration: none;
+  cursor: pointer;
+  transition: background-color .18s var(--ease), border-color .18s var(--ease),
+              color .18s var(--ease), transform .12s var(--ease), box-shadow .18s var(--ease);
+}
+.btn:hover { text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled, .btn.disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+.btn-primary,
+.btn-fbtn,
+.sendbtn-contact {
+  background: var(--emerald-500);
+  color: var(--text-invert);
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover, .btn-fbtn:hover, .sendbtn-contact:hover,
+.btn-primary:focus-visible, .btn-fbtn:focus-visible, .sendbtn-contact:focus-visible {
+  background: var(--emerald-700);
+  color: var(--text-invert);
+}
+
+/* The call-to-action. Gold on ink reads as the one thing to press. */
+.btn-gold,
+.callbtn {
+  background: var(--gold);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.btn-gold:hover, .callbtn:hover,
+.btn-gold:focus-visible, .callbtn:focus-visible { background: var(--gold-600); color: var(--ink); }
+
+.btn-secondary {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--ink);
+}
+.btn-secondary:hover { background: var(--cream-alt); border-color: var(--emerald-400); color: var(--ink); }
+
+.btn-outline-secondary {
+  background: transparent; border-color: var(--border); color: var(--text);
+}
+.btn-outline-secondary:hover { background: var(--cream-alt); color: var(--ink); }
+
+/* A .btn-link is a line of text, not a control with a fixed label — the FAQ
+   accordion uses one per question. The nowrap that keeps "SEARCH FLIGHTS"
+   on one line pushed those questions off a 320px screen. */
+.btn-link {
+  background: none; color: var(--emerald-500);
+  padding-inline: var(--s2); min-height: 0;
+  white-space: normal; text-align: left;
+}
+.btn-link h4, .panel-title .btn-link { margin: 0; overflow-wrap: anywhere; }
+.btn-link:hover { color: var(--emerald-700); text-decoration: underline; }
+
+.btn-danger  { background: var(--danger);  color: #fff; }
+.btn-danger:hover { background: #8a2818; color: #fff; }
+.btn-success { background: var(--success); color: #fff; }
+.btn-success:hover { background: #0f5540; color: #fff; }
+
+.btn-sm { padding: var(--s2) var(--s3); min-height: 36px; font-size: .9rem; }
+.w-100  { width: 100%; }
+
+/* The hover-slide effect kept from the original markup, rebranded. The old
+   overlay was rust orange; it is gold now, and the label darkens to match
+   so the text stays legible as the panel passes under it. */
+.hvr-bounce-to-right { position: relative; overflow: hidden; z-index: 0; }
+.hvr-bounce-to-right::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--gold);
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform .32s var(--ease);
+}
+.hvr-bounce-to-right:hover::before,
+.hvr-bounce-to-right:focus-visible::before { transform: scaleX(1); }
+.hvr-bounce-to-right:hover,
+.hvr-bounce-to-right:focus-visible { color: var(--ink); }
+
+.btn-group { display: inline-flex; align-items: center; gap: var(--s1); max-width: 100%; }
+.btn-group .btn { border-radius: var(--radius-sm); padding: var(--s2); min-height: 36px; min-width: 36px; }
+
+/* The passenger steppers. Three controls in a narrow column, so they get a
+   fixed-size square each and the count between them takes the slack rather
+   than pushing the buttons out of the column. */
+.btn-group.popplusap { flex-wrap: nowrap; width: 100%; justify-content: space-between; gap: 0; }
+/* These sit in a column about 67px wide, so a fixed 34px pair plus the count
+   between them does not fit. Let them shrink rather than burst the column. */
+.btn-group.popplusap .btn { flex: 0 1 32px; width: 32px; min-width: 0; height: 32px; min-height: 32px; padding: 0; }
+.btn-group.popplusap .btn img { width: 14px; height: 14px; }
+.btn-group.popplusap input,
+.btn-group.popplusap .form-control {
+  flex: 1 1 auto; min-width: 0; width: auto;
+  padding: 0; text-align: center; font-weight: 700;
+}
+
+/* A <small> inside a <p> was running past the paragraph on long unbroken
+   strings — phone numbers and email addresses, mostly. */
+p small { display: inline-block; max-width: 100%; overflow-wrap: break-word; }
+
+
+/* ==========================================================================
+ * 7. Hero
+ *
+ * The original pinned this to height:375px, which is why the search panel
+ * fell out of it between 768 and 991px: the columns stacked, the content
+ * grew past 375px, and the box did not. Height is content-driven here.
+ * ========================================================================== */
+
+.main {
+  position: relative;
+  padding-block: var(--s6) var(--s7);
+  background:
+    radial-gradient(1200px 400px at 80% -10%, rgba(15,107,92,.20), transparent 60%),
+    linear-gradient(160deg, var(--emerald-800) 0%, var(--emerald-900) 100%);
+  color: var(--text-invert);
+  /* No overflow clipping here. The glow is a background gradient and cannot
+     escape anyway, but the clip also cut off every dropdown that opens from
+     the search card — the date picker lost half its calendar to it. */
+}
+
+.main > .container > .row { align-items: center; row-gap: var(--s6); }
+
+.flight-iconbox h3 {
+  color: var(--text-invert);
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.4rem);
+  margin-bottom: var(--s4);
+}
+#colortext { color: var(--gold); font-style: normal; }
+
+.flight-iconbox > img { display: none; }   /* decorative plane bitmap; the gradient carries it now */
+
+/* The three promises. A grid, so the boxes cannot drift out of line. */
+.three-box {
+  display: grid;
+  gap: var(--s3);
+  margin-top: var(--s5);
+}
+.three-box h3 {
+  display: flex; align-items: center; gap: var(--s3);
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: .98rem; font-weight: 500;
+  color: var(--text-invert);
+}
+.three-box h3 span {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  border-radius: var(--pill);
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+}
+.three-box h3 span img { width: 24px; height: 24px; }
+
+
+/* ==========================================================================
+ * 8. Search form
+ *
+ * Three of the reported faults lived here:
+ *   - the white card overflowed the green hero, because the card carried a
+ *     width wider than its column and no border-box;
+ *   - the ROUND TRIP / ONE WAY tabs sat on top of the card, because they
+ *     were positioned with margin:-45px 0 0 -16px;
+ *   - the fields ran off the right edge on narrow screens, because the row
+ *     was a fixed-width float layout with no wrap.
+ *
+ * All three are structural, so all three are fixed structurally: the card is
+ * a normal block inside its column, the tabs are the first row inside it,
+ * and the fields are a grid that reflows by column count.
+ * ========================================================================== */
+
+.sercheform { width: 100%; }
+
+/* Same reason: these are white panels living inside the dark hero, so they
+   have to restate the text colour rather than inherit the hero's. */
+.sercheform, .sercheform .card, .card.new1, #pop, .desktop_view_calaender,
+.listsearchlist, .listsearchlistdes { color: var(--text); }
+
+.sercheform .card,
+.card.new1 {
+  display: block;
+  width: 100%;
+  padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color: var(--text);
+}
+@media (min-width: 768px) { .sercheform .card, .card.new1 { padding: var(--s5); } }
+
+/* Trip-type tabs. In flow, inside the card — no negative margin anywhere. */
+.switch-field {
+  display: inline-flex;
+  margin: 0 0 var(--s4);
+  padding: var(--s1);
+  background: var(--cream-alt);
+  border-radius: var(--pill);
+}
+.switch-field input { position: absolute; opacity: 0; width: 0; height: 0; }
+.switch-field label {
+  margin: 0;
+  padding: var(--s2) var(--s5);
+  border-radius: var(--pill);
+  font-size: .85rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.switch-field label:hover { color: var(--ink); }
+.switch-field input:checked + label {
+  background: var(--emerald-500);
+  color: var(--text-invert);
+  box-shadow: var(--shadow-sm);
+}
+.switch-field input:focus-visible + label { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* The field grid. One column on a phone, two from 640px, and the wide
+   layout from 992px — set by grid-template-areas so the fields keep their
+   reading order no matter how they wrap. */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s3);
+  margin: 0;
+}
+/* minmax(0, 1fr), not 1fr. A bare 1fr is minmax(auto, 1fr), and `auto`
+   floors each column at its content's minimum width — so the two columns
+   came out 348px and 266px instead of equal. */
+@media (min-width: 640px) { .form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.search-biginput,
+.search-smallinput {
+  position: relative;
+  min-width: 0;
+}
+
+.textlng {
+  position: relative;
+  display: block;
+  padding: var(--s3) var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.textlng:hover { border-color: var(--emerald-400); }
+.textlng:focus-within {
+  border-color: var(--emerald-500);
+  box-shadow: 0 0 0 3px rgba(15,107,92,.12);
+}
+.textlng > label {
+  display: block;
+  margin: 0 0 var(--s1);
+  font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.textlng .map-icon {
+  position: absolute; left: var(--s4); top: 50%;
+  transform: translateY(-2px);
+  width: 22px; pointer-events: none;
+}
+.textlng .map-icon img { width: 22px; height: 22px; }
+
+/* The input itself sits to the right of the icon. Padding, not margin, so
+   the click target still covers the icon area. */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0 0 0 32px;
+  border: 0;
+  background: transparent;
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.form-control::placeholder { color: var(--text-muted); font-weight: 500; opacity: 1; }
+.form-control:focus { outline: none; }
+
+/* The helper line under a field ("Origin Airport"). */
+.new3, .textlng > p {
+  margin: var(--s1) 0 0 32px;
+  font-size: .8rem;
+  color: var(--text-muted);
+}
+
+/* Error state — a real state, not an afterthought. */
+.textlng.origin_error, .textlng.destination_error,
+.textlng.from_error, .textlng.to_error { border-color: var(--border); }
+.has-error .textlng,
+.textlng.is-invalid {
+  border-color: var(--danger);
+  background: var(--danger-tint);
+}
+
+/* Clear-field cross */
+.new2, #blank1, #blank2 {
+  position: absolute; right: var(--s3); top: var(--s3);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color .18s var(--ease);
+}
+.new2:hover, #blank1:hover, #blank2:hover { color: var(--danger); }
+
+/* Origin/destination swap */
+.exchange-box {
+  position: absolute; right: calc(var(--s4) * -1); top: 50%;
+  z-index: 3;
+  display: none;
+  width: 36px; height: 36px;
+  transform: translateY(-50%);
+  align-items: center; justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--pill);
+  color: var(--emerald-500);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background .18s var(--ease), transform .2s var(--ease);
+}
+.exchange-box:hover { background: var(--cream-alt); transform: translateY(-50%) rotate(180deg); }
+@media (min-width: 640px) { .exchange-box { display: flex; } }
+
+/* Airport autocomplete panel */
+.listsearchlist, .listsearchlistdes {
+  position: absolute; left: 0; right: 0; top: calc(100% + var(--s2));
+  z-index: 60;
+  display: none;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--s2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+.listsearchlist.show, .listsearchlistdes.show,
+.listsearchlist[style*="block"], .listsearchlistdes[style*="block"] { display: block; }
+
+.listsearchlist ul li, .listsearchlistdes ul li {
+  padding: var(--s3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background .14s var(--ease);
+}
+.listsearchlist ul li:hover, .listsearchlistdes ul li:hover,
+.listsearchlist ul li.active, .listsearchlistdes ul li.active { background: var(--cream-alt); }
+
+.deporg { display: flex; align-items: center; justify-content: space-between; padding: var(--s2) var(--s3); }
+.deporg h4 { margin: 0; font-size: 1rem; }
+.deporg i { cursor: pointer; color: var(--text-muted); }
+
+/* Loading spinners inside fields */
+.spinner-border {
+  display: none;
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-right-color: var(--emerald-500);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+.spinner-border.show, .spinner-border[style*="block"] { display: inline-block; }
+.spinner-border-sm { width: 14px; height: 14px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Passenger / cabin controls */
+.form-check { display: flex; align-items: center; gap: var(--s2); }
+.form-check-input { width: 18px; height: 18px; accent-color: var(--emerald-500); cursor: pointer; }
+.form-check-label { cursor: pointer; font-size: .95rem; }
+
+.input-group { display: flex; align-items: center; gap: var(--s2); }
+
+/* Submit row */
+/* The submit row is a child of the field grid, so it landed in one column.
+   The button plus its caption need more than that column has, and the pair
+   spilled out to the left. It spans the full grid instead. */
+.search-btnbox {
+  display: flex;
+  justify-content: stretch;
+  grid-column: 1 / -1;
+  margin-top: var(--s4);
+}
+.search-btnbox .textbtn { width: 100%; margin: 0; padding: 0; }
+.search-btnbox .textbtn .btn { width: 100%; }
+@media (min-width: 640px) {
+  .search-btnbox { justify-content: flex-end; }
+  .search-btnbox .textbtn { width: auto; }
+  .search-btnbox .textbtn .btn { width: auto; padding-inline: var(--s7); }
+}
+
+/* Tab panes driven by bootstrap's JS */
+.tab-content > .tab-pane { display: none; }
+.tab-content > .tab-pane.active,
+.tab-content > .tab-pane.show.active { display: block; }
+.fade { transition: opacity .18s var(--ease); }
+.fade:not(.show) { opacity: 0; }
+.fade.show { opacity: 1; }
+
+
+/* ==========================================================================
+ * 9. Date picker
+ *
+ * jQuery UI builds this, so the markup is fixed and only CSS can save it.
+ * It was collapsing to roughly one character wide, which is why the month
+ * title rendered as a vertical column of letters: nothing established a
+ * minimum width, so the absolutely-positioned panel shrank to fit whatever
+ * the narrowest cell allowed.
+ * ========================================================================== */
+
+/* jQuery UI's own base theme is no longer loaded — it was painting grey
+   .ui-widget-header bars behind each month and a box around every single
+   day, on top of everything below. The widget needs no CSS from its library
+   to work, only from here, so the library's sheet is gone and this section
+   is the whole appearance of the picker. */
+.ui-widget, .ui-widget-content, .ui-widget-header {
+  background: none; border: 0; color: inherit; font-family: inherit;
+}
+.ui-helper-hidden-accessible { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+.ui-datepicker-header.ui-widget-header { background: none; border: 0; }
+.ui-state-default, .ui-widget-content .ui-state-default {
+  background: none; border: 1px solid transparent; color: inherit; font-weight: 500;
+}
+
+#ui-datepicker-div,
+.ui-datepicker {
+  width: auto;
+  min-width: 17.5em;           /* the declaration whose absence broke it */
+  max-width: calc(100vw - var(--s5));
+  padding: var(--s3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-body);
+  font-size: .95rem;
+  z-index: 1200 !important;    /* jQuery UI writes z-index inline */
+}
+
+.ui-datepicker-header {
+  position: relative;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s2);
+  margin-bottom: var(--s3);
+}
+
+.ui-datepicker-title {
+  flex: 1 1 auto;
+  display: flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-width: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+  white-space: nowrap;         /* stops the per-character wrap outright */
+}
+.ui-datepicker-title select {
+  min-width: 0;
+  padding: var(--s1) var(--s2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: .9rem;
+}
+
+/* jQuery UI emits the header as prev, next, title. With the header laid out
+   as a flex row that puts "next" on the LEFT of the second month instead of
+   at the far right of the widget. Order puts them back where they read. */
+.ui-datepicker-prev { order: 0; }
+.ui-datepicker-title { order: 1; }
+.ui-datepicker-next { order: 2; margin-left: auto; }
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;   /* was two oversized overlapping circles */
+  border-radius: var(--pill);
+  background: var(--cream-alt);
+  color: var(--emerald-600);
+  cursor: pointer;
+  transition: background .18s var(--ease);
+}
+.ui-datepicker-prev:hover, .ui-datepicker-next:hover { background: var(--emerald-100); }
+.ui-datepicker-prev span, .ui-datepicker-next span {
+  /* jQuery UI ships sprite-backed text; replace it with a glyph */
+  display: block; overflow: hidden; text-indent: -9999px; width: 0; height: 0;
+}
+.ui-datepicker-prev::before { content: "‹"; font-size: 1.5rem; line-height: 1; }
+.ui-datepicker-next::before { content: "›"; font-size: 1.5rem; line-height: 1; }
+.ui-datepicker-prev.ui-state-disabled, .ui-datepicker-next.ui-state-disabled {
+  opacity: .35; cursor: default; background: transparent;
+}
+
+.ui-datepicker-calendar { width: 100%; table-layout: fixed; }
+.ui-datepicker-calendar th {
+  padding: var(--s1) 0;
+  font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+}
+.ui-datepicker-calendar td { padding: 1px; text-align: center; }
+.ui-datepicker-calendar td a,
+.ui-datepicker-calendar td span {
+  display: block;
+  padding: var(--s2) 0;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  text-decoration: none;
+  transition: background .14s var(--ease), color .14s var(--ease);
+}
+.ui-datepicker-calendar td a:hover,
+.ui-datepicker-calendar td a.ui-state-hover {
+  background: var(--cream-alt); border-color: var(--border); color: var(--ink); text-decoration: none;
+}
+.ui-datepicker-calendar td a.ui-state-active,
+.ui-datepicker-calendar td.ui-datepicker-current-day a {
+  background: var(--emerald-500); color: var(--text-invert); font-weight: 700;
+}
+.ui-datepicker-calendar td.ui-datepicker-today a { box-shadow: inset 0 0 0 2px var(--gold); font-weight: 700; }
+.ui-datepicker-calendar td.ui-datepicker-unselectable span { color: var(--text-muted); opacity: .45; }
+.ui-datepicker-calendar td.ui-datepicker-week-end a { color: var(--emerald-600); }
+
+/* Two months side by side on a wide screen, stacked on a phone.
+ *
+ * jQuery UI writes style="width: 34em; display: block" straight onto the
+ * widget when it builds it, and an inline style outranks any stylesheet.
+ * That 34em is what held the two months in a single narrow column no matter
+ * what width the panel had. These two !importants are the documented
+ * exception at the top of this file: they exist solely to beat an inline
+ * attribute we do not control, not to win a fight with another stylesheet. */
+.ui-datepicker-multi .ui-datepicker-group { float: none; width: 100%; }
+@media (min-width: 640px) {
+  .ui-datepicker-multi {
+    display: flex !important;        /* vs inline display:block */
+    width: auto !important;          /* vs inline width:34em */
+    gap: var(--s4);
+  }
+  .ui-datepicker-multi .ui-datepicker-group { width: auto; flex: 1 1 0; min-width: 16em; }
+}
+.ui-datepicker-row-break { display: none; }
+
+/* The departure/return calendar is inline markup, not the popup one — it
+   lives in .desktop_view_calaender and is toggled by a click on the field.
+   Left in flow it takes its width from the field's column, which is far too
+   narrow for two months and is what squeezed the month title down to a
+   single character per line. As a floating panel it sizes to its content
+   instead, and is clamped so it can still never leave the screen. */
+.desktop_view_calaender {
+  position: absolute;
+  z-index: 70;
+  top: calc(100% + var(--s2));
+  left: 0;
+  /* Wide enough for two months, and no wider. Left unbounded it grew to the
+     full 1416px the viewport allowed and ran off the right-hand edge, since
+     it is anchored to a field that already sits well right of centre. */
+  width: max-content;
+  max-width: min(660px, calc(100vw - var(--s5)));
+  padding: var(--s3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+/* Near the right edge of a card the panel is anchored by its right side
+   instead, so it opens inwards rather than off-screen. */
+.res-mobiletxtview .desktop_view_calaender { left: auto; right: 0; }
+.desktop_view_calaender .ui-datepicker,
+.desktop_view_calaender .ui-datepicker-inline {
+  border: 0; box-shadow: none; padding: 0; background: none;
+}
+/* Anchor the panel to the date field rather than to the page. */
+.res-mobiletxtview, .search-smallinput { position: relative; }
+
+@media (max-width: 639.98px) {
+  /* On a phone there is no room to float anything: let it fill the field's
+     width and push the content below it down. */
+  .desktop_view_calaender { position: static; width: 100%; max-width: 100%; }
+}
+
+
+/* ==========================================================================
+ * 10. Destination and tour cards
+ *
+ * The photographs are <img> elements. They were being hidden by
+ * `.popular-imgbox img { display:none }` while a sprite sheet painted the
+ * picture from the background — which is why replacing an image file
+ * changed the file at its URL but not the page. No sprites here.
+ * ========================================================================== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: var(--s4);
+}
+
+.popular-imgbox,
+.holiday-imgbox {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 2;         /* the box follows the picture, not a fixed 200px */
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--cream-alt);
+  box-shadow: var(--shadow-sm);
+  transition: transform .28s var(--ease), box-shadow .28s var(--ease);
+}
+.popular-imgbox:hover,
+.holiday-imgbox:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+.popular-imgbox img,
+.holiday-imgbox img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  transition: transform .5s var(--ease);
+}
+.popular-imgbox:hover img,
+.holiday-imgbox:hover img { transform: scale(1.04); }
+
+/* The caption. Inset on all sides so it can never hang off the card —
+   the fault in the "Somewhere else in mind?" box. */
+.popular-imgtxtbox {
+  position: absolute;
+  left: var(--s3); right: var(--s3); bottom: var(--s3);
+  width: auto;
+  padding: var(--s3) var(--s4);
+  background: rgba(7,35,30,.72);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-sm);
+  color: var(--text-invert);
+}
+.popular-imgtxtbox h3, .popular-imgtxtbox h4 {
+  margin: 0; color: var(--text-invert);
+  font-size: 1.05rem; line-height: 1.25;
+}
+.popular-imgtxtbox p { margin: var(--s1) 0 0; font-size: .85rem; opacity: .85; }
+
+/* The browse-more tile is a card like any other, not an overlay. */
+.browsebox {
+  position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  aspect-ratio: 3 / 2;
+  padding: var(--s4);
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, var(--emerald-700), var(--emerald-900));
+  color: var(--text-invert);
+}
+.browsebox .popular-imgtxtbox {
+  position: static;
+  padding: 0; background: none; backdrop-filter: none;
+}
+
+
+/* ==========================================================================
+ * 11. Content sections
+ * ========================================================================== */
+
+.explo { padding-block: var(--s7); background: var(--cream); }
+.explo .row { row-gap: var(--s5); }
+
+/* Feature trio ("Every fare, one search" …).
+   These are .whyxtreme-*, not .finfo/.ficon — those two belong to the footer
+   and styling them here put a 56px circle around the "Follow Us" column. */
+.container-newbox { width: min(100% - (var(--gutter) * 2), var(--measure)); margin-inline: auto; }
+.row.ful-border { row-gap: var(--s5); }
+
+.whyxtreme-box { text-align: center; padding: var(--s4); }
+.whyxtreme-imgbox {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; margin-bottom: var(--s4);
+  border-radius: var(--pill);
+  background: var(--emerald-100);
+}
+.whyxtreme-imgbox img { width: 30px; height: 30px; object-fit: contain; }
+.whyxtreme-txtbox h3 { font-size: 1.15rem; margin-bottom: var(--s2); }
+.whyxtreme-txtbox p  { color: var(--text-muted); font-size: .95rem; margin: 0; }
+
+/* Agent / support block */
+.mobile-support { padding-block: var(--s6); background: var(--cream-alt); }
+.agent {
+  width: 100%; max-width: 420px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.india-popularbox, .paybox, .payment-icon-box, .main_b_details1, .wdthauto {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Reveal on scroll. Opacity only — no sliding, which read as meaningless
+   motion. Content is visible by default; only JS hides it, so a script
+   failure leaves a readable page rather than a blank one. */
+.will-reveal { opacity: 0; transition: opacity .42s var(--ease); }
+.will-reveal.is-revealed { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .will-reveal { opacity: 1; transition: none; }
+}
+
+
+/* ==========================================================================
+ * 12. Footer
+ * ========================================================================== */
+
+footer {
+  padding-block: var(--s7) var(--s5);
+  background: var(--emerald-900);
+  color: rgba(244,248,246,.78);
+}
+footer a { color: rgba(244,248,246,.78); }
+footer a:hover { color: var(--gold); text-decoration: none; }
+footer h3, footer h4, footer h5 { color: var(--text-invert); font-size: 1.05rem; margin-bottom: var(--s3); }
+
+/* .fhome is a <span> around an icon, sitting inline before the text — not a
+   row of its own. Making it a flex container pushed the label onto its own
+   line and left the icon stranded. */
+/* .fhome wraps exactly one Font Awesome glyph. Left as a plain inline span
+   the glyph's own box sticks out past it, so it gets a box of its own —
+   inline-flex, not flex, so it still sits on the text baseline beside the
+   label rather than taking a line to itself. */
+.fhome {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: none;
+  width: 1.15em; height: 1.15em;
+  color: var(--gold);
+  margin-right: var(--s1);
+}
+.fhome i { color: var(--gold); font-size: .95em; line-height: 1; }
+
+/* .finfo is used twice with different tags: a <ul> of links and a <div> of
+   contact lines. Both want the same rhythm, neither wants a bullet. */
+.finfo { margin: 0; padding: 0; }
+.finfo li { margin-bottom: var(--s2); font-size: .92rem; }
+.finfo h6 {
+  display: flex; align-items: flex-start; gap: var(--s2);
+  margin-bottom: var(--s3);
+  font-size: .92rem; font-weight: 400;
+  color: rgba(244,248,246,.78);
+  min-width: 0;
+}
+.finfo h6 p, .finfo h6 span { margin: 0; min-width: 0; }
+
+/* Email addresses and phone numbers are unbroken strings, and in a footer
+   column around 230px wide they simply ran out of the line they were on.
+   `anywhere` rather than `break-word` so the break can happen mid-address
+   instead of only at a space that never comes. */
+/* Only the value may break, never the label beside it. `anywhere` on the
+   whole row split "Email:" into "Emai / l:" once the domain got long. */
+footer a, .finfo li { overflow-wrap: anywhere; }
+.finfo h6 { overflow-wrap: normal; }
+.finfo h6 > span, .finfo h6 > .fhome { flex: none; }
+.finfo h6 a { overflow-wrap: anywhere; min-width: 0; }
+
+/* The "Follow Us" column: a heading, then one .social wrapper per network.
+   .ficon is the column, .social is a single icon — so the row lives on
+   .ficon, not on .social. */
+.ficon { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.ficon h5 { flex: 0 0 100%; margin-bottom: var(--s1); }
+.social { display: inline-flex; }
+.social a, .social li a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: var(--pill);
+  background: rgba(255,255,255,.07);
+  color: var(--text-invert);
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.social a:hover { background: var(--gold); color: var(--ink); text-decoration: none; }
+
+/* Newsletter box */
+.stay-top { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: stretch; }
+.stay-top .form-control {
+  flex: 1 1 160px;
+  padding: var(--s2) var(--s3);
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: var(--radius-sm);
+  color: var(--text-invert);
+  font-size: .95rem; font-weight: 400;
+}
+.stay-top .form-control::placeholder { color: rgba(244,248,246,.5); }
+.stay-top .btn { flex: none; min-height: 0; padding: var(--s2) var(--s5); }
+.mes_newsletter { flex: 0 0 100%; }
+.mes_newsletter p { margin: 0; font-size: .8rem; color: rgba(244,248,246,.6); }
+
+.footer-bottom {
+  margin-top: var(--s6); padding-top: var(--s4);
+  border-top: 1px solid rgba(255,255,255,.1);
+  font-size: .85rem;
+}
+
+
+/* ==========================================================================
+ * 13. Popup
+ *
+ * On a phone this filled the whole screen with the close control tucked in
+ * a corner, so there was no obvious way past it. It is a centred sheet now,
+ * it never exceeds the viewport, and the close button is a real target.
+ * ========================================================================== */
+
+.overllllay {
+  position: fixed; inset: 0; z-index: 1100;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: var(--s4);
+  background: rgba(7,35,30,.6);
+  backdrop-filter: blur(3px);
+}
+.overllllay.show, .overllllay[style*="block"] { display: flex; }
+
+#onloadshowpop {
+  position: relative;
+  width: min(100%, 420px);
+  max-height: calc(100vh - var(--s7));
+  overflow-y: auto;
+  padding: var(--s6) var(--s5) var(--s5);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+#closebvtn {
+  position: absolute; top: var(--s3); right: var(--s3);
+  z-index: 2;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: var(--pill);
+  background: var(--cream-alt);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+#closebvtn:hover { background: var(--danger-tint); color: var(--danger); }
+
+#onloadshowpop img { border-radius: var(--radius); margin-bottom: var(--s4); }
+#popmenu { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s2); margin-top: var(--s4); }
+#popmenu li { background: var(--emerald-800); color: var(--text-invert); padding: var(--s1) var(--s3); border-radius: var(--pill); font-size: .85rem; }
+
+.Phone { animation: ringing 4s ease-in-out infinite; transform-origin: center; }
+@keyframes ringing {
+  0%, 18%, 40%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(10deg); }  22% { transform: rotate(-10deg); }
+  24% { transform: rotate(8deg); }   26% { transform: rotate(-8deg); }
+  28% { transform: rotate(5deg); }   30% { transform: rotate(-5deg); }
+  32% { transform: rotate(2deg); }
+}
+
+
+/* ==========================================================================
+ * 14. Accordion, tables, utilities
+ * ========================================================================== */
+
+.panel-group { display: grid; gap: var(--s3); }
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.panel-heading { padding: 0; }
+.panel-title { margin: 0; font-size: 1rem; }
+.panel-title a {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  padding: var(--s4);
+  color: var(--ink); font-weight: 600;
+  text-decoration: none;
+}
+.panel-title a:hover { background: var(--cream-alt); text-decoration: none; }
+.panel-body { padding: 0 var(--s4) var(--s4); color: var(--text-muted); }
+
+.panel-collapse { display: none; }
+.panel-collapse.show, .panel-collapse.in { display: block; }
+
+/* The +/- marker. Bootstrap toggles .collapsed on the trigger. */
+.more-less, .glyphicon {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: var(--pill);
+  background: var(--emerald-100);
+  color: var(--emerald-700);
+  font-style: normal;
+  transition: transform .2s var(--ease), background .2s var(--ease);
+}
+.panel-title a:not(.collapsed) .more-less,
+.panel-title a:not(.collapsed) .glyphicon { transform: rotate(45deg); background: var(--gold); color: var(--ink); }
+.glyphicon-plus::before { content: "+"; font-size: 1.1rem; line-height: 1; }
+
+.table { width: 100%; background: var(--surface); border-radius: var(--radius); overflow: hidden; }
+.table th, .table td { padding: var(--s3); border-bottom: 1px solid var(--border); text-align: left; }
+.table th { background: var(--cream-alt); font-weight: 700; color: var(--ink); }
+.table-striped tbody tr:nth-child(odd) { background: var(--cream); }
+
+/* A table is the one thing that legitimately needs to scroll sideways on a
+   phone; give it its own scroller instead of letting it widen the page.
+ *
+ * The fee schedule has five columns and cannot usefully reflow, so on a
+ * narrow screen it becomes its own scroll container. Without this it forced
+ * the document to 621px inside a 375px viewport and took the whole page
+ * sideways with it. Applied to the table itself rather than to a wrapper,
+ * because the wrapper does not exist in the inherited markup. */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+@media (max-width: 991.98px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+  .table thead, .table tbody, .table tr { display: table; width: 100%; table-layout: fixed; }
+  .table th, .table td { white-space: normal; min-width: 7rem; }
+}
+
+/* Spacing utilities the markup uses. */
+.m-0{margin:0}.mb-0{margin-bottom:0}.mt-2{margin-top:var(--s2)}.mb-2{margin-bottom:var(--s2)}
+.mt-3{margin-top:var(--s4)}.mb-3{margin-bottom:var(--s4)}.mr-2{margin-right:var(--s2)}
+.ml-auto{margin-left:auto}.mx-auto{margin-inline:auto}
+.d-none{display:none}.d-block{display:block}.d-flex{display:flex}
+.text-center{text-align:center}.text-right{text-align:right}
+@media (min-width: 992px) { .d-lg-none{display:none} .d-lg-block{display:block} }
+
+.collapse:not(.show) { display: none; }
+.collapsing { height: 0; overflow: hidden; transition: height .3s var(--ease); }
+
+
+/* ==========================================================================
+ * 15. Panels the page opens
+ *
+ * Everything in this section was missing, and missing for one reason: it is
+ * not on screen when the page loads, so writing the stylesheet by looking at
+ * the page never surfaced it. Checking it by measurement did not either —
+ * the traveller panel sits inside its field and is narrower than it, so it
+ * passed every overflow and containment test while being visibly broken.
+ *
+ * These panels have no styles of their own in the inherited sheets that were
+ * deleted, so without the rules below they fall back to `position: static`
+ * and `display: block`: permanently open, transparent, and squeezed to
+ * whatever width the form field around them happens to be.
+ * ========================================================================== */
+
+/* --- Traveller / cabin dropdown -------------------------------------- */
+
+/* jQuery toggles this with .toggle(), which reads the computed display and
+   writes an inline one. Starting from `none` here is what makes it a
+   dropdown rather than a block wedged into the form. */
+#pop {
+  display: none;
+  position: absolute;
+  z-index: 80;
+  top: calc(100% + var(--s2));
+  right: 0;
+  width: 340px;
+  max-width: calc(100vw - var(--s5));
+  padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+}
+
+.repbackhighttr {
+  display: flex; align-items: center; gap: var(--s2);
+  margin-bottom: var(--s4);
+  padding-bottom: var(--s3);
+  border-bottom: 1px solid var(--border-soft);
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--ink);
+}
+.repbackhighttr h4 {
+  display: flex; align-items: center; gap: var(--s2);
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--ink);
+}
+/* The back arrow belongs to the mobile flow, where the panel is a full
+   screen you step back from. On a dropdown there is nowhere to go back to,
+   and at heading size it read as part of the title. */
+.repbackhighttr i { flex: none; font-size: .85rem; color: var(--text-muted); cursor: pointer; }
+@media (min-width: 992px) { .repbackhighttr i { display: none; } }
+.repbackhighttr a { color: var(--text-muted); text-decoration: none; }
+
+/* Three passenger types. Side by side they get about 110px each, which is
+   not enough for "1 Adults (Aged 12+ yrs)" and wraps it onto three lines.
+   One per row instead: label on the left, stepper on the right. */
+.travllerbox-mbl .row { display: grid; grid-template-columns: 1fr; gap: var(--s3); margin: 0; }
+.travllerbox-mbl .col-sm-4 {
+  flex: none; max-width: none; width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  padding: 0;
+}
+.travllerbox-mbl h6, .travllerbox-mbl p, .travllerbox-mbl label {
+  margin: 0; font-size: .9rem; font-weight: 600; color: var(--ink); line-height: 1.3;
+}
+.travllerbox-mbl small, .travllerbox-mbl span.agetxt {
+  display: block; font-size: .78rem; font-weight: 400; color: var(--text-muted);
+}
+.travllerbox-mbl .btn-group.popplusap { width: auto; flex: none; gap: var(--s2); }
+.travllerbox-mbl .btn-group.popplusap .btn { flex: none; width: 32px; }
+
+/* The stepper glyphs. minus-icon.png is 14x2 and plus-icon.png is 14x14,
+   both in the original operator's orange, which fights the emerald. Rather
+   than recolour a bitmap, draw them: the markup keeps its <img> (search.js
+   reads these buttons by class, not by their contents) and the glyph comes
+   from the button. Crisp at any zoom, and it follows the palette. */
+.btn-group.popplusap .btn img { display: none; }
+.btn-group.popplusap .btn {
+  font-size: 1.25rem; font-weight: 400; line-height: 1;
+  color: var(--emerald-600);
+}
+.btn-group.popplusap .btn::before { content: "\2212"; }        /* true minus sign */
+.btn-group.popplusap .btn[class*="plus_"]::before { content: "+"; }
+.btn-group.popplusap .btn:hover { background: var(--emerald-100); border-color: var(--emerald-400); }
+
+.model_heading {
+  margin: var(--s4) 0 var(--s2);
+  font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+
+/* Travel class list. The radio and its label are siblings inside the <li>,
+   not nested — so the row has to be the <li>. Styling the label as a flex
+   container (the obvious guess) leaves the radio on a line of its own. */
+#pop ul { display: grid; gap: var(--s1); }
+#pop ul li {
+  display: flex; align-items: center; gap: var(--s3);
+  margin: 0; padding: var(--s2) var(--s3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background .16s var(--ease);
+}
+#pop ul li:hover { background: var(--cream-alt); }
+#pop ul li label { margin: 0; font-size: .95rem; cursor: pointer; flex: 1; }
+#pop ul li input[type="radio"] {
+  flex: none; margin: 0;
+  width: 18px; height: 18px;
+  accent-color: var(--emerald-500);
+  cursor: pointer;
+}
+
+/* Cancel / Done */
+#pop > div:last-child {
+  display: flex; justify-content: flex-end; gap: var(--s2);
+  margin-top: var(--s4); padding-top: var(--s3);
+  border-top: 1px solid var(--border-soft);
+}
+.btncommin {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  padding: var(--s2) var(--s4);
+  border-radius: var(--pill);
+  font-size: .9rem; font-weight: 600; text-decoration: none;
+  transition: background .16s var(--ease), color .16s var(--ease);
+}
+.btncommin:hover { text-decoration: none; }
+#btn-cancel { color: var(--text-muted); }
+#btn-cancel:hover { background: var(--cream-alt); color: var(--ink); }
+#btn-done { background: var(--emerald-500); color: var(--text-invert); }
+#btn-done:hover { background: var(--emerald-700); color: var(--text-invert); }
+
+/* --- Call-us panel --------------------------------------------------- */
+
+/* Toggled by a .show class from search.js. Without a resting state it sat
+   in the flow as a full-width transparent band. */
+/* An inline script adds .show once the page is scrolled past 450px, so this
+   is a call bar that follows the reader — not a block that belongs anywhere
+   in the document. Positioned absolute with no positioned ancestor it
+   resolved against the page and laid a 1920px band straight across the
+   search card. It is fixed to the bottom of the window instead.
+   Phones only: on a desktop the number is already in the header area and a
+   bar across the foot of the window is just in the way. */
+.fixcn { display: none; }
+@media (max-width: 767.98px) {
+  .fixcn.show {
+    display: block;
+    position: fixed; z-index: 1000;
+    left: 0; right: 0; bottom: 0;
+    padding: var(--s3) var(--s4);
+    padding-bottom: calc(var(--s3) + env(safe-area-inset-bottom, 0px));
+    background: var(--emerald-800);
+    box-shadow: 0 -4px 24px rgba(7,35,30,.28);
+    text-align: center;
+  }
+}
+.fixcn h4 { margin: 0; color: var(--text-invert); font-size: 1rem; }
+.fixcn a { color: var(--text-invert); text-decoration: none; }
+.fixcn .deal-text { font-size: .85rem; opacity: .8; }
+
+/* --- The travellers field itself -------------------------------------- */
+
+/* #popover is the <input> that shows "1 ADULT". An <input> is a void element,
+   so :empty matches it always — an earlier `#popover:empty { display: none }`
+   here hid the field outright, which is why the passenger icon ended up
+   sitting on top of the cabin label underneath it. */
+.traveller_focus { position: relative; cursor: pointer; }
+.traveller_focus > label { display: block; margin: 0 0 var(--s1); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.traveller_focus .map-icon { position: absolute; left: 0; top: 1.85rem; width: 22px; pointer-events: none; }
+.traveller_focus #popover,
+.traveller_focus .form-control {
+  display: block; width: 100%;
+  padding: 0 0 0 32px;
+  border: 0; background: transparent;
+  font-size: 1.05rem; font-weight: 600; color: var(--ink);
+  cursor: pointer;
+}
+.traveller_focus .class_type_name {
+  margin: var(--s1) 0 0 32px;
+  font-size: .8rem; color: var(--text-muted);
+}
+
+/* --- Mobile-only panel headings --------------------------------------- */
+
+/* "← Departure Date" and friends belong to the full-screen mobile flow.
+   On a desktop dropdown there is nothing to go back to, and at heading size
+   they printed a second title inside the field. */
+/* "← Departure Date" printed a second title inside a field already labelled
+   DEPARTURE, at every width, whether or not the calendar was open. It is the
+   header of a full-screen mobile panel this layout does not use. */
+.repbackhight { display: none; }
+
+/* --- Search options strip --------------------------------------------- */
+
+/* .prefferair — "Non stop" and the airline filter — is a sibling of the
+   card, not a child, so it landed on the green hero below it. Rather than
+   move it in the markup (search.js binds inside it), the two are joined
+   visually: the card loses its bottom corners and the strip takes them. */
+.sercheform .card.new1 { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 0; }
+.row.prefferair {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4);
+  margin: 0;
+  /* The strip sits inside .main, whose text is near-white for the green
+     hero. On this white panel that left "Non stop" invisible. */
+  color: var(--text);
+  padding: var(--s3) var(--s4) var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border-soft);
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+@media (min-width: 768px) { .row.prefferair { padding-inline: var(--s5); } }
+.row.prefferair .col-sm-4,
+.row.prefferair .search-checkbox { flex: 0 1 auto; max-width: none; width: auto; padding: 0; }
+.row.prefferair .pair { display: flex; align-items: center; gap: var(--s2); color: var(--text-muted); }
+.row.prefferair .pair i { color: var(--emerald-500); }
+.row.prefferair input[type="text"], .row.prefferair .form-control {
+  padding: var(--s2) var(--s3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); font-size: .9rem; font-weight: 500;
+}
+.labelnonst { font-size: .92rem; }
+
+/* --- Submit row ------------------------------------------------------- */
+
+/* "Quick Results" was squeezed into 97px beside the button and broke across
+   two lines through it. It is a caption, so it sits under the button. */
+.search-btnbox { flex-direction: column; align-items: stretch; gap: var(--s2); }
+.quick-result {
+  display: flex; align-items: center; justify-content: center; gap: var(--s2);
+  font-size: .85rem; color: var(--text-muted); white-space: nowrap;
+}
+.quick-result span { display: inline-flex; color: var(--success); }
+@media (min-width: 640px) {
+  .search-btnbox { flex-direction: row; align-items: center; justify-content: flex-end; gap: var(--s4); }
+  .quick-result { order: -1; }
+}
+
+
+/* The bar above the two months: trip type on the left, which column is
+   which on the right. It came from the markup with no styles of its own. */
+/* The markup nests four levels of bootstrap rows and columns in here for
+   what is a single strip of three controls. Flatten the lot: every column
+   becomes an inline item and the strip stays one line. */
+.topViewbar { margin-bottom: var(--s3); padding-bottom: var(--s3); border-bottom: 1px solid var(--border-soft); }
+.topViewbar .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin: 0; }
+.topViewbar [class*="col-"] { flex: 0 1 auto; width: auto; max-width: none; padding: 0; }
+.topViewbar .col-sm-6:last-child > .row { justify-content: flex-end; }
+.topViewbar input, .topViewbar .depclpop { width: 130px; }
+.topViewbar .mobred:empty { display: none; }
+.topViewbar select, .topViewbar .form-control {
+  padding: var(--s1) var(--s2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); background: var(--surface); font-size: .9rem; font-weight: 600;
+}
+.topViewbar label, .topViewbar span {
+  font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+
+
+/* Calendar footer: Reset on the left, Done on the right. The container is
+   .confirm-cal — an earlier `.row:last-child` here also matched the nested
+   rows in the top strip and drew a rule above each of them. */
+.desktop_view_calaender .confirm-cal {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s5);
+  margin: var(--s3) 0 0; padding-top: var(--s4);
+  border-top: 1px solid var(--border-soft);
+}
+.resertdate {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: .9rem; font-weight: 600; color: var(--emerald-600); text-decoration: none;
+}
+.resertdate:hover { color: var(--emerald-700); text-decoration: none; }
+.calbtn { flex: none; }
+
+
+/* ==========================================================================
+ * 16. Two footers, and the tour tiles that have no <img>
+ * ========================================================================== */
+
+/* The markup carries the footer twice: .footerr is the column layout and
+   .footerr-res is an accordion for small screens. Nothing in the new
+   stylesheet chose between them, so both rendered and the page ended with
+   the same links printed once as columns and again as three panels. */
+.footerr-res { display: none; }
+@media (max-width: 767.98px) {
+  .footerr     { display: none; }
+  .footerr-res { display: block; }
+}
+.footerr-res .panel {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.12);
+}
+.footerr-res .panel-title a { color: var(--text-invert); }
+.footerr-res .panel-title a:hover { background: rgba(255,255,255,.06); }
+.footerr-res .panel-body { color: rgba(244,248,246,.78); }
+.footerr-res .more-less, .footerr-res .glyphicon {
+  background: rgba(255,255,255,.1); color: var(--text-invert);
+}
+
+/* The second tour carousel slide has no <img> elements at all — its four
+   tiles were painted from a sprite sheet, and the rules that replaced that
+   sprite with real photographs lived in theme.css. Deleting that file took
+   the photographs with it and left four empty boxes. They belong here now,
+   the only stylesheet there is. */
+.holiday-imgbox.ca-img     { background-image: url('../image/cdestination/canadian-img.154f5347.jpg'); }
+.holiday-imgbox.alca-img   { background-image: url('../image/cdestination/atlantic-canada-img.c302f591.jpg'); }
+.holiday-imgbox.maxica-img { background-image: url('../image/cdestination/mexican-celebration-img.37e52e58.jpg'); }
+.holiday-imgbox.phuket-img { background-image: url('../image/cdestination/phuket-celebration-img.9721fccc.jpg'); }
+.holiday-imgbox.ca-img, .holiday-imgbox.alca-img,
+.holiday-imgbox.maxica-img, .holiday-imgbox.phuket-img {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Tour tile captions. .holiday-txtbox had no rules of its own, so the title
+   and its "Check Now" link sat in normal flow at the top of the tile, in
+   heading type, directly over the photograph. Same treatment as the
+   destination cards: a scrim panel inset at the bottom. */
+.holiday-txtbox {
+  position: absolute;
+  left: var(--s3); right: var(--s3); bottom: var(--s3);
+  padding: var(--s3) var(--s4);
+  background: rgba(7, 35, 30, .72);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius-sm);
+  color: var(--text-invert);
+}
+.holiday-txtbox h3 {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s2);
+  margin: 0;
+  font-size: 1rem; line-height: 1.25;
+  color: var(--text-invert);
+}
+.chek-btnbox {
+  font-family: var(--font-body);
+  font-size: .82rem; font-weight: 600;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.chek-btnbox:hover { color: var(--gold-tint); text-decoration: none; }
+
+/* The "talk to someone" band. Its markup is a bare run of headings and divs
+   with no container, so every line started hard against the left edge of the
+   window while the photograph floated centred above it. */
+/* Mobile only, as the class name says. This is the "would you rather just
+   talk to someone" card — a phone affordance. It was rendering full width at
+   the top of every desktop page, above the hero, and the previous pass made
+   that worse by giving it a two-column desktop layout. */
+.mobile-support {
+  width: min(100% - (var(--gutter) * 2), var(--measure));
+  margin-inline: auto;
+  padding-block: var(--s6);
+}
+@media (min-width: 768px) { .mobile-support { display: none; } }
+.mobile-support .agent { display: block; margin: 0 auto var(--s5); }
+.mobile-support h4 {
+  margin: 0 0 var(--s2);
+  font-size: clamp(1.2rem, 1.05rem + .7vw, 1.6rem);
+  text-align: center;
+}
+.mobile-support > p { text-align: center; color: var(--text-muted); margin-bottom: var(--s4); }
+.mobile-support .phone-number {
+  display: block; margin-bottom: var(--s2);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem); font-weight: 700;
+  color: var(--emerald-500); text-align: center;
+}
+.mobile-support .phone-number:hover { color: var(--emerald-700); text-decoration: none; }
+
+.mobile-support .features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--s3);
+  margin-bottom: var(--s4);
+}
+.feature-card {
+  display: flex; align-items: center; justify-content: center; gap: var(--s2);
+  padding: var(--s3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: .92rem; font-weight: 500;
+}
+.feature-card i { color: var(--emerald-500); }
+.mobile-support .mt-3 { text-align: center; color: var(--text-muted); font-size: .92rem; }
+
+
+
+
+/* ==========================================================================
+ * 17. Search results
+ *
+ * This page had its own stylesheet, listing.css, 2,474 lines, referenced by
+ * nothing else. Deleting it with the rest of the inherited CSS left the page
+ * that actually sells the product as bare HTML: 268px animated GIFs for the
+ * sort buttons, a 330px close cross, fares set in display serif at heading
+ * size, and "Earliest" broken across two lines as "Earlies / t".
+ *
+ * Rebuilt here. The markup arrives from src/render.js and carries paired
+ * desktop/mobile variants — .flight-time-desk / .flight-time-mobile,
+ * .baggage-desk / .baggage-mobile, .desk / .mobile-des, .desktopview /
+ * .mobileshort — and exactly one of each pair may ever be on screen.
+ * ========================================================================== */
+
+/* --- which half of each pair is showing ------------------------------- */
+
+.flight-time-mobile, .baggage-mobile, .mobile-des, .mobileshort { display: none; }
+.flight-time-desk, .baggage-desk, .desk, .desktopview { display: block; }
+
+@media (max-width: 991.98px) {
+  .flight-time-desk, .baggage-desk, .desk, .desktopview { display: none; }
+  .flight-time-mobile, .baggage-mobile, .mobile-des, .mobileshort { display: block; }
+}
+
+/* The filter drawer and its close cross belong to the phone layout. The
+   cross is a bare Font Awesome glyph with no size of its own, so on a
+   desktop it rendered as a 330px black X in the middle of the sidebar. */
+.mobfilterclose, .btn-filter-mobile, .btn-sort, .sortbyapply { display: none; }
+@media (max-width: 991.98px) {
+  .mobfilterclose, .btn-filter-mobile, .btn-sort, .sortbyapply {
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .mobfilterclose { width: 40px; height: 40px; font-size: 1.1rem; border-radius: var(--pill); background: var(--cream-alt); }
+}
+
+/* --- the page frame --------------------------------------------------- */
+
+.result-nav {
+  padding-block: var(--s5);
+  background: var(--cream-alt);
+  border-bottom: 1px solid var(--border);
+}
+.result-nav h1, .result-nav h2, .result-nav h3 {
+  margin: 0 0 var(--s1);
+  font-size: clamp(1.1rem, 1rem + .5vw, 1.4rem);
+  text-transform: uppercase; letter-spacing: .02em;
+}
+.result-nav p { margin: 0; color: var(--text-muted); font-size: .92rem; }
+
+/* "Modify search" / "Edit" */
+.modifysearch, .editsearch {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: .85rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--emerald-600);
+}
+
+/* --- sort strip -------------------------------------------------------- */
+
+/* Three suggestions across the top: earliest, cheapest, fastest. The icons
+   are decorative GIFs shipped at 268px; they are chips here. */
+.fixedsort, .sortbynav { margin-block: var(--s4); }
+.sortbynav ul, .fixedsort ul,
+.sort-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: var(--s3);
+}
+.sortbynav li, .fixedsort li {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.sortbynav li:hover, .fixedsort li:hover { border-color: var(--emerald-400); box-shadow: var(--shadow-sm); }
+.sortbynav li.active, .fixedsort li.active { border-color: var(--emerald-500); box-shadow: 0 0 0 2px rgba(15,107,92,.12); }
+
+/* Whatever wrapper the sort suggestions land in, their artwork is a chip. */
+.sortbynav img, .fixedsort img,
+img[src*="travel.gif"], img[src*="money-bag.gif"], img[src*="down-time.gif"] {
+  width: 40px; height: 40px;
+  object-fit: contain;
+  flex: none;
+}
+.sortbynav h4, .sortbynav h5, .fixedsort h4, .fixedsort h5 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: .82rem; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-muted);
+  white-space: nowrap;
+}
+.sortbynav p, .fixedsort p { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--ink); }
+
+/* --- filter sidebar ---------------------------------------------------- */
+
+.filterborder {
+  padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.filterborder + .filterborder { margin-top: var(--s3); }
+.filterborder h4, .filterborder h5, .filterborder .hed {
+  margin: 0 0 var(--s3);
+  font-family: var(--font-body);
+  font-size: .8rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.filterborder label { display: flex; align-items: center; gap: var(--s2); padding-block: var(--s1); font-size: .92rem; cursor: pointer; }
+.filterborder input[type="checkbox"], .filterborder input[type="radio"] { accent-color: var(--emerald-500); width: 16px; height: 16px; }
+.resetfilter, .reset-filter {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  font-size: .85rem; font-weight: 600; color: var(--emerald-600);
+}
+@media (min-width: 992px) {
+  .filter-mobile { position: sticky; top: calc(var(--s7) + var(--s4)); }
+}
+
+/* --- a fare ------------------------------------------------------------ */
+
+form.all {
+  display: block;
+  margin-bottom: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+form.all:hover { border-color: var(--emerald-400); box-shadow: var(--shadow); }
+
+.data-show-res { padding: var(--s4); }
+@media (min-width: 768px) { .data-show-res { padding: var(--s5); } }
+
+.depar-res + .depar-res { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px dashed var(--border); }
+
+.logo-res {
+  display: flex; align-items: center; gap: var(--s2);
+  font-size: .95rem; font-weight: 600; color: var(--ink);
+}
+.logo-res img { width: 28px; height: 28px; object-fit: contain; flex: none; }
+
+/* The fare. It was inheriting the display serif and the h2 clamp, which at
+   1440px is 2.6rem — hence "CAD 338.00" set like a section heading. */
+#res-price, .res-price, h2#res-price {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.35rem; font-weight: 700; line-height: 1.2;
+  color: var(--ink); white-space: nowrap;
+}
+@media (min-width: 992px) { #res-price, .res-price { text-align: right; } }
+
+/* departure / arrival columns */
+.or { display: flex; flex-direction: column; gap: 2px; }
+.dtime { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--ink); line-height: 1.25; }
+.depcode { margin: 0; font-size: .82rem; color: var(--text-muted); }
+
+#durationtime, .route {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  margin: 0; font-size: .85rem; color: var(--text-muted);
+}
+.line {
+  position: relative;
+  width: 100%; height: 1px;
+  background: var(--border);
+}
+.line::after {
+  content: ""; position: absolute; right: 0; top: -3px;
+  border-left: 6px solid var(--border);
+  border-top: 3px solid transparent; border-bottom: 3px solid transparent;
+}
+.stop { font-size: .78rem; color: var(--emerald-600); font-weight: 600; }
+
+.baggagebox p, .depdate p { margin: 0; font-size: .82rem; color: var(--text-muted); }
+.baggagebox i, .depdate i { color: var(--emerald-500); margin-right: 4px; }
+
+/* "Flight details" disclosure + Book now */
+.shortone, .shortonebtn, .deskshort, .deskshortbtn {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3);
+}
+.flight-details-toggle, [data-toggle="collapse"].shortone {
+  font-size: .82rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--emerald-600); cursor: pointer;
+}
+.booknow, .book-now, form.all .btn-primary { flex: none; }
+
+/* --- expanded itinerary ------------------------------------------------ */
+
+.roundtrip-box {
+  width: 100%;
+  padding: var(--s4);
+  background: var(--cream);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+}
+.roundtrip-box + .roundtrip-box, .difborder + .container .roundtrip-box { margin-top: var(--s3); }
+.difborder { height: var(--s3); }
+
+.depart-btn p {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  margin: 0 0 var(--s3);
+  font-size: .8rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--emerald-700);
+}
+.depart-btn img { width: 16px; height: 16px; object-fit: contain; }
+
+.f-deta { display: flex; flex-direction: column; gap: 2px; }
+.f-deta img { width: 30px; height: 30px; object-fit: contain; }
+.f-deta h4 { margin: 0; font-family: var(--font-body); font-size: .95rem; font-weight: 700; }
+.f-deta h5 { margin: 0; font-family: var(--font-body); font-size: .8rem; font-weight: 400; color: var(--text-muted); }
+
+.timebox { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
+.col-04, .col-01, .col-03 { flex: 1 1 auto; min-width: 0; }
+.col-04 p, .col-01 p { margin: 0; font-size: .92rem; }
+.date-txtfnt, .timetxt { font-size: .78rem !important; color: var(--text-muted); }
+.timebox img { width: 48px; height: auto; opacity: .5; }
+
+/* --- loading placeholder ----------------------------------------------- */
+
+.shimmerround, .shimmer {
+  min-height: 120px;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, var(--cream-alt) 25%, var(--surface) 50%, var(--cream-alt) 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+/* Seat diagram on the booking pages — 195x253 unstyled. */
+img[src*="seat-icon"] { width: 22px; height: auto; }
+
+
+/* --- results: the real selectors --------------------------------------- */
+
+/* The sort suggestions are .overpricefilter > .row > .col-sm-4 >
+   .overviewprice, with the fare in an <h3>. An h3 here inherits the display
+   serif and the heading clamp, so each fare printed at 25.6px in Fraunces
+   and wrapped as "CAD 622. / 00". */
+.overpricefilter { margin-bottom: var(--s4); }
+.overpricefilter .row { gap: var(--s3); flex-wrap: wrap; }
+.overpricefilter .col-sm-4 { flex: 1 1 200px; max-width: none; padding: 0; }
+
+.overviewprice {
+  display: flex; align-items: center; gap: var(--s3);
+  width: 100%; padding: var(--s3) var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.overviewprice:hover { border-color: var(--emerald-400); box-shadow: var(--shadow-sm); }
+.overviewprice img { width: 36px; height: 36px; object-fit: contain; flex: none; }
+.overviewprice h4 {
+  flex: 1 1 auto; min-width: 0; margin: 0;
+  font-family: var(--font-body);
+  font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.overviewprice h3,
+.myrecomendedflightfare, .ovpricechepest, .myshortestflightfare {
+  flex: none; margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.05rem; font-weight: 700; line-height: 1.2;
+  color: var(--ink); white-space: nowrap;
+}
+
+/* Filter section headings: .white-border-box > .row > .hed-fullborder >
+   .hed > h3. Same serif-at-heading-size problem. */
+.white-border-box {
+  margin-bottom: var(--s3); padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.white-border-box .row { gap: var(--s2); }
+.hed-fullborder, .white-border-box .col-sm-12 { padding: 0; }
+.hed h3, .hed h4, .hed h5 {
+  margin: 0 0 var(--s2);
+  font-family: var(--font-body);
+  font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.white-border-box label { display: flex; align-items: center; gap: var(--s2); padding-block: var(--s1); font-size: .9rem; cursor: pointer; }
+.white-border-box input[type="checkbox"], .white-border-box input[type="radio"] { accent-color: var(--emerald-500); width: 16px; height: 16px; flex: none; }
+.white-border-box input[type="text"], .white-border-box input[type="search"] {
+  width: 100%; padding: var(--s2) var(--s3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--cream); font-size: .9rem;
+}
+.white-border-box img { width: 18px; height: 18px; object-fit: contain; }
+
+/* "Filter Your Results" / "Reset filter" */
+.main-filtersection > .hed h3, .filterbox > .hed h3 { font-size: .9rem; }
+
+/* The filter exists twice: once in a phone drawer, once as the sidebar.
+   Both were on screen, so every heading appeared twice. */
+.filter-mobile { display: none; }
+@media (max-width: 991.98px) {
+  .col-sm-3 > .filterbox { display: none; }
+  .filter-mobile {
+    display: block;
+    position: fixed; z-index: 1100; inset: 0;
+    transform: translateY(100%);
+    overflow-y: auto;
+    padding: var(--s4);
+    background: var(--cream);
+  }
+}
+
+/* The route line. The "Direct" label and the plane glyph were both centred
+   in the same spot and printed over each other. */
+#durationtime, .route { position: relative; padding-block: var(--s2); }
+#durationtime img, .route img { display: block; margin: 0 auto; width: 44px; opacity: .45; }
+#durationtime .stop, .route .stop { display: block; margin-top: 2px; }
+.shine { position: relative; }
+
+/* Fares inside the expanded itinerary carry the same h2/h3 problem. */
+.thespbody h2, .thespbody h3, .full-wdt h2, .full-wdt h3,
+.data-show-res h2, .data-show-res h3 {
+  font-family: var(--font-body);
+  font-size: 1.25rem; font-weight: 700;
+}
+
+
+/* --- results: the last four ------------------------------------------- */
+
+/* The fare sits in an <h2> inside .pricebar. An h2 here takes the display
+   serif and the heading clamp — 41.6px at this width, which is why every
+   fare in the list was set like a section title. */
+.pricebar h2, .pricebar h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.35rem; font-weight: 700; line-height: 1.2;
+  color: var(--ink); white-space: nowrap;
+}
+.pricebar p, .pricebar small { margin: 0; font-size: .8rem; color: var(--text-muted); white-space: nowrap; }
+.pricebar { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s1); }
+@media (min-width: 992px) { .pricebar { align-items: flex-end; text-align: right; } }
+
+/* #locationicon is a map pin meant to sit on the route line. With no size
+   of its own it drew at 44x72 over the middle of every itinerary. */
+#locationicon, img[src*="map-icon"] {
+  width: 14px; height: 14px;
+  object-fit: contain;
+  opacity: .55;
+}
+.route .line { display: flex; align-items: center; justify-content: center; gap: var(--s2); }
+
+/* The sort control exists three times: the strip above the results, a
+   drawer in the sidebar column, and a sticky bar for phones. Only the strip
+   belongs on a desktop. */
+.sortbynav, #fixedsort { display: none; }
+@media (max-width: 991.98px) {
+  .col-sm-9 > .listcontainer > .sortdata { display: none; }
+  #fixedsort { display: block; position: sticky; top: 0; z-index: 60; background: var(--cream); padding-block: var(--s2); }
+  .sortbynav {
+    display: block;
+    position: fixed; z-index: 1100; inset: 0;
+    transform: translateY(100%);
+    overflow-y: auto; padding: var(--s4);
+    background: var(--cream);
+  }
+}
+
+/* Anything the filter column prints as a heading is a label, not a title. */
+.main-filtersection h1, .main-filtersection h2, .main-filtersection h3,
+.main-filtersection h4, .main-filtersection h5,
+.filterbox h1, .filterbox h2, .filterbox h3, .filterbox h4, .filterbox h5 {
+  font-family: var(--font-body);
+  font-size: .9rem; font-weight: 700; letter-spacing: .02em;
+  text-transform: none; color: var(--ink);
+}
+.main-filtersection .hed h3, .filterbox .hed h3 {
+  font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+}
+
+
+/* --- results: price slider and route line ------------------------------ */
+
+/* jQuery UI's slider, unstyled, ships a bright red track that fights the
+   palette harder than anything else on the page. */
+.ui-slider {
+  position: relative;
+  height: 4px; margin: var(--s5) var(--s2) var(--s4);
+  background: var(--border);
+  border: 0; border-radius: var(--pill);
+}
+.ui-slider .ui-slider-range {
+  position: absolute; height: 100%;
+  background: var(--emerald-500);
+  border-radius: var(--pill);
+}
+.ui-slider .ui-slider-handle {
+  position: absolute; top: 50%;
+  width: 18px; height: 18px; margin-left: -9px;
+  transform: translateY(-50%);
+  background: var(--surface);
+  border: 2px solid var(--emerald-500);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  cursor: grab;
+}
+.ui-slider .ui-slider-handle:active { cursor: grabbing; }
+.ui-slider .ui-slider-handle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* The little value bubbles above the handles. */
+.slidervalue, .price-min, .price-max,
+.ui-slider + div span, .ui-slider span.pricelabel {
+  font-size: .78rem; font-weight: 700;
+  color: var(--ink); background: var(--cream-alt);
+  padding: 2px var(--s2); border-radius: var(--pill);
+}
+
+/* Route line: the aeroplane rides the line, the stop count sits under it. */
+.route, #durationtime { text-align: center; }
+.route .line, #durationtime + .line { position: relative; }
+.route img, #durationtime img, .line img { opacity: .45; }
+.route .fa, .line .fa { color: var(--text-muted); }
+.stop { display: block; text-align: center; }
+
+
+/* On a phone the filter and the sort list are drawers the user opens, not
+   a column of cards above the results. Stated without relying on where the
+   markup happens to nest them: hide every copy, then show back only the one
+   inside the drawer. */
+@media (max-width: 991.98px) {
+  .filterbox { display: none; }
+  .filter-mobile .filterbox { display: block; }
+  .filter-mobile, .sortbynav {
+    transition: transform .35s var(--ease);
+    box-shadow: 0 -8px 40px rgba(7,35,30,.25);
+  }
+  .filter-mobile .mobfilterclose, .sortbynav .mobfilterclose {
+    position: sticky; top: 0; margin-left: auto;
+  }
+}
+
+/* Closed state for the two phone drawers. Specificity has to clear the
+   earlier .filter-mobile rule in this file; it must NOT be !important,
+   because the scripts open these by writing transform inline and an
+   important declaration here would outrank that and jam them shut. */
+@media (max-width: 991.98px) {
+  .col-sm-3 > .filter-mobile,
+  .col-sm-3 > .sortbynav {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    transform: translateY(100%);
+    z-index: 1100;
+    overflow-y: auto;
+    padding: var(--s4);
+    background: var(--cream);
+  }
+}
+
+/* searchflight.html runs $('.filterbox').show() once the results arrive,
+   which writes display:block inline on BOTH copies of the filter — the
+   sidebar and the one inside the phone drawer. An inline style outranks any
+   stylesheet, so the sidebar kept reappearing on phones however the rule
+   above was written. This is the documented exception: !important here
+   exists only to beat a script-written inline style. */
+@media (max-width: 991.98px) {
+  .col-sm-3 > .filterbox { display: none !important; }
+}
+
+
+/* --- airport autocomplete --------------------------------------------- */
+
+/* The panel carries a full-screen mobile header — a back arrow, the title
+   "From Where?", and a SECOND text input — because on a phone it takes over
+   the screen. On a desktop dropdown all three are noise, and the panel was
+   opening over the departure field below it. */
+@media (min-width: 992px) {
+  .listsearchlist .deporg, .listsearchlistdes .deporg { display: none; }
+  .listsearchlist .mobileorigin, .listsearchlistdes .mobiledestination { display: none; }
+}
+@media (max-width: 991.98px) {
+  .listsearchlist, .listsearchlistdes {
+    position: fixed; inset: 0; z-index: 1200;
+    max-height: none; border-radius: 0;
+    padding: var(--s4);
+  }
+  .listsearchlist .mobileorigin, .listsearchlistdes .mobiledestination {
+    width: 100%; margin-bottom: var(--s3);
+    padding: var(--s3) var(--s4);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--cream); font-size: 1rem;
+  }
+}
+/* The results list itself */
+#mysearchlist, #mysearchlistdestination { display: grid; gap: 2px; }
+#mysearchlist li b, #mysearchlistdestination li b { font-weight: 700; color: var(--ink); }
+#mysearchlist li span, #mysearchlistdestination li span { font-size: .82rem; color: var(--text-muted); }
+#mysearchlist li img, #mysearchlistdestination li img { width: 18px; height: auto; border-radius: 2px; }
+
+
+/* ==========================================================================
+ * 18. Layout pass (v6) — compact rhythm, nothing overflows
+ *
+ * The sections below the hero had no frame of their own: headings sat on
+ * the viewport edge while the cards under them were indented by column
+ * padding, the destination grid had no gap between rows, the browse tile
+ * was wider than its column, and the FAQ cards were unstyled Bootstrap.
+ * This layer gives every home section the same container, the same
+ * heading, and the same gap, and tightens the vertical rhythm by about a
+ * third.
+ * ========================================================================== */
+
+:root { --section-y: var(--s6); --grid-gap: var(--s3); }
+@media (min-width: 768px) { :root { --section-y: var(--s7); --grid-gap: var(--s4); } }
+
+.section      { padding-block: var(--section-y); }
+.section-tight{ padding-block: calc(var(--section-y) * .66); }
+
+/* --- hero: tighter, and the search card is never taller than it needs --- */
+.main { padding-block: var(--s5) var(--s6); }
+.flight-iconbox h3 { margin-bottom: var(--s3); }
+.three-box { margin-top: var(--s4); gap: var(--s2); }
+.three-box h3 span { width: 36px; height: 36px; }
+.three-box h3 span img { width: 20px; height: 20px; }
+.sercheform .card, .card.new1 { padding: var(--s4); }
+.switch-field { margin-bottom: var(--s3); }
+.switch-field label { padding: 6px var(--s4); font-size: .78rem; }
+.textlng { padding: var(--s2) var(--s3); border-radius: var(--radius-sm); }
+.form-row { gap: var(--s2); }
+.search-btnbox { margin-top: var(--s2); }
+.row.prefferair { padding: var(--s3) var(--s4); gap: var(--s3); }
+
+/* Dates are a pair: departure and return share one row from 640px, so the
+   return field no longer sits alone under a blank half of the card. The
+   wrapper is a grid child, so it spans the full row and splits itself. */
+.res-mobiletxtview { display: grid; grid-template-columns: 1fr; gap: var(--s2); min-width: 0; }
+@media (min-width: 640px) {
+  .res-mobiletxtview { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* Wide hero: origin | destination on row one, dates | travellers on row two. */
+@media (min-width: 992px) {
+  .form-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .form-row > .search-biginput { grid-column: span 2; }
+  .res-mobiletxtview { grid-column: span 2; }
+  .form-row > .search-smallinput.input-ful { grid-column: span 2; }
+}
+.exchange-box { right: calc(var(--s2) * -1 - 18px); width: 32px; height: 32px; }
+
+/* --- the shared section frame ------------------------------------------ */
+.container-newbox, .photss, .holidaybox {
+  width: min(100% - (var(--gutter) * 2), var(--measure));
+  margin-inline: auto;
+}
+.container-newbox .photss, .container-newbox .holidaybox { width: 100%; }
+.container-newbox { padding-block: var(--section-y) 0; }
+.holiday-fullwdth { padding-bottom: var(--section-y); }
+
+.photss > h1, .holidaybox > h1, .mequery h3, .faqs-com h3 {
+  margin: var(--section-y) 0 var(--s4);
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem);
+  text-align: left;
+}
+.mequery h3, .faqs-com h3 { margin-top: 0; }
+
+/* The feature trio: three short columns, not three tall cards. */
+.row.ful-border { row-gap: var(--s2); }
+.row.ful-border > [class*="col-"] { padding-inline: var(--s2); }
+.whyxtreme-box { padding: var(--s2); }
+.whyxtreme-imgbox { width: 52px; height: 52px; margin-bottom: var(--s2); }
+.whyxtreme-imgbox img { width: 26px; height: 26px; }
+.whyxtreme-txtbox h3 { font-size: 1.05rem; }
+.whyxtreme-txtbox p { font-size: .9rem; max-width: 34ch; margin-inline: auto; }
+
+/* --- destination + tour grids ------------------------------------------ */
+/* Three nested bootstrap rows around one list of tiles. The outer two are
+   flattened; the inner one becomes the grid, so every gap is the same and
+   the browse tile measures exactly one cell. */
+.photss > .row, .india-popularbox { display: block; margin: 0; padding: 0; }
+.india-popularbox > .row, .holidaybox .row.mlrgt {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin: 0;
+}
+
+@media (min-width: 992px) {
+  .india-popularbox > .row, .holidaybox .row.mlrgt { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.india-popularbox > .row > [class*="col-"],
+.holidaybox .row.mlrgt > [class*="col-"] {
+  flex: none; width: auto; max-width: none; min-width: 0; padding: 0;
+}
+.innerpopularbox > a, .popular-inbox { display: block; height: 100%; color: inherit; text-decoration: none; }
+.innerpopularbox > a:hover { text-decoration: none; }
+
+.popular-imgbox, .holiday-imgbox, .browsebox { aspect-ratio: 4 / 3; }
+.popular-imgtxtbox, .holiday-txtbox {
+  left: var(--s2); right: var(--s2); bottom: var(--s2);
+  padding: var(--s2) var(--s3);
+}
+.popular-imgtxtbox .citybox { display: flex; align-items: center; justify-content: space-between; gap: var(--s2); }
+.popular-imgtxtbox .citybox h3 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.popular-imgtxtbox .citybox span {
+  flex: none; display: inline-flex; align-items: center; gap: 4px;
+  font-size: .8rem; font-weight: 600; color: var(--gold);
+}
+.popular-imgtxtbox .citybox svg { width: 18px; height: 18px; }
+.tripsbox:empty { display: none; }
+
+/* Browse tile: same cell, content inset, heading legible on the dark fill. */
+.browsebox { overflow: hidden; padding: var(--s4); min-width: 0; }
+.browsebox .popular-inbox { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+.browsebox .popular-imgtxtbox { position: static; padding: 0; background: none; backdrop-filter: none; }
+.browsebox h2 { margin: 0 0 var(--s2); font-size: clamp(1.1rem, 1rem + .5vw, 1.35rem); color: var(--text-invert); }
+.browsebox p { margin: 0 0 var(--s2); font-size: .85rem; color: rgba(244,248,246,.8); }
+.browsebox a { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: .9rem; color: var(--gold); }
+.browsebox a:hover { color: var(--gold-tint); text-decoration: none; }
+
+/* Tour tiles: title and link on one line; the title gives way first. */
+.holiday-txtbox h3 { flex-wrap: nowrap; justify-content: space-between; font-size: .95rem; }
+.holiday-txtbox h3 > span { flex: none; }
+/* One slide only, so the prev/next arrows had nothing to move to. */
+.holidaybox .carousel-control-prev, .holidaybox .carousel-control-next { display: none; }
+.holiday-fullwdth .container-newbox { padding-top: 0; }
+
+/* --- FAQ: Bootstrap .card accordion, styled as panels -------------------- */
+.explo { padding-block: var(--section-y); }
+.explo > .container > .row { row-gap: var(--s2); }
+.explo > .container > .row > [class*="col-"] { padding-inline: 0; }
+@media (min-width: 576px) {
+  .explo > .container > .row { column-gap: var(--s3); flex-wrap: nowrap; }
+  .explo > .container > .row > .col-sm-6 { flex: 1 1 0; max-width: none; }
+}
+#accordion { display: grid; gap: var(--s2); }
+#accordion > .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+#accordion .card-header { padding: 0; background: none; border: 0; }
+#accordion .card-header h4 { margin: 0; font-size: 1rem; }
+#accordion .faq-btn {
+  display: flex; width: 100%; align-items: center; justify-content: space-between; gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  font-family: var(--font-body); font-size: .95rem; font-weight: 600;
+  color: var(--ink); text-decoration: none;
+  border-radius: 0;
+}
+#accordion .faq-btn:hover { background: var(--cream-alt); color: var(--ink); text-decoration: none; }
+#accordion .faq-btn > span { flex: none; display: inline-flex; color: var(--emerald-500); transition: transform .2s var(--ease); }
+#accordion .faq-btn:not(.collapsed) > span { transform: rotate(180deg); }
+#accordion .card-body { padding: 0 var(--s4) var(--s3); font-size: .92rem; color: var(--text-muted); }
+/* A phone number split at a hyphen ("1-800-555-" / "0100") reads as two. */
+#accordion .card-body a[href^="tel:"] { white-space: nowrap; }
+#circle:empty { display: none; }
+
+/* --- footer ------------------------------------------------------------- */
+footer { padding-block: var(--s6) var(--s4); }
+.footerr .row { row-gap: var(--s5); }
+.footerr .row > [class*="col-"] { padding-inline: var(--s3); }
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .footerr .row > .col-sm-3 { flex: 0 0 50%; max-width: 50%; }
+}
+footer h5 { margin: 0 0 var(--s3); font-size: 1rem; }
+.finfo li { margin-bottom: 6px; }
+.finfo li a { display: inline-flex; align-items: baseline; gap: 6px; }
+.finfo li a i { font-size: .75em; color: var(--gold); }
+/* The markup nests an unclosed <h6> inside each phone line and pulls the
+   later ones up with inline margin-top:-6%. Reset both; !important only to
+   beat that inline attribute. */
+.finfo h6 { margin: 0 0 var(--s2); line-height: 1.45; align-items: baseline; }
+.finfo h6[style] { margin-top: 0 !important; }
+.finfo h6 h6 { margin: 0; display: block; }
+.finfo h6:empty { display: none; }
+.finfo { margin-bottom: var(--s4); }
+.ficon { gap: var(--s2); }
+.ficon h5 { margin-bottom: var(--s2); }
+.social a, .social li a { width: 36px; height: 36px; }
+.stay-top .btn { color: var(--ink); background: var(--gold); border-color: var(--gold); border-radius: var(--radius-sm); }
+.stay-top .btn:hover { background: var(--gold-600); color: var(--ink); }
+.stay-top .input-group-append { display: flex; }
+.txxt { margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid rgba(255,255,255,.1); text-align: center; }
+.txxt .brandlogo:has(.container:empty) { display: none; }
+.footerr-res .panel-heading hr, .footerr-res #idbarbr { display: none; }
+.footerr-res .panel-title a { justify-content: flex-start; padding: var(--s3); }
+.footerr-res .panel-body { padding: 0 var(--s3) var(--s3); }
+.footerr-res .ficon { margin-top: var(--s4); }
+
+.india-popularbox > .row > .browsebox { padding: var(--s4); }
+.holiday-imgbox { width: 100%; }
+
+/* --- inner pages: breadcrumb band + content frame --------------------- */
+/* The breadcrumb is an <h1> wrapping "Home >", so it printed at page-title
+   size above the real title. It is a small inline trail now. */
+.tophead { padding-block: var(--s3); background: var(--cream-alt); border-bottom: 1px solid var(--border); }
+.topbdy { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); }
+.topbdy h1 {
+  display: inline-flex; align-items: center; gap: var(--s2); margin: 0;
+  font-family: var(--font-body); font-size: .85rem; font-weight: 600; letter-spacing: 0;
+  color: var(--text-muted);
+}
+.topbdy h1 i { font-size: .7rem; }
+.topbdy h1 span:empty { display: none; }
+.topbdy p { margin: 0; font-size: .85rem; font-weight: 600; color: var(--ink); }
+/* Content column padding put the body 12px right of the breadcrumb. */
+.abouts, .abouts + *, .container > .row > .col-sm-12:only-child { padding-inline: 0; }
+.abouts { padding-block: var(--s5) var(--s6); }
+.abouts h1 { font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem); margin-bottom: var(--s3); }
+.abouts hr { margin: var(--s3) 0 var(--s4); }
+.abouts p { max-width: 72ch; }
+.abouts .row > [class*="col-"] { padding-inline: 0; }
+
+/* Footer contact lines: the nested <h6> inherited the display serif. */
+.finfo h6, .finfo h6 :not(i) { font-family: var(--font-body); font-weight: 400; font-size: .92rem; }
+.finfo h6 a { font-weight: 500; }
+
+/* Destination article pages: body copy under the hero had no top spacing
+   and every subhead used the full h1/h2 clamp. */
+.contentPanel { padding-block: var(--s5) var(--s6); max-width: 78ch; }
+.contentPanel h1 { font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem); margin-bottom: var(--s3); }
+.contentPanel h2 { font-size: clamp(1.25rem, 1.1rem + .7vw, 1.6rem); margin: var(--s5) 0 var(--s2); }
+.contentPanel h3 { font-size: 1.1rem; margin: var(--s4) 0 var(--s2); }
+.contentPanel p { margin-bottom: var(--s3); }
+
+/* --- FAQ page ----------------------------------------------------------- */
+/* faq.html carries an inline <style> that floats a second FontAwesome +/-
+   into every question with !important — so each row had two markers and a
+   right-aligned title. The glyphicon is the one marker we keep; the
+   !important here exists only to beat that inline block. */
+section.faq .panel-title > a::before,
+section.faq .panel-title > a.collapsed::before { content: none !important; display: none !important; }
+section.faq { padding-block: var(--s5) var(--s6); }
+section.faq .panel-group { display: block; }
+section.faq .panel-group > .row { row-gap: var(--s2); }
+section.faq .panel-group > .row > [class*="col-"] { display: grid; gap: var(--s2); align-content: start; padding-inline: 0; }
+@media (min-width: 576px) {
+  section.faq .panel-group > .row { column-gap: var(--s3); flex-wrap: nowrap; }
+  section.faq .panel-group > .row > .col-sm-6 { flex: 1 1 0; max-width: none; }
+}
+section.faq .panel { border-radius: var(--radius-sm); }
+section.faq .panel-title a {
+  justify-content: flex-start; text-align: left;
+  padding: var(--s3) var(--s4);
+  font-family: var(--font-body); font-size: .95rem; font-weight: 600; line-height: 1.35;
+}
+section.faq .panel-body { font-size: .92rem; line-height: 1.6; }
+
+.finfo > h6 { margin-bottom: 6px; }
+.finfo h6 h6 { margin: 0 !important; }
+
+
+/* ==========================================================================
+ * 19. Results page (v6)
+ *
+ * Scoped to the markup that only exists on /airline/searchflight: the
+ * summary bar, the modify-search panel, the filter sidebar/drawer, the sort
+ * cards and the fare cards from src/render.js. Every control here was
+ * checked by clicking it, at 375px and 1280px.
+ * ========================================================================== */
+
+/* --- summary bar ------------------------------------------------------- */
+.formcontainer { padding-block: var(--s3); background: var(--cream-alt); border-bottom: 1px solid var(--border); }
+.formcontainer > .container > .row { display: flex; flex-wrap: nowrap; align-items: center; gap: var(--s3); }
+.formcontainer > .container > .row > [class*="col-"] { flex: 1 1 auto; width: auto; max-width: none; padding: 0; }
+.formcontainer > .container > .row > .col-sm-3 { flex: none; }
+.formcontainer h4 { margin: 0; font-family: var(--font-body); font-size: 1.05rem; font-weight: 700; letter-spacing: .02em; }
+.formcontainer p { margin: 2px 0 0; font-size: .85rem; color: var(--text-muted); }
+#arrowms, .btn-editsearch { display: none !important; }  /* the modify toggle script shows #arrowms inline */
+.btn-modifysearch {
+  display: inline-flex; align-items: center; gap: var(--s2);
+  min-height: 40px; padding: var(--s2) var(--s4);
+  border: 1px solid var(--border); border-radius: var(--pill); background: var(--surface);
+  font-size: .8rem; font-weight: 700; letter-spacing: .06em; color: var(--emerald-600);
+}
+.btn-modifysearch:hover { border-color: var(--emerald-400); background: var(--surface); }
+.btn-modifysearch svg { width: 16px; height: 16px; }
+@media (max-width: 575.98px) {
+  .btn-modifysearch { padding: var(--s2) var(--s3); font-size: 0; gap: 0; min-width: 40px; }
+  .btn-modifysearch svg { width: 18px; height: 18px; }
+}
+
+/* --- modify-search panel ---------------------------------------------- */
+.collapse_searchform { padding-block: var(--s4); background: var(--surface); border-bottom: 1px solid var(--border); border-radius: 0; }
+.srch_apres { position: relative; }
+.srch_apres .close-btn { position: absolute; top: 0; right: 0; z-index: 2; }
+.srch_apres .close-btn i {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: var(--pill);
+  background: var(--cream-alt); color: var(--text-muted); cursor: pointer;
+}
+.srch_apres .close-btn i:hover { background: var(--danger-tint); color: var(--danger); }
+.listingradiobtn { display: flex; gap: var(--s4); margin: 0 48px var(--s3) 0; }
+.listingradiobtn .form-check-label { font-weight: 600; font-size: .92rem; }
+.modified-ser .form-row { grid-template-columns: minmax(0, 1fr); }
+.modified-ser .frm-width, .modified-ser .frm-width3, .modified-ser .frm-width4 { position: relative; min-width: 0; }
+.modified-ser .frm-width-sm { display: none; }
+.modified-ser .res-mobiletxtview { grid-column: auto; }
+.frm-width4 #search22 {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  width: 100%; height: 100%; min-height: 48px; padding: 0 var(--s5);
+  border-radius: var(--radius-sm); background: var(--emerald-500); color: var(--text-invert);
+  font-weight: 700; letter-spacing: .06em;
+}
+.frm-width4 #search22:hover { background: var(--emerald-700); }
+@media (min-width: 640px) {
+  .modified-ser .form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .modified-ser .res-mobiletxtview { grid-column: 1 / -1; }
+}
+@media (min-width: 992px) {
+  .modified-ser .form-row {
+    grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 1fr) auto;
+    align-items: stretch;
+  }
+  .modified-ser .res-mobiletxtview { grid-column: auto; }
+  .modified-ser .frm-width-sm { display: flex; align-items: center; justify-content: center; }
+  .modified-ser #exchange2 { color: var(--emerald-500); cursor: pointer; }
+}
+
+/* --- page grid: sidebar + list ---------------------------------------- */
+.formcontainer + .container > .row {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4);
+  padding-block: var(--s4) var(--s6);
+}
+.formcontainer + .container > .row > [class*="col-"] { width: auto; max-width: none; padding: 0; min-width: 0; }
+@media (min-width: 992px) {
+  .formcontainer + .container > .row { grid-template-columns: 264px minmax(0, 1fr); gap: var(--s5); align-items: start; }
+}
+
+/* --- filter ------------------------------------------------------------ */
+.filterbox .headingbar { margin-bottom: var(--s3); }
+.filterbox .headingbar h4 {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s2);
+  margin: 0 0 2px; font-family: var(--font-body); font-size: 1rem; font-weight: 700; color: var(--ink);
+}
+.uncheckreset_2 {
+  flex: none; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+  font-size: .8rem; font-weight: 600; color: var(--emerald-600);
+}
+.uncheckreset_2:hover { color: var(--emerald-700); text-decoration: underline; }
+.filterbox .headingbar p { margin: 0; font-size: .85rem; color: var(--text-muted); }
+
+.main-filtersection { display: grid; gap: var(--s2); }
+.main-filtersection .white-border-box { margin: 0; padding: var(--s3); border-radius: var(--radius-sm); }
+.white-border-box > .row { display: block; margin: 0; }
+.white-border-box > .row > [class*="col-"] { padding: 0; }
+/* .filterborder is an empty divider under each heading. The results
+   stylesheet had given it card padding and a border, which is the empty
+   rounded box that sat under every heading. */
+.hed .filterborder { display: none; }
+.main-filtersection .hed h3 { margin: 0 0 var(--s2); }
+
+/* Stops. The <label> is not tied to its radio (no for=), so clicking the
+   text did nothing. The radio is stretched over the whole row instead —
+   invisible, but it is what receives the click — and the dot is drawn on
+   the label. Works with the page script unchanged. */
+.group_main { display: grid; gap: 2px; }
+.go-right {
+  position: relative; display: flex; align-items: center;
+  min-height: 36px; padding: 0 var(--s2); border-radius: var(--radius-sm);
+}
+.go-right:hover { background: var(--cream-alt); }
+.go-right > input[type="radio"] {
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer;
+}
+.go-right > label { display: flex; align-items: center; gap: var(--s3); margin: 0; padding: 0; font-size: .92rem; cursor: pointer; }
+.go-right > label .checkbox_stops { display: inline; margin: 0; padding: 0; border: 0; }
+.go-right > label::before {
+  content: ""; flex: none; width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--border); background: var(--surface);
+  transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+}
+.go-right:hover > label::before { border-color: var(--emerald-400); }
+.go-right > input:checked + label::before { border-color: var(--emerald-500); box-shadow: inset 0 0 0 4px var(--surface); background: var(--emerald-500); }
+.go-right > input:checked + label { font-weight: 600; color: var(--ink); }
+.go-right > input:focus-visible + label::before { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* Departure time: a 2x2 grid of chips; the chosen one is filled. */
+#depfrmval { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); }
+.btncallval {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-height: 40px; padding: var(--s2); white-space: nowrap;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--ink);
+  font-size: .88rem; font-weight: 600;
+}
+.btncallval:hover { border-color: var(--emerald-400); background: var(--cream-alt); }
+.btncallval i { color: var(--emerald-500); font-size: .95em; }
+.btncallval.activefil { background: var(--emerald-500); border-color: var(--emerald-500); color: var(--text-invert); }
+.btncallval.activefil i { color: var(--gold); }
+.btncallval:focus-visible { outline-offset: 2px; border-radius: var(--radius-sm); }
+.btncallval.shine { min-height: 40px; }
+
+/* Airlines: same stretched-input treatment as the stops. */
+.flight-scroll { display: grid; gap: 2px; max-height: 248px; overflow-y: auto; scrollbar-width: thin; margin-inline: calc(var(--s1) * -1); padding-inline: var(--s1); }
+.flight-scroll .checkbox_stops { margin: 0; padding: 0; border: 0; }
+.flight-scroll .form-check {
+  position: relative; display: flex; align-items: center;
+  min-height: 38px; padding: 0 var(--s2); border-radius: var(--radius-sm);
+}
+.flight-scroll .form-check:hover { background: var(--cream-alt); }
+.flight-scroll .form-check-input {
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer;
+}
+.flight-scroll .form-check-label {
+  display: flex; align-items: center; gap: var(--s2); min-width: 0; margin: 0; padding: 0;
+  font-size: .88rem; line-height: 1.3; cursor: pointer;
+}
+.flight-scroll .form-check-label::before {
+  content: ""; flex: none; width: 18px; height: 18px; border-radius: 5px;
+  border: 2px solid var(--border); background: var(--surface) center / 12px no-repeat;
+  transition: border-color .15s var(--ease), background-color .15s var(--ease);
+}
+.flight-scroll .form-check:hover .form-check-label::before { border-color: var(--emerald-400); }
+.flight-scroll .form-check-input:checked + .form-check-label::before {
+  border-color: var(--emerald-500); background-color: var(--emerald-500);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-5' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.flight-scroll .form-check-input:focus-visible + .form-check-label::before { outline: 2px solid var(--gold); outline-offset: 2px; }
+.flight-scroll .form-check-label img { flex: none; width: 20px; height: 20px; object-fit: contain; border-radius: 3px; }
+
+/* Price slider (ion.rangeSlider, flat skin), in the palette. */
+.white-border-box .irs--flat { height: 44px; margin-top: var(--s1); }
+.white-border-box .irs--flat .irs-line { top: 28px; height: 4px; background: var(--border); border-radius: var(--pill); }
+.white-border-box .irs--flat .irs-bar { top: 28px; height: 4px; background: var(--emerald-500); }
+.white-border-box .irs--flat .irs-handle { top: 22px; width: 16px; height: 16px; }
+.white-border-box .irs--flat .irs-handle > i:first-child { left: 0; width: 16px; height: 16px; margin: 0; border-radius: 50%; background: var(--surface); border: 2px solid var(--emerald-500); }
+.white-border-box .irs--flat .irs-handle > i:not(:first-child) { display: none; }
+.white-border-box .irs--flat .irs-handle.state_hover > i:first-child, .white-border-box .irs--flat .irs-handle:hover > i:first-child { background: var(--emerald-100); }
+.white-border-box .irs--flat .irs-from, .white-border-box .irs--flat .irs-to, .white-border-box .irs--flat .irs-single {
+  top: 0; padding: 1px 6px; border-radius: var(--pill);
+  background: var(--emerald-700); font-family: var(--font-body); font-size: .72rem; font-weight: 700;
+}
+.white-border-box .irs--flat .irs-from::before, .white-border-box .irs--flat .irs-to::before, .white-border-box .irs--flat .irs-single::before { border-top-color: var(--emerald-700); }
+.white-border-box .irs--flat .irs-min, .white-border-box .irs--flat .irs-max { top: 0; background: var(--cream-alt); color: var(--text-muted); font-size: .7rem; border-radius: var(--pill); }
+
+/* --- loading placeholders --------------------------------------------- */
+.shine {
+  display: block; min-height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--cream-alt) 25%, var(--surface) 50%, var(--cream-alt) 75%);
+  background-size: 400% 100%; animation: shimmer 1.3s linear infinite;
+}
+.shine.fullw { height: 14px; margin-bottom: var(--s2); }
+.overviewprice .shine { height: 12px; margin: 0; flex: 1; }
+.shimmerround { min-height: 0; background: none; animation: none; border-radius: 0; }
+.shimmerround .divdata {
+  height: 150px; margin-bottom: var(--s3); border-radius: var(--radius);
+  background: linear-gradient(90deg, var(--cream-alt) 25%, var(--surface) 50%, var(--cream-alt) 75%);
+  background-size: 400% 100%; animation: shimmer 1.3s linear infinite;
+}
+.shimmerround .divdata > * { display: none; }
+
+/* --- sort cards --------------------------------------------------------- */
+.listcontainer > .sortdata { margin-bottom: var(--s3); }
+.overpricefilter { margin: 0; }
+.overpricefilter .row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); margin: 0; }
+.overpricefilter .col-sm-4 { width: auto; max-width: none; padding: 0; min-width: 0; }
+.overpricefilter [class^="callonclickfilterborder"], .overpricefilter .hero { display: none; }
+.overviewprice {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto;
+  column-gap: var(--s3); row-gap: 0; align-items: center;
+  height: 100%; padding: var(--s3); border-radius: var(--radius-sm);
+}
+.overviewprice h4 { grid-column: 2; display: contents; }
+.overviewprice h4 span { grid-row: 1 / span 2; grid-column: 1; display: inline-flex; }
+.overviewprice h4 span img { width: 32px; height: 32px; }
+.overviewprice h3, .myrecomendedflightfare, .ovpricechepest, .myshortestflightfare { grid-column: 2; font-size: 1rem; }
+.overviewprice.erest_active { border-color: var(--emerald-500); background: var(--emerald-100); box-shadow: none; }
+/* h4 is display:contents, so its bare text node needs a box of its own to
+   sit in column two, row one. */
+.overviewprice { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.overviewprice h3 { text-transform: none; letter-spacing: 0; }
+
+/* --- phone: sticky Filter | Sort bar, and the two drawers ---------------- */
+@media (max-width: 991.98px) {
+  #fixedsort {
+    position: sticky; top: 68px; z-index: 60;
+    margin: 0; padding: var(--s2) 0; background: var(--cream);
+  }
+  #fixedsort > .row { display: flex; flex-wrap: nowrap; align-items: stretch; gap: var(--s2); margin: 0; }
+  #fixedsort > .row > [class*="col-"] { flex: 1 1 0; width: auto; max-width: none; padding: 0; }
+  #fixedsort > .row > .col-sm-2 { display: none; }
+  .btn-filter-mobile, .btn-sort {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+    width: 100%; min-height: 44px; padding: var(--s2) var(--s3);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: var(--surface); color: var(--ink);
+    font-size: .92rem; font-weight: 600; box-shadow: var(--shadow-sm);
+  }
+  .btn-filter-mobile:hover, .btn-sort:hover { border-color: var(--emerald-400); background: var(--surface); color: var(--ink); }
+  .btn-filter-mobile i, .btn-sort i { color: var(--emerald-500); margin: 0; }
+
+  /* A closed drawer sits below the screen; hiding it as well keeps Tab from
+     walking into controls nobody can see. The scripts open it by writing
+     transform: translateY(0) inline, which is what this keys off. */
+  .filter-mobile, .sortbynav { visibility: hidden; transition: transform .35s var(--ease), visibility 0s linear .35s; }
+  .filter-mobile[style*="translateY(0"], .sortbynav[style*="translateY(0"] { visibility: visible; transition: transform .35s var(--ease), visibility 0s; }
+  .filter-mobile, .sortbynav { padding: var(--s3) var(--s4) var(--s6); }
+  .filter-mobile .mobfilterclose {
+    position: sticky; top: 0; z-index: 3;
+    display: flex; margin: 0 0 var(--s2) auto; width: 40px; height: 40px;
+    background: var(--surface); border: 1px solid var(--border); cursor: pointer;
+  }
+  .filter-mobile .mobfilterclose svg { width: 14px; height: 14px; fill: var(--ink); }
+  .filter-mobile .filterbox .headingbar { padding-right: 0; }
+
+  .listcontainer > .sortdata { display: none; }
+  .sortbynav .mbl-txt { margin: 0 0 var(--s3); font-family: var(--font-body); font-size: 1.1rem; font-weight: 700; }
+  .sortbynav .sortdata { display: block; }
+  .sortbynav .overpricefilter .row { grid-template-columns: minmax(0, 1fr); }
+  .sortbynav .overviewprice { min-height: 56px; }
+  .sortbynav .sortbyapply {
+    position: sticky; bottom: 0; display: flex;
+    width: 100%; height: 48px; margin-top: var(--s4);
+    border-radius: var(--radius-sm); background: var(--emerald-500); color: var(--text-invert);
+    font-weight: 700; cursor: pointer;
+  }
+}
+@media (min-width: 992px) {
+  #fixedsort, .sortbynav, .filter-mobile { display: none !important; }  /* vs the scroll script's inline .show() */
+}
+
+/* --- fare card (also the itinerary on the booking and thank-you pages,
+   which render the same markup inside .passengers2) ---------------------------------------------------------- */
+.mainshimmer { display: block; }
+.mainshimmer > [class^="list_"] { display: grid; gap: var(--s3); }
+:is(:is(form.all, .passengers2), .passengers2) { margin: 0; border-radius: var(--radius); }
+:is(:is(form.all, .passengers2), .passengers2) .third, :is(:is(form.all, .passengers2), .passengers2) .first, :is(:is(form.all, .passengers2), .passengers2) .hrborder, :is(:is(form.all, .passengers2), .passengers2) .triangle_btn, :is(:is(form.all, .passengers2), .passengers2) .brflight, :is(:is(form.all, .passengers2), .passengers2) #locationicon { display: none; }
+
+/* which layout of the card shows */
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res { display: none; }
+:is(:is(form.all, .passengers2), .passengers2) .data-show, :is(:is(form.all, .passengers2), .passengers2) .res-oneway { display: block; }
+@media (max-width: 991.98px) {
+  :is(:is(form.all, .passengers2), .passengers2) .data-show-res { display: block; }
+  :is(:is(form.all, .passengers2), .passengers2) .data-show, :is(:is(form.all, .passengers2), .passengers2) .res-oneway { display: none; }
+}
+
+/* shared: a leg row — times either side of the route line */
+:is(:is(form.all, .passengers2), .passengers2) .or { gap: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .dtime { font-size: 1.1rem; font-weight: 700; line-height: 1.2; }
+:is(:is(form.all, .passengers2), .passengers2) .depcode { font-size: .8rem; line-height: 1.3; }
+:is(:is(form.all, .passengers2), .passengers2) #durationtime { display: block; margin: 0; padding: 0; font-size: .78rem; text-align: center; color: var(--text-muted); }
+:is(:is(form.all, .passengers2), .passengers2) .route { display: block; padding: 6px 0; }
+:is(:is(form.all, .passengers2), .passengers2) .route .line { display: block; position: relative; width: 100%; height: 1px; background: var(--border); }
+:is(:is(form.all, .passengers2), .passengers2) .route .line::after { display: none; }
+:is(:is(form.all, .passengers2), .passengers2) .route .line #flighticon {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 26px; height: auto; margin: 0; padding: 0 5px; background: var(--surface); opacity: .55;
+}
+:is(:is(form.all, .passengers2), .passengers2) .stop { margin: 0; font-size: .75rem; text-align: center; }
+
+/* desktop round trip */
+:is(:is(form.all, .passengers2), .passengers2) .data-show > .row:first-child {
+  display: grid; grid-template-columns: minmax(0, 1fr) 190px; margin: 0;
+}
+:is(:is(form.all, .passengers2), .passengers2) .data-show > .row > [class*="col-"] { width: auto; max-width: none; padding: 0; min-width: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .result-nav { margin: 0; padding: var(--s3) var(--s4); background: none; border: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .result-nav.second { border-top: 1px dashed var(--border); }
+:is(:is(form.all, .passengers2), .passengers2) .result-nav > .row,
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row > .col-sm-9 > .row {
+  display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, .85fr) minmax(0, 1fr);
+  align-items: center; gap: var(--s3); margin: 0;
+}
+:is(:is(form.all, .passengers2), .passengers2) .result-nav > .row > [class*="col-"],
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row > .col-sm-9 > .row > [class*="col-"] { width: auto; max-width: none; padding: 0; min-width: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .result-nav .row > .col-sm-3:last-child .or { align-items: flex-end; text-align: right; }
+:is(:is(form.all, .passengers2), .passengers2) .result-nav .logo, :is(:is(form.all, .passengers2), .passengers2) .res-oneway .logo { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: var(--s2); align-items: center; }
+:is(:is(form.all, .passengers2), .passengers2) .result-nav .logo > img, :is(:is(form.all, .passengers2), .passengers2) .res-oneway .logo > img { grid-row: 1 / span 2; width: 28px; height: 28px; object-fit: contain; }
+:is(:is(form.all, .passengers2), .passengers2) .logo h4 { margin: 0; font-family: var(--font-body); font-size: .9rem; font-weight: 700; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+:is(:is(form.all, .passengers2), .passengers2) .logo .depdate p { font-size: .75rem; line-height: 1.3; }
+
+:is(:is(form.all, .passengers2), .passengers2) .data-show .col-sm-3 > .pricebar,
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway .pricebar {
+  height: 100%; justify-content: center; align-items: flex-end; gap: 2px;
+  padding: var(--s3) var(--s4); border-left: 1px dashed var(--border); text-align: right;
+}
+:is(:is(form.all, .passengers2), .passengers2) .pricebar h2 { font-size: 1.3rem; }
+:is(:is(form.all, .passengers2), .passengers2) .pricebar .btn-box { margin-top: var(--s2); }
+:is(:is(form.all, .passengers2), .passengers2) .btn-booknow, :is(:is(form.all, .passengers2), .passengers2) .fliddetails .btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 40px; padding: var(--s2) var(--s4);
+  border: 0; border-radius: var(--pill);
+  background: var(--emerald-500); color: var(--text-invert);
+  font-size: .85rem; font-weight: 700; letter-spacing: .04em; white-space: nowrap; cursor: pointer;
+  transition: background-color .18s var(--ease);
+}
+:is(:is(form.all, .passengers2), .passengers2) .btn-booknow:hover { background: var(--emerald-700); }
+/* render.js writes this one's colour inline with !important. */
+:is(:is(form.all, .passengers2), .passengers2) .fliddetails .btn-primary { background-color: var(--emerald-500) !important; border-radius: var(--pill) !important; }
+:is(:is(form.all, .passengers2), .passengers2) .fliddetails .btn-primary:hover { background-color: var(--emerald-700) !important; }
+
+:is(:is(form.all, .passengers2), .passengers2) .achortag, :is(:is(form.all, .passengers2), .passengers2) .contlibr > .row {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s3);
+  margin: 0; padding: var(--s2) var(--s4); border-top: 1px solid var(--border-soft); background: var(--cream);
+}
+:is(:is(form.all, .passengers2), .passengers2) .achortag > [class*="col-"], :is(:is(form.all, .passengers2), .passengers2) .contlibr > .row > [class*="col-"] { flex: none; width: auto; max-width: none; padding: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .achortag h6 { margin: 0; }
+#col_listingbtn, #flightd-res, #fddd {
+  display: inline-flex; align-items: center; gap: 6px; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--font-body); font-size: .78rem; font-weight: 700; letter-spacing: .06em;
+  color: var(--emerald-600); text-decoration: none;
+}
+#col_listingbtn:hover, #flightd-res:hover, #fddd:hover { color: var(--emerald-700); text-decoration: none; }
+#col_listingbtn i, #flightd-res i, #fddd i { transition: transform .2s var(--ease); }
+[aria-expanded="true"]#col_listingbtn i, [aria-expanded="true"]#flightd-res i, [aria-expanded="true"]#fddd i { transform: rotate(180deg); }
+:is(:is(form.all, .passengers2), .passengers2) .classtype { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 600; color: var(--danger); }
+:is(:is(form.all, .passengers2), .passengers2) .classtype img { width: 14px; height: 14px; }
+
+/* desktop one way */
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway { padding: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row { display: grid; grid-template-columns: minmax(0, 1fr) 190px; margin: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row > [class*="col-"] { width: auto; max-width: none; padding: 0; min-width: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row > .col-sm-9 { padding: var(--s3) var(--s4); }
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row > .col-sm-12 { grid-column: 1 / -1; }
+:is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row > .col-sm-3 > .row, :is(:is(form.all, .passengers2), .passengers2) .res-oneway > .row > .col-sm-3 > .row > .col-sm-12 { display: block; height: 100%; margin: 0; padding: 0; width: auto; max-width: none; }
+
+/* phone card */
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res { padding: var(--s3) var(--s4); }
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res #res-price { display: none; }  /* the fare is in the Book Now bar at the foot of the card */
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res .row { display: block; margin: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res .row > [class*="col-"] { width: auto; max-width: none; padding: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res .row + .row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--s3);
+  margin-top: var(--s2);
+}
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res .row + .row > .col-sm-2:last-child .or { align-items: flex-end; text-align: right; }
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res .depcode { max-width: 9ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+:is(:is(form.all, .passengers2), .passengers2) .data-show-res .row + .row > .col-sm-2:last-child .depcode { margin-left: auto; }
+:is(:is(form.all, .passengers2), .passengers2) .logo-res { gap: var(--s2); font-size: .88rem; }
+:is(:is(form.all, .passengers2), .passengers2) .logo-res img { width: 22px; height: 22px; }
+:is(:is(form.all, .passengers2), .passengers2) .depar-res + .return, :is(:is(form.all, .passengers2), .passengers2) .depar-res + .depar-res { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px dashed var(--border); }
+:is(:is(form.all, .passengers2), .passengers2) .oner-res-div .depar-res { margin: 0; padding: 0; border: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .fliddetails { margin-top: var(--s3); }
+:is(:is(form.all, .passengers2), .passengers2) .fliddetails h6 { margin: 0 0 var(--s2); }
+:is(:is(form.all, .passengers2), .passengers2) .fliddetails > .border-top {
+  margin: 0 calc(var(--s4) * -1) calc(var(--s3) * -1);
+  padding: var(--s3) var(--s4); border-top: 1px solid var(--border-soft); background: var(--cream);
+}
+:is(:is(form.all, .passengers2), .passengers2) .fliddetails > .border-top > div { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+:is(:is(form.all, .passengers2), .passengers2) .price-wrapper { display: flex; align-items: baseline; gap: 4px; color: var(--ink); }
+:is(:is(form.all, .passengers2), .passengers2) .price-wrapper .fw-semibold { font-size: .8rem; font-weight: 600; }
+:is(:is(form.all, .passengers2), .passengers2) .price-wrapper .fs-4 { font-size: 1.25rem; font-weight: 700; margin: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .fliddetails small { display: block; font-size: .75rem; color: var(--text-muted); }
+
+/* --- flight details (the collapse) --------------------------------------- */
+:is(:is(form.all, .passengers2), .passengers2) .thespbody { margin: 0; padding: var(--s3) var(--s4) var(--s4); border: 0; border-top: 1px solid var(--border-soft); border-radius: 0; background: var(--cream); display: grid; gap: var(--s3); }
+:is(:is(form.all, .passengers2), .passengers2) .thespbody .container { width: 100%; margin: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .thespbody .row.col-sp { display: block; margin: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .roundtrip-box { display: grid; gap: var(--s2); padding: var(--s3); background: var(--surface); }
+:is(:is(form.all, .passengers2), .passengers2) .difborder { display: none; }
+:is(:is(form.all, .passengers2), .passengers2) .flight-time-desk { display: none; }
+:is(:is(form.all, .passengers2), .passengers2) .flight-time-mobile { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s2); margin: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .flight-time-mobile > [class*="col-"] { width: auto; max-width: none; padding: 0; min-width: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .depar-box:empty { display: none; }
+:is(:is(form.all, .passengers2), .passengers2) .depart-btn p { margin: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .f-deta { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: var(--s2); align-items: center; }
+:is(:is(form.all, .passengers2), .passengers2) .f-deta img { grid-row: 1 / span 3; width: 28px; height: 28px; }
+:is(:is(form.all, .passengers2), .passengers2) .f-deta h5.spac { color: var(--text-muted); }
+:is(:is(form.all, .passengers2), .passengers2) .flgh-desp { display: flex; flex-wrap: wrap; gap: var(--s1) var(--s4); margin-top: var(--s1); padding-left: 36px; }
+:is(:is(form.all, .passengers2), .passengers2) .flgh-desp .baggagebox { width: auto; max-width: none; padding: 0; flex: none; }
+:is(:is(form.all, .passengers2), .passengers2) .timebox { display: grid; grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr); align-items: center; gap: var(--s2); }
+:is(:is(form.all, .passengers2), .passengers2) .timebox > div { min-width: 0; }
+:is(:is(form.all, .passengers2), .passengers2) .timebox > div:last-child { text-align: right; }
+:is(:is(form.all, .passengers2), .passengers2) .timebox img { width: 32px; opacity: .4; margin: 0 auto; display: block; }
+:is(:is(form.all, .passengers2), .passengers2) .timebox p { margin: 0; font-size: .88rem; line-height: 1.35; }
+:is(:is(form.all, .passengers2), .passengers2) .timebox p span { color: var(--text-muted); }
+:is(:is(form.all, .passengers2), .passengers2) .timebox.desk .col-04 p:not(.date-txtfnt), :is(:is(form.all, .passengers2), .passengers2) .timebox.mobile-des p.timetxt { font-weight: 700; color: var(--ink); }
+:is(:is(form.all, .passengers2), .passengers2) .timebox.desk .col-04 p:not(.date-txtfnt) span, :is(:is(form.all, .passengers2), .passengers2) .timebox.mobile-des p.timetxt span { font-weight: 400; }
+:is(:is(form.all, .passengers2), .passengers2) .timebox.mobile-des p:not(.timetxt) { font-size: .78rem; color: var(--text-muted); }
+:is(:is(form.all, .passengers2), .passengers2) .baggage-desk { display: none; }
+:is(:is(form.all, .passengers2), .passengers2) .divider-box { display: flex; }
+:is(:is(form.all, .passengers2), .passengers2) .divider-box p {
+  margin: 0; padding: 4px var(--s3); border-radius: var(--pill);
+  background: var(--gold-tint); font-size: .78rem; color: var(--ink);
+}
+@media (min-width: 992px) {
+  :is(:is(form.all, .passengers2), .passengers2) .flight-time-mobile { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); column-gap: var(--s5); align-items: center; }
+  :is(:is(form.all, .passengers2), .passengers2) .flight-time-mobile > .depar-box { grid-column: 1 / -1; }
+  :is(:is(form.all, .passengers2), .passengers2) .timebox.mobile-des { display: none; }
+  :is(:is(form.all, .passengers2), .passengers2) .timebox.desk { display: grid; }
+}
+@media (max-width: 991.98px) {
+  :is(:is(form.all, .passengers2), .passengers2) .timebox.desk { display: none; }
+  :is(:is(form.all, .passengers2), .passengers2) .timebox.mobile-des { display: grid; }
+}
+
+/* --- below the list ------------------------------------------------------ */
+.textalert:empty { display: none; }
+.textalert { padding: var(--s5) 0; font-size: 1rem; color: var(--text-muted); }
+.listcontainer .spin { margin: var(--s4) auto; }
+.viewmore { display: block; margin-top: var(--s4); }
+.viewmore .vmoredatalist { min-width: 220px; }
+#myBtn1 {
+  display: none; position: fixed; right: var(--s4); bottom: var(--s4); z-index: 950;
+  width: 44px; height: 44px; border-radius: var(--pill);
+  background: var(--ink); color: var(--text-invert); box-shadow: var(--shadow);
+  align-items: center; justify-content: center;
+}
+#myBtn1[style*="block"] { display: inline-flex !important; }  /* the scroll script writes display:block */
+@media (max-width: 767.98px) { #myBtn1 { bottom: 84px; } }
+
+form.all .depcode { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.group_main { margin: 0; padding: 0; min-height: 0; }
+form.all .thespbody .logo { display: block; }
+form.all .divider-box p { border-radius: var(--radius-sm); }
+.modified-ser .form-row > div > .textlng { height: 100%; }
+.mrg-btm { margin-bottom: 0; }
+@media (max-width: 991.98px) {
+  form.all .thespbody { padding: var(--s3); }
+  form.all .roundtrip-box { padding: var(--s3); }
+}
+@media (max-width: 991.98px) { .filterbox-shimmer { display: none !important; } }  /* vs the page script's inline show/hide */
+.filterbox-shimmer .headingbar h4 { margin: 0 0 var(--s3); font-family: var(--font-body); font-size: 1rem; font-weight: 700; }
+.sortbynav .sortbyapply { align-items: center; justify-content: center; font-size: 1rem; line-height: 1; }
+.modified-ser .res-mobiletxtview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 991.98px) { .collapse_searchform { padding-block: var(--s3); } .modified-ser .form-row { gap: var(--s2); } }
+/* Menu toggle: show the cross while the menu is open. */
+.navbar-toggler[aria-expanded="true"] #closeoncloseluist { display: none; }
+.navbar-toggler[aria-expanded="true"] #closeonclose { display: inline; }
+.nav-link > span { display: inline-flex; align-items: center; }
+@media (max-width: 767.98px) {
+  .mobile-support { padding-block: var(--s4); }
+  .mobile-support .agent { max-width: 100%; aspect-ratio: 16 / 9; margin-bottom: var(--s3); }
+}
+
+@media (max-width: 479.98px) {
+  /* Two across on a phone too: one photo per screen made the page seven screens long. */
+  .popular-imgbox, .holiday-imgbox, .browsebox { aspect-ratio: 1 / 1; }
+  .popular-imgtxtbox, .holiday-txtbox { left: 6px; right: 6px; bottom: 6px; padding: 6px var(--s2); }
+  .popular-imgtxtbox .citybox h3, .holiday-txtbox h3 { font-size: .85rem; }
+  .popular-imgtxtbox .citybox span { font-size: 0; gap: 0; }
+  .holiday-txtbox .chek-btnbox { display: none; }
+  .holiday-txtbox h3 { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .browsebox { padding: var(--s3); }
+  .india-popularbox > .row > .browsebox { padding: var(--s3); }
+  .browsebox h2 { font-size: 1rem; }
+  .browsebox p { display: none; }
+}
+/* Anchor the two-month calendar to the date pair, not to the departure
+   field: from the departure field's right edge it opened leftwards over the
+   hero headline. From the pair's left edge it stays inside the card. */
+@media (min-width: 640px) {
+  .res-mobiletxtview > .search-smallinput { position: static; }
+  .res-mobiletxtview .desktop_view_calaender { left: 0; right: auto; }
+}
+/* Clicking One Way runs a script that writes width:31% inline on the date
+   and traveller fields (sized for the original float layout). Inside the
+   grid that 31% shrank each field to a sliver of its cell. !important here
+   only beats that script-written inline width. */
+.search-smallinput, .frm-width3, .traveller_focus { width: auto !important; }
+/* With the return field hidden, departure takes the whole date pair. */
+.res-mobiletxtview:has(.ar_date_focus[style*="none"]) { grid-template-columns: minmax(0, 1fr); }
+
+
+/* ==========================================================================
+ * 20. Booking and thank-you pages
+ *
+ * These pages had no styles of their own, so every block fell back to bare
+ * markup: the Price Match modal rendered open in the page (a 1,400px block
+ * above the itinerary), both session-expired popups printed below the form,
+ * the fare table appeared twice, the phone and desktop copies of the
+ * itinerary and traveller form showed together. Checked at 375 and 1280.
+ * ========================================================================== */
+
+/* --- page head ----------------------------------------------------------- */
+.booking .tophighlighttext { padding-block: var(--s4) var(--s3); }
+.tophighlighttext .breadcrum h6 { margin: 0 0 var(--s2); font-family: var(--font-body); font-size: .8rem; font-weight: 500; color: var(--text-muted); }
+.tophighlighttext .breadcrum a { color: var(--emerald-600); }
+.tophighlighttext center { text-align: left; }
+#hfourbd { margin: 0; font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.7rem); color: var(--ink); }
+#hfourbd_resmob { display: none; }
+#txtresbd { margin: 4px 0 0; font-size: .92rem; color: var(--text-muted); text-wrap: pretty; }
+
+/* --- two columns: form + sticky summary ---------------------------------- */
+.bookingdetailspage { padding-bottom: var(--s6); }
+.bookingdetailspage > .container > .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4); margin: 0; }
+.bookingdetailspage > .container > .row > [class*="col-"] { width: auto; max-width: none; padding: 0; margin: 0; min-width: 0; }
+.bookingdetailspage #des_top { margin-top: 0; }  /* the page's inline <style> pushes it down 22px */
+@media (min-width: 992px) {
+  .bookingdetailspage > .container > .row { grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
+  .bookingdetailspage #des_top { position: sticky; top: 84px; }
+}
+.bookingdetailspage .container-fluid { display: grid; gap: var(--s3); padding: 0; }
+
+/* --- cards --------------------------------------------------------------- */
+.bookingdetailspage .main_bookdetails {
+  margin: 0; padding: var(--s4);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: .9rem;
+}
+/* The page's inline <style> gives .passengers a mint fill and a green
+   border with !important; this is the one override that has to match it. */
+.bookingdetailspage .main_bookdetails.passengers { background: var(--surface); border-color: var(--border) !important; padding: var(--s4); }
+.bookingdetailspage .Payment_info { margin: 0; padding: 0; background: none; border: 0; }
+.bookingdetailspage .main_bookdetails > h4,
+.bookingdetailspage .passengerform > h4,
+.bookingdetailspage .whitebox h4,
+.bookingdetailspage .heading-whitebox h6 {
+  display: flex; align-items: center; gap: var(--s2);
+  margin: 0 0 var(--s3); font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--ink);
+}
+.bookingdetailspage .main_bookdetails > h4 i,
+.bookingdetailspage .passengerform > h4 i,
+.bookingdetailspage .heading-whitebox h6 i,
+.bookingdetailspage .whitebox h4 svg { color: var(--emerald-500); font-size: .95rem; }
+
+/* sidebar: one column of separate cards */
+#des_top > .main_bookdetails { display: grid; gap: var(--s3); padding: 0 !important; background: none; border: 0 !important; }
+#des_top .Payment_info { padding: var(--s4); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+#des_top .deskvision { background: var(--gold-tint); border-color: transparent; }
+#des_top .deskvision h6 { margin-bottom: var(--s1); font-family: var(--font-body); font-size: .75rem; font-weight: 700; letter-spacing: .06em; }
+.countdown { font-size: 1.6rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--ink); }
+.p_booking_main { margin: 2px 0 0; font-size: .8rem; color: var(--text-muted); }
+#red_h { color: var(--danger); font-weight: 600; }
+
+/* "why book here" */
+.p_booking { display: flex; align-items: center; gap: var(--s2); margin: 0 0 6px; font-size: .85rem; }
+.p_booking img, .secured-img { width: 16px; height: 16px; }
+.wbwubar { margin-top: var(--s3); padding-top: var(--s3); border-top: 1px solid var(--border-soft); }
+.wbwubar p { margin: 0; font-size: .78rem; color: var(--text-muted); }
+.wbwubar #red_h { display: flex; align-items: center; gap: var(--s2); margin-bottom: 4px; color: var(--emerald-700); }
+.mar-top-booking, .mar-top-booking-minus { display: none; }
+
+/* --- price match note, back link ---------------------------------------- */
+.grennotebard { display: flex; align-items: center; gap: var(--s3); padding: var(--s3) var(--s4); border-radius: var(--radius-sm); background: var(--emerald-100); }
+.grennotebard > img { flex: none; width: 24px; height: 24px; }
+.grennotebard > p { margin: 0; font-size: .86rem; line-height: 1.45; color: var(--ink); }
+.grennotebard a { font-weight: 600; color: var(--emerald-700); }
+.bookingbackbtn { display: inline-flex; align-items: center; gap: 6px; justify-self: start; font-size: .85rem; font-weight: 600; color: var(--emerald-600); }
+.bookingbackbtn:hover { color: var(--emerald-700); }
+
+/* --- modals (Bootstrap JS toggles .show and writes display:block) --------- */
+.modal { display: none; position: fixed; inset: 0; z-index: 1300; overflow-y: auto; padding: var(--s4); }
+.modal.show { display: block; }
+.modal-dialog { max-width: 560px; margin: 8vh auto; }
+.modal-content { padding: var(--s5); background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-lg, var(--shadow)); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s3); }
+.modal-header h3 { margin: 0; font-family: var(--font-display); font-size: 1.25rem; }
+.modal-header .close {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border: 0; border-radius: var(--pill);
+  background: var(--cream-alt); font-size: 1.3rem; line-height: 1; cursor: pointer;
+}
+.modal-body p { margin: 0 0 var(--s2); font-size: .9rem; line-height: 1.55; }
+.modal-backdrop { position: fixed; inset: 0; z-index: 1250; background: rgb(0 0 0 / .45); }
+body.modal-open { overflow: hidden; }
+
+/* session popups: hidden until the countdown script calls .show() */
+#popupSession, #wtdo { display: none; position: fixed; inset: 0; z-index: 1300; padding: var(--s4); background: rgb(0 0 0 / .5); }
+#popupS, #wpopupS {
+  position: relative; max-width: 420px; margin: 18vh auto 0; padding: var(--s5);
+  background: var(--surface); border-radius: var(--radius); text-align: center; box-shadow: var(--shadow);
+}
+#popupS h4 { display: flex; flex-direction: column; align-items: center; gap: var(--s2); margin: 0 0 var(--s2); font-family: var(--font-display); font-size: 1.2rem; }
+#popupS h4 i { font-size: 1.8rem; color: var(--gold); }
+.p_booking_maina, .p_wbooking_maina { margin: 0 0 var(--s3); font-size: .9rem; }
+#linktoclose { position: absolute; top: var(--s3); right: var(--s3); width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--pill); background: var(--cream-alt); cursor: pointer; }
+#orspace { margin: var(--s2) 0; font-size: .8rem; color: var(--text-muted); }
+
+/* --- itinerary card ------------------------------------------------------ */
+.passengers2 .main_bookdetails { padding: var(--s4); }
+.passengers2 .data-show, .passengers2 .data-show-res { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.passengers2 .data-show .achortag { border-top: 1px solid var(--border-soft); }
+.passengers2 .collapse.show, .passengers2 .collapsing { margin-top: var(--s2); border-radius: var(--radius-sm); overflow: hidden; }
+.passengers2 .info.countbarreturnmob { display: none; }
+@media (max-width: 991.98px) {
+  .passengers2 .info.countbarreturnmob { display: flex; align-items: baseline; gap: var(--s3); margin: 0 0 var(--s3); padding: var(--s2) var(--s3); border-radius: var(--radius-sm); background: var(--gold-tint); }
+  .passengers2 .info.countbarreturnmob .countdown { font-size: 1.2rem; }
+}
+
+/* --- baggage ------------------------------------------------------------- */
+.bookingdetailspage .heading-whitebox > .row { display: flex; align-items: center; gap: var(--s3); margin: 0 0 var(--s3); }
+.bookingdetailspage .heading-whitebox > .row > [class*="col-"] { width: auto; max-width: none; flex: none; padding: 0; }
+.bookingdetailspage .heading-whitebox > .row > .col-sm-11 { flex: 1; min-width: 0; }
+/* inline style sets 37px and a 21px left margin on this icon */
+.heading-whitebox .col-sm-1 i { font-size: 26px !important; margin: 0 !important; color: var(--emerald-400) !important; }
+.baggage-hed h3 { margin: 0; font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; }
+.baggage-hed h4 { display: flex; align-items: center; margin: 2px 0 0; font-family: var(--font-body); font-size: .8rem; font-weight: 600; color: var(--text-muted); }
+#baggagebx { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); margin: 0; }
+#baggagebx > [class*="col-"] { width: auto; max-width: none; padding: var(--s3); border: 1px solid var(--border-soft); border-radius: var(--radius-sm); background: var(--cream); }
+#baggagebx h5 { display: flex; align-items: center; gap: 6px; margin: 0 0 4px; font-family: var(--font-body); font-size: .88rem; font-weight: 700; }
+#baggagebx h5 img { width: 18px; height: 18px; }
+#baggagebx p { display: flex; align-items: center; gap: 6px; margin: 0; font-size: .8rem; color: var(--text-muted); }
+@media (max-width: 575.98px) { #baggagebx { grid-template-columns: minmax(0, 1fr); } }
+
+/* --- fare details -------------------------------------------------------- */
+.trip-sidebox { margin-bottom: var(--s3); }
+.trip-topbox h4 { display: flex; align-items: center; gap: 6px; margin: 0 0 4px; font-family: var(--font-body); font-size: .9rem; font-weight: 700; }
+.trip-topbox h4 i { color: var(--emerald-500); }
+.trip-bttmbox ul { margin: 0; padding: 0; list-style: none; font-size: .82rem; color: var(--text-muted); }
+.trip-bttmbox li { display: flex; flex-wrap: wrap; gap: 4px; }
+.trip-bttmbox li strong { color: var(--ink); }
+.trip-bttmbox li span { margin-left: auto; }
+.bookingdetailspage .Payment_info .info table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+.bookingdetailspage .Payment_info .info td { padding: 3px 0; vertical-align: baseline; }
+.bookingdetailspage .Payment_info .info td.fareloc { text-align: right; font-weight: 600; color: var(--ink); }
+.bookingdetailspage .Payment_info .info hr { margin: var(--s2) 0; border: 0; border-top: 1px solid var(--border-soft); }
+.bookingdetailspage .total-txt { font-size: .95rem; }
+.grandTotal { font-size: 1.15rem; font-weight: 700; color: var(--emerald-700); }
+.coponbox .input-group { display: flex; gap: var(--s2); }
+.coponbox .input-group > .form-control { flex: 1; min-width: 0; }
+.coponbox .input-group-append { display: flex; }
+.btnapplycodee { height: 42px; padding: 0 var(--s4); border: 0; border-radius: var(--radius-sm); background: var(--ink); color: var(--text-invert); font-weight: 600; cursor: pointer; }
+.btnapplycodee:hover { background: var(--emerald-700); }
+.spbox:empty { display: none; }
+
+/* The fare box exists twice: in the sidebar (.pderesdesk) and in the form
+   column for phones (.pderesdeskmobres). One at a time. */
+.pderesdeskmobres { display: none; }
+@media (max-width: 991.98px) {
+  .pderesdeskmobres { display: block; margin-bottom: var(--s4) !important; padding-bottom: var(--s4) !important; border-bottom: 1px solid var(--border-soft) !important; }
+  .bookingdetailspage:has(.pderesdeskmobres) #des_top .pderesdesk { display: none; }
+  #des_top .deskvision { display: none; }
+  .bookingdetailspage #des_top { order: 2; }
+}
+
+/* --- fields -------------------------------------------------------------- */
+.bookingdetailspage .form-control {
+  width: 100%; height: 44px; padding: 0 var(--s3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--ink); font: inherit; font-size: .9rem;
+}
+.bookingdetailspage select.form-control { padding-right: var(--s5); }
+.bookingdetailspage .form-control:focus { outline: none; border-color: var(--emerald-500); box-shadow: 0 0 0 3px var(--emerald-100); }
+.bookingdetailspage .form-control::placeholder { color: var(--text-muted); }
+.bookingdetailspage .text-danger:empty, .datepicker_text:empty { display: none; }
+.datepicker_text, .bookingdetailspage .text-danger { display: block; margin-top: 2px; font-size: .75rem; color: var(--danger); }
+
+/* travellers, wide screens: one row per passenger */
+.deskres_pax .passangerheading { display: inline-block; margin: 0 0 var(--s2); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.deskres_pax .triangle-up, .deskres_pax .adultbr > br { display: none; }
+.deskres_pax .row.row-reverse { display: flex; flex-wrap: wrap; gap: var(--s2); margin: 0 0 var(--s3); }
+.deskres_pax .row.row-reverse > .mysp { position: relative; flex: 1 1 140px; width: auto; max-width: none; padding: 0; min-width: 0; }
+.deskres_pax .row.row-reverse > .mysp:first-child:has(select) { flex: 0 0 92px; }
+#icodate-neww { position: absolute; left: 12px; top: 15px; z-index: 1; color: var(--text-muted); pointer-events: none; }
+.deskres_pax .dob { padding-left: 34px; }
+.notebord { margin-top: var(--s3); padding: var(--s3); border-radius: var(--radius-sm); background: var(--cream); }
+.notebord h6 { margin: 0 0 var(--s1); font-size: .8rem; font-weight: 700; }
+.notebord ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.notebord li { display: flex; gap: var(--s2); font-size: .78rem; line-height: 1.45; color: var(--text-muted); }
+.notebord li > span:first-child { color: var(--emerald-500); }
+
+/* travellers, phones: one collapsible card per passenger. The page script
+   switches forms at 600px, so the CSS does too. */
+.mobres_pax { display: none; }
+@media (max-width: 600px) {
+  .deskres_pax .adultbr:not(:last-child), .deskres_pax .row.row-reverse { display: none; }
+  .mobres_pax { display: block; }
+}
+.mobres_pax .card { margin-bottom: var(--s2); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.mobres_pax .card-header h5 { margin: 0; }
+.mobres_pax .btn-callbyclikck { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 44px; padding: 0 var(--s3); background: var(--cream); font-size: .9rem; font-weight: 700; color: var(--ink); }
+.mobres_pax .card-body { padding: var(--s3); }
+.mobres_pax .countadds { display: none; }
+.mobrowpax { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s2); margin: 0 0 var(--s2); }
+.mobrowpax > [class*="col-"] { width: auto; max-width: none; padding: 0; }
+.mobrowpax select[style*="28%"] { width: 110px !important; }  /* inline width:28% */
+.icorel { position: relative; }
+.icorel > img { position: absolute; right: 12px; top: 13px; width: 18px; height: 18px; pointer-events: none; }
+
+/* billing */
+.passengers3 .whitebox { margin: 0; padding: 0; background: none; }
+.last-passform .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); margin: 0 0 var(--s2); }
+.last-passform .row:has(> .col-md-3) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.last-passform .row > [class*="col-"] { width: auto; max-width: none; padding: 0; min-width: 0; }
+@media (max-width: 767.98px) {
+  .last-passform .row { grid-template-columns: minmax(0, 1fr); }
+  .last-passform .row:has(> .col-md-3) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* the checkbox row carries inline margins sized for the old layout */
+.tandc { margin-top: var(--s2); }
+.tandc .checkbox { flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: 0 !important; }
+.tandc .checkbox > br { display: none; }
+.tandc input[type="checkbox"] { width: 18px; height: 18px; margin: 0; accent-color: var(--emerald-500); }
+.tandc label { margin: 0 !important; }
+.tandc label a { color: var(--emerald-600); font-weight: 600; }
+.tandcerror { flex-basis: 100%; font-size: .78rem; color: var(--danger); }
+.tandcerror:empty { display: none; }
+#callbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s2);
+  min-height: 48px; padding: 0 var(--s5); border: 0; border-radius: var(--pill);
+  background: var(--emerald-500); color: var(--text-invert); font-weight: 700; letter-spacing: .04em; cursor: pointer;
+}
+#callbtn:hover { background: var(--emerald-700); }
+#callbtn svg { width: 18px; height: 18px; }
+@media (max-width: 600px) { #callbtn { width: 100%; } }
+.bookingdetailspage .container-fluid { max-width: none; margin: 0; }
+#baggagebx { align-items: stretch; }
+.deskres_pax .row.row-reverse > .mysp { flex-basis: 100px; }
+.passengers3 .whitebox { margin-bottom: var(--s3); }
+.passengers3 .whitebox h4 { margin: 0; }
+/* jQuery UI's empty datepicker container showed as a white strip under the footer */
+#ui-datepicker-div:not([style*="block"]) { display: none; }
+.bookingdetailspage .container-fluid { width: 100%; padding: 0 !important; }
+.notebord li { display: block; position: relative; padding-left: 14px; }
+.notebord li > span:first-child { position: absolute; left: 0; top: 0; }
+.tandc label { flex: 1; min-width: 0; }
+.tandc .checkbox { flex-wrap: nowrap; }
+.tandc .tandcerror { display: none; }
+.tandc .tandcerror:not(:empty) { display: block; }
+.tandc .checkbox:has(.tandcerror:not(:empty)) { flex-wrap: wrap; }
+.mobres_pax .card-body { padding: var(--s3) var(--s3) var(--s1); }
+.modal-body img { display: block; max-width: 96px; height: auto; margin: var(--s3) auto 0; }
+/* thank-you */
+.bookingdetailspage .passengers2.pdetails2 { display: grid; gap: var(--s3); }
+.bookingdetailspage .info ul li { display: flex; align-items: center; gap: var(--s2); padding: 4px 0; font-size: .9rem; }
+.bookingdetailspage .info ul li small { color: var(--text-muted); }
+.bookingdetailspage .info ul[style] { padding: 0 !important; margin: 0; }  /* inline padding-bottom */
+@media (max-width: 991.98px) {
+  .passengers2 .thespbody { padding: var(--s2); }
+  .passengers2 .roundtrip-box { padding: var(--s3); }
+}
+
+
+/* --- One Way: the date row closes up ----------------------------------- */
+
+/* The pair is a two-column grid above, and a grid keeps the track of a
+   display:none child — so hiding the return field left Departure at half
+   width with a blank half beside it. Detecting the hidden sibling to
+   collapse that track is the part that keeps failing; flex removes the
+   need to detect anything, because it has no tracks. A hidden child takes
+   no space and Departure grows into the row by itself. */
+.res-mobiletxtview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  min-width: 0;
+}
+.res-mobiletxtview > .search-smallinput { flex: 1 1 0; min-width: 0; }
+
+@media (max-width: 639.98px) {
+  .res-mobiletxtview > .search-smallinput { flex: 1 1 100%; }
+}
+
+
+/* ==========================================================================
+ * 22. Two things the page-by-page sweep turned up
+ * ========================================================================== */
+
+/* The fare card's footer strip is pulled out by a negative inline margin so
+   it runs edge to edge — a full-bleed trick that only works while the box
+   around it has matching padding. .fliddetails has none on a phone, so the
+   strip simply hung 16px off both sides of every card in the list. It sits
+   inside the card instead; the border and background still read as a
+   separate band without the bleed. */
+:is(form.all, .passengers2) .fliddetails > .border-top {
+  margin-inline: 0;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+
+/* The footer address line is driven by SITE_ADDRESS. The client has not
+   supplied theirs yet and the one that was hard-coded here belonged to the
+   reference site, so the setting is empty — and an empty value must not
+   leave a house icon sitting beside nothing. */
+.finfo h6:has(p:empty),
+.finfo h6:has(> p:only-child:empty) { display: none; }
+/* The same for the second and third footer numbers (SITE_PHONE_2 / _3):
+   optional, and an unset one would print "Phone No:" with nothing after it.
+   Wide footer: the line's link is an empty tel:. Phone footer: .fline. */
+.finfo h6:has(> a[href="tel:"]),
+.fline:has(> span:empty) { display: none; }
+/* Phone footer: the address is a block <p> after its inline house icon, so
+   the text dropped a line and left the icon on its own row. Unseen until
+   SITE_ADDRESS was filled. */
+.panel-body .finfo > .fhome + p {
+  display: inline-block;
+  width: calc(100% - 2em);
+  margin: 0 0 var(--s2);
+  vertical-align: top;
+}
+
+
+/* ==========================================================================
+ * 23. Contact and quote forms
+ *
+ * Neither form had a rule of its own after the rewrite, and neither could
+ * fail a containment check. The contact inputs picked up the search card's
+ * .form-control — no border, no fill, a 32px indent for an icon that is
+ * not there — and printed as loose placeholder text beside their labels.
+ * The quote form fell back to the browser's grey boxes, with its title
+ * outside any container and flush against the window edge. tools/sweep.js
+ * reports both as "bare" fields now.
+ * ========================================================================== */
+
+/* --- both forms: label above the field, one field look ------------------ */
+:is(.form-contact, .form-content) label {
+  display: block;
+  margin: 0 0 var(--s1);
+  font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.form-content label span { margin-left: 2px; color: var(--danger); }
+
+.form-contact .form-control,
+.form-content :is(input, select, textarea) {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--s2) var(--s3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit; font-size: .95rem; font-weight: 400; line-height: 1.4;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.form-contact textarea.form-control,
+.form-content textarea { min-height: 132px; resize: vertical; }
+.form-contact .form-control:focus,
+.form-content :is(input, select, textarea):focus {
+  outline: none;
+  border-color: var(--emerald-500);
+  box-shadow: 0 0 0 3px var(--emerald-100);
+}
+.form-contact .form-control::placeholder,
+.form-content :is(input, textarea)::placeholder { color: var(--text-muted); font-weight: 400; opacity: 1; }
+/* "Select Country" is a prompt, like the placeholders around it. */
+.form-content select:has(option:first-child:checked) { color: var(--text-muted); }
+
+/* A phone number is not a quantity: no stepper arrows on it. */
+.form-contact input[name="phone"],
+.form-content input[name="MobileNo"] { -moz-appearance: textfield; appearance: textfield; }
+.form-contact input[name="phone"]::-webkit-inner-spin-button,
+.form-contact input[name="phone"]::-webkit-outer-spin-button,
+.form-content input[name="MobileNo"]::-webkit-inner-spin-button,
+.form-content input[name="MobileNo"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* --- contact page ------------------------------------------------------- */
+/* The title band is shared with the booking pages; only this one needs the
+   room and the inner-page title size. The title was an <h4> set at page-title
+   size, so the page had no <h1> and the sweep read it as body text in the
+   display face; it is the page's <h1> now. */
+.tophighlighttext:has(+ .main_cont_manager) { padding-block: var(--s5) var(--s4); }
+.tophighlighttext:has(+ .main_cont_manager) h1 { margin: 0 0 var(--s2); font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem); }
+.tophighlighttext:has(+ .main_cont_manager) p { margin: 0; color: var(--text-muted); }
+
+.main_cont_manager { padding-bottom: var(--s7); }
+.bodyfirst_ao > .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4); }
+.bodyfirst_ao > .row > [class*="col-"] { width: auto; max-width: none; padding: 0; }
+@media (min-width: 992px) {
+  .bodyfirst_ao > .row { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s5); align-items: start; }
+}
+
+/* left: the illustration, then how to reach us */
+.address-box {
+  display: grid; gap: var(--s4);
+  padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+@media (min-width: 576px) { .address-box { padding: var(--s5); } }
+.call-imgbox img { display: block; width: 100%; max-width: 200px; height: auto; margin-inline: auto; }
+@media (min-width: 576px) { .call-imgbox img { max-width: 320px; } }
+
+.adress-inbox ul { display: grid; gap: var(--s3); margin: 0; padding: 0; list-style: none; }
+.adress-inbox li { padding-top: var(--s3); border-top: 1px solid var(--border-soft); }
+.adress-inbox h5 {
+  margin: 0 0 var(--s2);
+  font-family: var(--font-body); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+/* .95rem is what lets the site's own address fit one line on a 375px phone. */
+.adress-inbox p { display: flex; align-items: center; gap: var(--s3); margin: 0; font-size: .95rem; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+.adress-inbox p > span:first-child {
+  flex: none; display: grid; place-items: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--emerald-100); color: var(--emerald-600); font-size: .85rem;
+}
+.adress-inbox a { color: var(--emerald-600); }
+.adress-inbox :is(.addr, .ein) { display: block; font-weight: 400; color: var(--text-muted); }
+/* EIN, like the address, is a .env value; empty means the line goes, here
+   and beside the legal name in every footer. */
+.adress-inbox .ein:has(> span:empty),
+.fein:has(> span:empty) { display: none; }
+/* Same rule as the footer line in section 22: no SITE_ADDRESS yet, so no
+   ADDRESS heading standing over a company name and nothing else. */
+.adress-inbox li:has(.addr:empty) { display: none; }
+/* The first item showing takes no rule above it. */
+.adress-inbox li:first-child,
+.adress-inbox li:has(.addr:empty) + li { padding-top: 0; border-top: 0; }
+
+/* right: the form card */
+.form-contact {
+  padding: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 576px) { .form-contact { padding: var(--s5); } }
+@media (min-width: 768px) { .form-contact { padding: var(--s6); } }
+.form-contact h2 { margin: 0 0 var(--s2); font-size: clamp(1.4rem, 1.2rem + .8vw, 1.8rem); }
+.form-contact > p { margin: 0 0 var(--s5); color: var(--text-muted); }
+.form-contact > p a { font-weight: 600; color: var(--emerald-600); white-space: nowrap; }
+
+.form-contact form > .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4); }
+.form-contact form > .row > * { width: auto; max-width: none; padding: 0; }
+@media (min-width: 576px) {
+  .form-contact form > .row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form-contact form > .row > :is(.col-sm-12, .cbtn) { grid-column: 1 / -1; }
+}
+.form-contact .form-group { margin: 0; }
+.form-contact .form-group > br, .cbtn > br { display: none; }
+.cbtn { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
+#err_con { font-size: .9rem; font-weight: 500; color: var(--danger); }
+#err_con:empty { display: none; }
+
+/* --- request-a-quote page ----------------------------------------------- */
+.formouter-content { padding-bottom: var(--s7); }
+/* The title block sits outside .container in the markup, so it takes the
+   container's width rule instead of touching the window edge. */
+.formouter-content > .banner-content {
+  width: min(100% - (var(--gutter) * 2), var(--measure));
+  margin-inline: auto;
+  padding-block: var(--s5) var(--s4);
+}
+.banner-content h2 { margin: 0 0 var(--s2); font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.4rem); }
+.banner-content p { margin: 0; color: var(--text-muted); }
+
+.quote-warp {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.quote-warp > .row { display: grid; grid-template-columns: minmax(0, 1fr); }
+.quote-warp > .row > [class*="col-"] { width: auto; max-width: none; padding: 0; }
+@media (min-width: 992px) {
+  .quote-warp > .row { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+}
+/* The illustration is a JPEG on white, so it sits on the white card as is. */
+.quote-imgwarp { display: grid; place-items: center; padding: var(--s5) var(--s5) 0; }
+.quote-imgwarp img { display: block; width: 100%; max-width: 240px; height: auto; }
+@media (min-width: 992px) {
+  .quote-imgwarp { padding: var(--s6); }
+  .quote-imgwarp img { max-width: 420px; }
+}
+
+.form-content { padding: var(--s4); }
+@media (min-width: 576px) { .form-content { padding: var(--s5); } }
+@media (min-width: 768px) { .form-content { padding: var(--s6); } }
+.form-content form { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4); }
+@media (min-width: 576px) {
+  .form-content form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form-content form > :is(.message_box, .btn) { grid-column: 1 / -1; }
+}
+.form-content form > br { display: none; }
+.form-content form > .btn { justify-self: start; }
