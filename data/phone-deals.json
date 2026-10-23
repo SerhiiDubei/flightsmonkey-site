@@ -1,0 +1,25 @@
+{
+  "_help": "Банери Phone Only Deals і pop-up на сторінці вибору рейсів. Міняйте тексти тут і зберігайте файл — сайт підхопить без перезапуску. price: число — показується як ціна «від», null — пише «Call for price». Напрями й тексти погоджує клієнт; номер телефону береться з SITE_PHONE у .env, тут його немає.",
+  "banners": {
+    "enabled": true,
+    "title": "Phone-only deals",
+    "subtitle": "Fares you will not find online",
+    "items": [
+      { "route": "Flights to Hawaii", "note": "Ask an agent for today's phone-only fare", "price": null },
+      { "route": "Flights to Mexico", "note": "Ask an agent for today's phone-only fare", "price": null },
+      { "route": "Flights to Canada", "note": "Ask an agent for today's phone-only fare", "price": null }
+    ]
+  },
+  "popup": {
+    "enabled": true,
+    "title": "Call now — it's faster",
+    "text": "Our agents can find fares you will not find online and book them for you on the call.",
+    "button": "Call",
+    "showWhileResultsLoad": true,
+    "showAfterSeconds": 30,
+    "exitIntent": true
+  },
+  "sticky": {
+    "label": "Fares you will not find online"
+  }
+}

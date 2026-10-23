@@ -79,6 +79,13 @@ const cfg = {
   bookingsDir: path.join(ROOT, 'data', 'bookings'),
   pagesDir: path.join(ROOT, 'pages'),
   publicDir: path.join(ROOT, 'public'),
+  // Call tracking (ТЗ 23.10.2026). Both optional: empty GA4_ID loads no analytics at all;
+  // the call-click events still go to window.dataLayer, so GTM can pick them up later.
+  analytics: {
+    ga4Id: process.env.GA4_ID || '',
+    // Google Ads conversion for a call click, "AW-123456789/AbCdEf" — set with the PPC specialist.
+    adsCallConversion: process.env.GOOGLE_ADS_CALL_CONVERSION || '',
+  },
 };
 
 module.exports = cfg;

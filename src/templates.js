@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const cfg = require('./config');
+const calls = require('./calls');
 
 const cache = new Map();
 const PROD = process.env.NODE_ENV === 'production';
@@ -59,11 +60,20 @@ function brandVars() {
     SITE_PHONE_DISPLAY: prettyPhone(s.phone),
     SITE_PHONE_ALT_DISPLAY: prettyPhone(s.phoneAlt),
     YEAR: String(new Date().getFullYear()),
+    // Calls from the site: every block takes the one SITE_PHONE
+    PHONE_DEALS_SIDE: calls.dealsHtml('side', s.phone, prettyPhone(s.phone)),
+    PHONE_DEALS_INLINE: calls.dealsHtml('inline', s.phone, prettyPhone(s.phone)),
+    STICKY_LABEL: (calls.deals().sticky || {}).label || 'Fares you will not find online',
+    AIRLINES_BLOCK: calls.airlinesHtml(),
+    REVIEWS_BLOCK: calls.reviewsHtml(),
   };
 }
 
 function render(rel, vars) {
-  return fill(load(rel), { ...brandVars(), ...vars });
+  const s = cfg.site;
+  return fill(load(rel), { ...brandVars(), ...vars })
+    .replace('</head>', `${calls.headTags()}\n</head>`)
+    .replace(/<\/body>(?![\s\S]*<\/body>)/, `${calls.bodyTags(s.phone, prettyPhone(s.phone))}\n</body>`);
 }
 
 /** every mirrored static page (for the sitemap and the router) */
