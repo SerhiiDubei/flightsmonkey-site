@@ -119,3 +119,57 @@
 .hero-call b { font-size: 1.4rem; letter-spacing: .02em; }
 @media (max-width: 767.98px) { .hero-call { display: none; } }
 .hero-call b, .hero-call small { color: #fff !important; }
+
+/* --- Mobile: the four help cards are call links, and say so --------------------- */
+.mobile-support .features-lead { margin: 0 0 var(--s2); text-align: center; font-weight: 600; color: var(--ink); }
+a.feature-card { color: var(--ink); text-decoration: none; }
+a.feature-card:active, a.feature-card:hover { border-color: var(--emerald-500); background: #f3faf6; color: var(--ink); }
+a.feature-card::after { content: "Call"; margin-left: auto; font-size: .75rem; font-weight: 700; color: var(--emerald-700); }
+
+/* --- Mobile: traveller details is a full-screen sheet with Done always in reach ---
+   On a phone the dropdown ran past the bottom edge under the call bar, so the
+   last class and the Done button could not be reached. */
+@media (max-width: 767.98px) {
+  #pop {
+    position: fixed; inset: 0; z-index: 1200;
+    width: auto; max-width: none; border: 0; border-radius: 0;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: var(--s4) var(--s4) 0;
+  }
+  #pop .repbackhighttr { position: sticky; top: calc(-1 * var(--s4)); margin: calc(-1 * var(--s4)) calc(-1 * var(--s4)) var(--s4); padding: var(--s4); background: var(--surface); z-index: 2; }
+  #pop .repbackhighttr i { display: inline-flex; font-size: 1.2rem; padding: 8px; cursor: pointer; color: var(--ink); }
+  #pop > div:last-child, #pop #optionbtn {
+    position: sticky; bottom: 0; z-index: 2;
+    margin: var(--s4) calc(-1 * var(--s4)) 0; padding: var(--s3) var(--s4) calc(var(--s3) + env(safe-area-inset-bottom, 0px));
+    background: var(--surface); border-top: 1px solid var(--border-soft);
+    display: flex; gap: var(--s3);
+  }
+  #pop #optionbtn .btncommin { flex: 1; justify-content: center; padding: 14px 16px; font-size: 1rem; }
+  #pop #btn-done { background: var(--emerald-600); color: #fff; }
+}
+
+/* --- Mobile: the date picker is a full-screen sheet, like traveller details ---------
+   Inline in the field it ran under the call bar, its right column spilled out of the
+   card and the Return icon floated over the days. As a sheet it has the whole screen,
+   two months scroll, and Reset / Done stay at the bottom. */
+@media (max-width: 767.98px) {
+  .desktop_view_calaender {
+    position: fixed !important; inset: 0; z-index: 1200;
+    width: auto !important; max-width: none !important; margin: 0;
+    border: 0; border-radius: 0; box-shadow: none;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 0 var(--s4);
+    left: 0 !important; right: 0 !important; top: 0 !important;
+  }
+  .desktop_view_calaender::before {
+    content: "Choose your dates"; display: block; position: sticky; top: 0; z-index: 3;
+    margin: 0 calc(-1 * var(--s4)) var(--s3); padding: var(--s4); background: var(--surface);
+    border-bottom: 1px solid var(--border-soft); font: 600 1.05rem var(--font-display); color: var(--ink);
+  }
+  .desktop_view_calaender .ui-datepicker-multi { width: 100% !important; }
+  .desktop_view_calaender .confirm-cal {
+    position: sticky; bottom: 0; z-index: 3; margin: var(--s4) calc(-1 * var(--s4)) 0;
+    padding: var(--s3) var(--s4) calc(var(--s3) + env(safe-area-inset-bottom, 0px)); background: var(--surface);
+  }
+  .desktop_view_calaender .confirm-cal .calbtn { flex: 1; justify-content: center; padding: 14px 16px; font-size: 1rem; }
+}

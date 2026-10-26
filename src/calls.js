@@ -96,7 +96,7 @@ function reviewsHtml() {
 
 /** Tags added to every page: the calls stylesheet in <head>; GA4 (if set) and the calls script before </body>. */
 function headTags() {
-  return '<link href="/assets/css/calls.css?v=4" rel="stylesheet" />';
+  return '<link href="/assets/css/calls.css?v=7" rel="stylesheet" />';
 }
 
 function bodyTags(phone, phoneDisplay) {
@@ -106,7 +106,7 @@ function bodyTags(phone, phoneDisplay) {
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config',${JSON.stringify(ga)});</script>` : '';
   return `${gaTags}
 <script id="fm-calls-config" type="application/json">${clientConfig(phone, phoneDisplay)}</script>
-<script src="/assets/js/calls.js?v=1" defer></script>`;
+<script src="/assets/js/calls.js?v=3" defer></script>`;
 }
 
 module.exports = { deals, dealsHtml, airlinesHtml, reviewsHtml, headTags, bodyTags, priceLabel };

@@ -61,31 +61,29 @@
 
   <div class="support-content">
     <h4>Would you rather just talk to someone?</h4>
-   
 
-
- <a href="tel:{{SITE_PHONE}}" class="phone-number">{{SITE_PHONE_DISPLAY}}</a>
-
+ <a href="tel:{{SITE_PHONE}}" class="phone-number" data-call-source="support" data-call-number><span data-call-display>{{SITE_PHONE_DISPLAY}}</span></a>
 
     <p>Open around the clock, every day of the year</p>
 
+    <p class="features-lead">Tap what you need. It starts a call.</p>
     <div class="features">
-      <div class="feature-card">
+      <a class="feature-card" href="tel:{{SITE_PHONE}}" data-call-source="support-new-booking" data-call-number>
         <i class="fa-solid fa-phone"></i>
         <span>New booking</span>
-      </div>
-      <div class="feature-card">
+      </a>
+      <a class="feature-card" href="tel:{{SITE_PHONE}}" data-call-source="support-change" data-call-number>
         <i class="fa-solid fa-right-left"></i>
         <span>Change a flight</span>
-      </div>
-      <div class="feature-card">
+      </a>
+      <a class="feature-card" href="tel:{{SITE_PHONE}}" data-call-source="support-upgrade" data-call-number>
         <i class="fa-solid fa-star"></i>
         <span>Upgrades</span>
-      </div>
-      <div class="feature-card">
+      </a>
+      <a class="feature-card" href="tel:{{SITE_PHONE}}" data-call-source="support-baggage" data-call-number>
         <i class="fa-solid fa-suitcase-rolling"></i>
         <span>Baggage</span>
-      </div>
+      </a>
     </div>
 
     <p class="mt-3"><span style="color:#f0b429;">⚡</span> A person picks up. No phone menu, no ticket number.</p>
