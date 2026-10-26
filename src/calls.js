@@ -65,7 +65,7 @@ const AIRLINES = [
 
 function airlinesHtml() {
   const logos = AIRLINES.map(([code, name]) =>
-    `<li><img src="/assets/images/uploads/airlines/${code}.png" alt="${esc(name)}" title="${esc(name)}" loading="lazy" width="96" height="48"></li>`).join('');
+    `<li><img src="/assets/images/uploads/airlines-hd/${code}.png" alt="${esc(name)}" title="${esc(name)}" loading="lazy" width="64" height="64"></li>`).join('');
   return `
 <section class="trust-airlines" aria-labelledby="trust-airlines-h">
   <div class="container">
@@ -96,7 +96,7 @@ function reviewsHtml() {
 
 /** Tags added to every page: the calls stylesheet in <head>; GA4 (if set) and the calls script before </body>. */
 function headTags() {
-  return '<link href="/assets/css/calls.css?v=3" rel="stylesheet" />';
+  return '<link href="/assets/css/calls.css?v=4" rel="stylesheet" />';
 }
 
 function bodyTags(phone, phoneDisplay) {

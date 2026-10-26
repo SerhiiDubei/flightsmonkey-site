@@ -9,3 +9,5 @@ data/bookings
 .env.local
 .shots
 .shots*
+
+.vercel

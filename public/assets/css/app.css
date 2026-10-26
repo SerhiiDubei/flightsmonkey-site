@@ -974,6 +974,12 @@ p small { display: inline-block; max-width: 100%; overflow-wrap: break-word; }
   }
   .ui-datepicker-multi .ui-datepicker-group { width: auto; flex: 1 1 0; min-width: 16em; }
 }
+@media (max-width: 639.98px) {
+  /* Phone: jQuery UI's inline width:34em (~366px) is wider than the card and made the
+     page scroll sideways, cutting off the Saturday column. Fit the card instead. */
+  .ui-datepicker-multi { width: 100% !important; max-width: 100%; }
+  .ui-datepicker-multi .ui-datepicker-group { width: 100%; min-width: 0; }
+}
 .ui-datepicker-row-break { display: none; }
 
 /* The departure/return calendar is inline markup, not the popup one — it

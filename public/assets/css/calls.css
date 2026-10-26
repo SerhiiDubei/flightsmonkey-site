@@ -93,7 +93,7 @@
   list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--s5); align-items: center;
 }
-.trust-airlines-list img { display: block; width: 100%; max-width: 112px; height: auto; margin: 0 auto; object-fit: contain; }
+.trust-airlines-list img { display: block; width: 100%; max-width: 64px; height: auto; margin: 0 auto; object-fit: contain; }
 @media (max-width: 767.98px) {
   .trust-airlines-list { grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
 }
