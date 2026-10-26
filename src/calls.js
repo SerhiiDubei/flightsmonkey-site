@@ -96,7 +96,7 @@ function reviewsHtml() {
 
 /** Tags added to every page: the calls stylesheet in <head>; GA4 (if set) and the calls script before </body>. */
 function headTags() {
-  return '<link href="/assets/css/calls.css?v=7" rel="stylesheet" />';
+  return '<link href="/assets/css/calls.css?v=9" rel="stylesheet" />';
 }
 
 function bodyTags(phone, phoneDisplay) {

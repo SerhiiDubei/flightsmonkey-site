@@ -173,3 +173,46 @@ a.feature-card::after { content: "Call"; margin-left: auto; font-size: .75rem; f
   }
   .desktop_view_calaender .confirm-cal .calbtn { flex: 1; justify-content: center; padding: 14px 16px; font-size: 1rem; }
 }
+
+/* --- Mobile home: one clear call button, compact, so the search form shows on the first screen --- */
+@media (max-width: 767.98px) {
+  .mobile-support { padding: var(--s3) var(--s4); }
+  .mobile-support .support-compact { display: flex; align-items: center; gap: var(--s3); }
+  .mobile-support .agent { flex: none; width: 56px; height: 56px; margin: 0; border-radius: 50%; object-fit: cover; object-position: 60% 35%; }
+  .mobile-support .support-content { text-align: left; }
+  .mobile-support .support-content h4 { margin: 0 0 2px; font-size: 1rem; line-height: 1.25; text-align: left; }
+  .mobile-support .support-content p { margin: 0; font-size: .85rem; color: var(--text-muted); text-align: left; }
+  .support-call {
+    display: flex; align-items: center; justify-content: center; gap: var(--s3); margin-top: var(--s3);
+    padding: 12px 16px; border-radius: var(--radius); background: var(--emerald-600); color: #fff; text-decoration: none;
+    font-weight: 600; box-shadow: 0 4px 14px rgba(7,35,30,.22);
+  }
+  .support-call:active { background: var(--emerald-700); color: #fff; }
+  .support-call i { font-size: 1.2rem; color: var(--gold); }
+  .support-call b { font-size: 1.15rem; letter-spacing: .02em; }
+}
+@media (min-width: 768px) { .support-call { display: none; } }
+
+/* --- Pinned call button: 25% larger, with a light ring on the phone icon --- */
+.fixcn.fixcn--pinned .fixcn-call i { font-size: 32px; position: relative; animation: fm-ring 4.5s ease-in-out infinite; transform-origin: 50% 60%; }
+.fixcn.fixcn--pinned .deal-text { font-size: .975rem; }
+.fixcn.fixcn--pinned .fixcn-number { font-size: 1.5625rem; }
+@media (min-width: 768px) { .fixcn.fixcn--pinned { padding: 12px 15px 12px 22px; gap: 16px; box-shadow: 0 8px 28px rgba(7,35,30,.32), 0 0 0 0 rgba(240,180,41,.5); animation: fm-glow 4.5s ease-out infinite; } }
+@media (max-width: 767.98px) {
+  .fixcn.fixcn--pinned { padding: 15px var(--s5) calc(15px + env(safe-area-inset-bottom, 0px)); animation: fm-glow-bar 4.5s ease-out infinite; }
+  body:has(.fixcn--pinned) { padding-bottom: 96px; }
+}
+@keyframes fm-ring {
+  0%, 70%, 100% { transform: rotate(0); }
+  74% { transform: rotate(14deg); } 78% { transform: rotate(-12deg); } 82% { transform: rotate(10deg); } 86% { transform: rotate(-6deg); } 90% { transform: rotate(0); }
+}
+@keyframes fm-glow { 0%, 60% { box-shadow: 0 8px 28px rgba(7,35,30,.32), 0 0 0 0 rgba(240,180,41,.55); } 100% { box-shadow: 0 8px 28px rgba(7,35,30,.32), 0 0 0 18px rgba(240,180,41,0); } }
+@keyframes fm-glow-bar { 0%, 60% { box-shadow: 0 -4px 24px rgba(7,35,30,.28), inset 0 0 0 0 rgba(240,180,41,.0); } 80% { box-shadow: 0 -4px 24px rgba(7,35,30,.28), inset 0 3px 0 0 rgba(240,180,41,.9); } 100% { box-shadow: 0 -4px 24px rgba(7,35,30,.28), inset 0 3px 0 0 rgba(240,180,41,0); } }
+@media (prefers-reduced-motion: reduce) { .fixcn.fixcn--pinned, .fixcn.fixcn--pinned .fixcn-call i { animation: none !important; } }
+
+/* Mobile home: headline short, value points hidden, so the search form is on the first screen */
+.support-call b { color: #fff; }
+@media (max-width: 767.98px) {
+  .three-box { display: none; }
+  .hero-call { display: none; }
+}
