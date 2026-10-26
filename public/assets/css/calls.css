@@ -106,3 +106,16 @@
 
 /* --- Footer company line (ТЗ 6) --------------------------------------- */
 .fcompany { margin-top: var(--s3); font-size: .85rem; opacity: .85; }
+
+/* --- Header number and the line under the home hero (ТЗ 23.10: every screen offers a call) --- */
+.nav-call { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--emerald-700) !important; white-space: nowrap; }
+.nav-call i { font-size: .9em; }
+@media (min-width: 992px) { .nav-call-item { margin-left: var(--s3); } .nav-call { border: 1px solid var(--emerald-100); border-radius: 999px; padding: 6px 14px !important; } }
+@media (max-width: 991.98px) { .nav-call-item { display: none; } }
+.hero-call { display: inline-flex; align-items: center; gap: var(--s3); margin-top: var(--s5); padding: 12px 20px; border-radius: var(--radius); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.28); color: #fff; text-decoration: none; }
+.hero-call:hover { background: rgba(255,255,255,.18); color: #fff; }
+.hero-call i { font-size: 26px; color: var(--gold); }
+.hero-call small { display: block; font-size: .8rem; opacity: .85; }
+.hero-call b { font-size: 1.4rem; letter-spacing: .02em; }
+@media (max-width: 767.98px) { .hero-call { display: none; } }
+.hero-call b, .hero-call small { color: #fff !important; }
