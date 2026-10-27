@@ -28,12 +28,15 @@ const cfg = {
   // The consolidator endpoint the client supplied — the one that has to work
   // in production. Credentials ride in the query string by the supplier's
   // design, so they belong in .env and nowhere else.
+  // The Vercel project still carries the v1 names (WIKI_USERID & co., set 24.09); v7 renamed
+  // them and production lost its credentials — every search ended in "supplier did not
+  // answer" (27.10). Both spellings are read, the new one wins.
   wikiproject: {
-    endpoint: process.env.WIKIPROJECT_ENDPOINT || 'https://agency.wikiproject.in/',
-    userId:   process.env.WIKIPROJECT_USERID   || '',
-    password: process.env.WIKIPROJECT_PASSWORD || '',
-    metaId:   process.env.WIKIPROJECT_METAID   || '2023',
-    website:  process.env.WIKIPROJECT_WEBSITE  || '',
+    endpoint: process.env.WIKIPROJECT_ENDPOINT || process.env.WIKI_BASE_URL || 'https://agency.wikiproject.in/',
+    userId:   process.env.WIKIPROJECT_USERID   || process.env.WIKI_USERID   || '',
+    password: process.env.WIKIPROJECT_PASSWORD || process.env.WIKI_PASSWORD || '',
+    metaId:   process.env.WIKIPROJECT_METAID   || process.env.WIKI_METAID   || '2023',
+    website:  process.env.WIKIPROJECT_WEBSITE  || process.env.WIKI_WEBSITE  || '',
     currency: (process.env.WIKIPROJECT_CURRENCY || 'USD').toUpperCase(),
     // Blank means "no cap"; the endpoint returned 700 offers (1.7 MB) for a
     // single round trip, which is more than any results page needs.

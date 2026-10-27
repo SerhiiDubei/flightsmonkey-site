@@ -89,13 +89,39 @@
 /* --- Trust: airline logos and reviews (ТЗ 6) --------------------------- */
 .trust-airlines { padding: var(--s7) 0; background: var(--surface); }
 .trust-airlines h2, .trust-reviews h2 { font-size: 1.5rem; text-align: center; margin-bottom: var(--s5); color: var(--ink); }
-.trust-airlines-list {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--s5); align-items: center;
+/* Logo with the airline's name under it (27.10). Desktop: all twelve in one compact row. */
+.trust-airlines-list { list-style: none; margin: 0; padding: 0; }
+.trust-airlines-list li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.trust-airlines-list img { display: block; width: 40px; height: 40px; object-fit: contain; }
+.trust-airlines-list span { font-size: .78rem; line-height: 1.2; font-weight: 600; color: var(--ink); }
+@media (min-width: 992px) {
+  .trust-airlines { padding: var(--s6) 0; }
+  .trust-airlines h2 { margin-bottom: var(--s4); }
+  .trust-airlines-list { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--s3); align-items: start; }
+  .trust-airlines-list--dup { display: none; }
 }
-.trust-airlines-list img { display: block; width: 100%; max-width: 64px; height: auto; margin: 0 auto; object-fit: contain; }
-@media (max-width: 767.98px) {
-  .trust-airlines-list { grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+/* Phones and tablets: a slow running line, one row high instead of four rows of three.
+   Two identical lists slide left by exactly one list's width, so the loop has no jump. */
+@media (max-width: 991.98px) {
+  .trust-airlines { padding: var(--s5) 0; }
+  .trust-airlines h2 { font-size: 1.25rem; margin-bottom: var(--s3); }
+  .trust-airlines-viewport {
+    overflow: hidden; margin: 0 calc(-1 * var(--s4));
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .trust-airlines-track { display: flex; width: max-content; animation: fm-airlines 45s linear infinite; }
+  .trust-airlines-viewport:hover .trust-airlines-track,
+  .trust-airlines-viewport:active .trust-airlines-track { animation-play-state: paused; }
+  .trust-airlines-list { display: flex; flex-shrink: 0; }
+  .trust-airlines-list li { width: 96px; flex-shrink: 0; }
+}
+@keyframes fm-airlines { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* No motion wanted: the same row, swiped by hand */
+@media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
+  .trust-airlines-viewport { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .trust-airlines-track { animation: none; }
+  .trust-airlines-list--dup { display: none; }
 }
 .trust-reviews { padding: var(--s7) 0; background: #f6faf8; }
 .trust-reviews-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s4); }
@@ -112,6 +138,16 @@
 .nav-call i { font-size: .9em; }
 @media (min-width: 992px) { .nav-call-item { margin-left: var(--s3); } .nav-call { border: 1px solid var(--emerald-100); border-radius: 999px; padding: 6px 14px !important; } }
 @media (max-width: 991.98px) { .nav-call-item { display: none; } }
+/* Desktop header (Olha, 27.10): no "Contact us" — its place goes to "Phone-Only Deals! Call <number>"
+   with an agent's face, as on the competitor's site. The burger menu on phones keeps Contact us. */
+.nav-call-agent, .nav-call-label { display: none; }
+@media (min-width: 992px) {
+  .nav-contact-item { display: none; }
+  .nav-call { padding: 4px 16px 4px 4px !important; background: #f3faf6; }
+  .nav-call:hover { background: var(--emerald-100); text-decoration: none; }
+  .nav-call-agent { display: block; width: 30px; height: 30px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; }
+  .nav-call-label { display: inline; font-weight: 600; color: var(--ink); }
+}
 .hero-call { display: inline-flex; align-items: center; gap: var(--s3); margin-top: var(--s5); padding: 12px 20px; border-radius: var(--radius); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.28); color: #fff; text-decoration: none; }
 .hero-call:hover { background: rgba(255,255,255,.18); color: #fff; }
 .hero-call i { font-size: 26px; color: var(--gold); }

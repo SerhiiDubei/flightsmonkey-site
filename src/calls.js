@@ -63,14 +63,22 @@ const AIRLINES = [
   ['BA', 'British Airways'], ['LH', 'Lufthansa'], ['AF', 'Air France'], ['EK', 'Emirates'],
 ];
 
+// Logo + name (Olha, 27.10: not everyone knows an airline by its logo). Desktop: one row of 12.
+// Below 992px: a slow running line; the second copy exists only so the loop has no seam,
+// so screen readers skip it and it is hidden on desktop.
 function airlinesHtml() {
-  const logos = AIRLINES.map(([code, name]) =>
-    `<li><img src="/assets/images/uploads/airlines-hd/${code}.png" alt="${esc(name)}" title="${esc(name)}" loading="lazy" width="64" height="64"></li>`).join('');
+  const items = () => AIRLINES.map(([code, name]) =>
+    `<li><img src="/assets/images/uploads/airlines-hd/${code}.png" alt="" loading="lazy" width="64" height="64"><span>${esc(name)}</span></li>`).join('');
   return `
 <section class="trust-airlines" aria-labelledby="trust-airlines-h">
   <div class="container">
     <h2 id="trust-airlines-h">Airlines we book</h2>
-    <ul class="trust-airlines-list">${logos}</ul>
+    <div class="trust-airlines-viewport">
+      <div class="trust-airlines-track">
+        <ul class="trust-airlines-list">${items()}</ul>
+        <ul class="trust-airlines-list trust-airlines-list--dup" aria-hidden="true">${items()}</ul>
+      </div>
+    </div>
   </div>
 </section>`;
 }
@@ -96,7 +104,7 @@ function reviewsHtml() {
 
 /** Tags added to every page: the calls stylesheet in <head>; GA4 (if set) and the calls script before </body>. */
 function headTags() {
-  return '<link href="/assets/css/calls.css?v=9" rel="stylesheet" />';
+  return '<link href="/assets/css/calls.css?v=10" rel="stylesheet" />';
 }
 
 function bodyTags(phone, phoneDisplay) {
