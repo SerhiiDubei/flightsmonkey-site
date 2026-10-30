@@ -100,16 +100,16 @@
 
                                     <div class="switch-field">
                                         <input type="radio" id="round" name="triptype" value="round" checked />
-                                        <label for="round">Round Trip</label>
+                                        <label for="round">Return trip</label>
                                         <input type="radio" id="oneway" name="triptype" value="oneway" />
-                                        <label for="oneway">One Way</label>
+                                        <label for="oneway">Single trip</label>
                                     </div>
                                     <div class="mt-2">
                                         <div class="form-row">
                                             <div class="search-biginput  origin_focus ">
                                                 <div class="textlng  origin_error">
                                                     <i class="fa-sharp fa-solid fa-circle-xmark new2" id="blank1"></i>
-                                                    <label>Origin</label>
+                                                    <label>Leaving from</label>
                                                     <div class="map-icon">
                                                         <img src="/assets/images/origin-new.svg"
                                                             alt="origin" />
@@ -125,7 +125,7 @@
                                                     <div class="listsearchlist">
                                                         <div class='deporg new4'>
                                                             <h4 class="new5"><i id='depclickclose' onclick='dpclose1()'
-                                                                    class='fa-solid fa-xmark new6'></i> From Where?</h4>
+                                                                    class='fa-solid fa-xmark new6'></i> Leaving from?</h4>
                                                         </div>
                                                         <input type="text" id="origin"
                                                             class="form-control mobileorigin new7" placeholder="FROM"
@@ -159,7 +159,7 @@
                                                     <div class="listsearchlistdes">
                                                         <div class='deporg'>
                                                             <h4 class="new8"><i id='depclickclose' onclick='dpclose2()'
-                                                                    class='fa-solid fa-xmark'></i> Where To?</h4>
+                                                                    class='fa-solid fa-xmark'></i> Heading to?</h4>
                                                         </div>
                                                         <input type="text" class="form-control mobiledestination new9"
                                                             id="destination" placeholder="TO" autocomplete="off"
@@ -171,7 +171,7 @@
                                             <div class="res-mobiletxtview">
                                                 <div class="search-smallinput dp_date_focus">
                                                     <div class="textlng from_error">
-                                                        <label>Departure</label>
+                                                        <label>Depart</label>
                                                         <div class="map-icon"><img
                                                                 src="/assets/images/calender-icon.svg"
                                                                 alt="calender" /></div>
@@ -180,7 +180,7 @@
                                                             readonly="readonly">
                                                         <p id="dp_date" class="dp_date">Date</p>
                                                         <div class="repbackhight">
-                                                            <h4><i class="fa-solid fa-arrow-left"></i> Departure Date
+                                                            <h4><i class="fa-solid fa-arrow-left"></i> Pick a departure day
                                                             </h4>
                                                         </div>
                                                         <div class="desktop_view_calaender">
@@ -189,8 +189,8 @@
                                                                     <div class="col-sm-6">
                                                                         <select class="form-control newfunction12"
                                                                             name="title13">
-                                                                            <option value="round">Round Trip</option>
-                                                                            <option value="oneway">One Way</option>
+                                                                            <option value="round">Return trip</option>
+                                                                            <option value="oneway">Single trip</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="col-sm-6">
@@ -305,7 +305,7 @@
                                             <div class="search-smallinput input-ful ">
                                                 <div class="textlng">
                                                     <div class="traveller_focus">
-                                                        <label>Travelers</label>
+                                                        <label>Passengers</label>
                                                         <div class="map-icon traveliconmap">
                                                             <img src="/assets/images/user-new.svg"
                                                                 alt="user-new" />
@@ -320,14 +320,13 @@
                                                     <div id="pop" class="myfrm arrow-top">
                                                         <div class="repbackhighttr">
                                                             <h4><i id="sfclickclose"
-                                                                    class="fa-solid fa-arrow-left"></i>Traveller Details
+                                                                    class="fa-solid fa-arrow-left"></i>Who is flying
                                                             </h4>
                                                         </div>
                                                         <div class="travllerbox-mbl">
                                                             <div class="row" id="index_style_mar">
                                                                 <div class="col-sm-4">
-                                                                    <p><span class="adult">1 </span> Adults <small>(Aged
-                                                                            12+ yrs)</small></p>
+                                                                    <p><span class="adult">1 </span> Adults <small>(12 and over)</small></p>
                                                                     <div class="btn-group popplusap" role="group"
                                                                         aria-label="Basic example">
                                                                         <button type="button"
@@ -344,8 +343,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
-                                                                    <p><span class="child">0</span> Child <small>(Aged
-                                                                            2-12 yrs)</small></p>
+                                                                    <p><span class="child">0</span> Child <small>(from 2 up to 12)</small></p>
                                                                     <div class="btn-group popplusap" role="group"
                                                                         aria-label="Basic example">
                                                                         <button type="button"
@@ -362,8 +360,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
-                                                                    <p><span class="infant">0</span> Infant<small>(Below
-                                                                            2 yrs)</small></p>
+                                                                    <p><span class="infant">0</span> Infant<small>(under 2)</small></p>
                                                                     <div class="btn-group popplusap" role="group"
                                                                         aria-label="Basic example">
                                                                         <button type="button"
@@ -381,7 +378,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <p class="model_heading">Travel Class</p>
+                                                        <p class="model_heading">Cabin</p>
                                                         <input type="hidden" name="class_type" value="Economy"
                                                             id="class_type" />
                                                         <ul id="cont_index_marleft">
@@ -420,7 +417,7 @@
                                                                 class="ai ai-Search">
                                                                 <path
                                                                     d="M21 21l-4.486-4.494M19 10.5a8.5 8.5 0 1 1-17 0 8.5 8.5 0 0 1 17 0z" />
-                                                            </svg></span> SEARCH FLIGHTS</button>
+                                                            </svg></span> FIND FLIGHTS</button>
 
 
                                                 </div>
@@ -430,7 +427,7 @@
                                                             stroke-linecap="round" stroke-linejoin="round"
                                                             class="ai ai-Check">
                                                             <path d="M4 12l6 6L20 6" />
-                                                        </svg></span>Quick Results</div>
+                                                        </svg></span>Instant results</div>
                                             </div>
                                         </div>
                                     </div>
@@ -443,8 +440,8 @@
                                         <div class="form-check non_stop new15">
                                             <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                 value="true" autocomplete="off" name="nonstop">
-                                            <label class="form-check-label labelnonst" for="inlineCheckbox1">Non
-                                                stop</label>
+                                            <label class="form-check-label labelnonst" for="inlineCheckbox1">Direct
+                                                only</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -514,7 +511,7 @@
                                 <div class="popular-imgtxtbox">
                                     <div class="citybox">
                                         <h3>Niagara Falls </h3>
-                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        <span>Explore <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                                 class="ai ai-CircleChevronRightFill">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -534,7 +531,7 @@
                                 <div class="popular-imgtxtbox">
                                     <div class="citybox">
                                         <h3>Miami </h3>
-                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        <span>Explore <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                                 class="ai ai-CircleChevronRightFill">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -554,7 +551,7 @@
                                 <div class="popular-imgtxtbox">
                                     <div class="citybox">
                                         <h3>Montreal </h3>
-                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        <span>Explore <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                                 class="ai ai-CircleChevronRightFill">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -574,7 +571,7 @@
                                 <div class="popular-imgtxtbox">
                                     <div class="citybox">
                                         <h3>Halifax </h3>
-                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        <span>Explore <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                                 class="ai ai-CircleChevronRightFill">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -594,7 +591,7 @@
                                 <div class="popular-imgtxtbox">
                                     <div class="citybox">
                                         <h3>Mexico </h3>
-                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        <span>Explore <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                                 class="ai ai-CircleChevronRightFill">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -614,7 +611,7 @@
                                 <div class="popular-imgtxtbox">
                                     <div class="citybox">
                                         <h3>Bangkok </h3>
-                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        <span>Explore <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                                 class="ai ai-CircleChevronRightFill">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -634,7 +631,7 @@
                                 <div class="popular-imgtxtbox">
                                     <div class="citybox">
                                         <h3>Costa Rica </h3>
-                                        <span>Know More <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                        <span>Explore <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                                 class="ai ai-CircleChevronRightFill">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -653,7 +650,7 @@
                                 </h2>
                                 <p scrolls scrolls-anim="fade-down" scrolls-duration="1000">Open the map and see what it costs to reach anywhere we fly.
                                 </p>
-                                <a href="/destinations">Click More <svg xmlns="http://www.w3.org/2000/svg"
+                                <a href="/destinations">See all places <svg xmlns="http://www.w3.org/2000/svg"
                                         width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke-width="2"
                                         class="ai ai-CircleChevronRightFill">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -683,7 +680,7 @@
                                       <img src="/assets/image/cdestination/canadian-img.154f5347.jpg" class="fassets/image" alt="canadian-img">
                                         <div class="holiday-txtbox">
                                             <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Canadian East Coast
-                                                <span><a href="/tour/canadian-eastcoast" class="chek-btnbox">Check Now</a></span>
+                                                <span><a href="/tour/canadian-eastcoast" class="chek-btnbox">View trip</a></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -698,7 +695,7 @@
                                         <div class="holiday-txtbox">
                                             <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Atlantic Canada
                                                 <span><a href="/tour/atlantic-canada"
-                                                        class="chek-btnbox">Check Now</a></span>
+                                                        class="chek-btnbox">View trip</a></span>
                                             </h3>
 
 
@@ -713,7 +710,7 @@
                                             src="/assets/image/cdestination/mexican-celebration-img.37e52e58.jpg" class="fassets/image" alt="mexican celebration">
                                         <div class="holiday-txtbox">
                                             <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Mexican Celebration
-                                                <span><a href="/mexican-celebration" class="chek-btnbox">Check Now</a></span>
+                                                <span><a href="/mexican-celebration" class="chek-btnbox">View trip</a></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -725,7 +722,7 @@
                                       <img src="/assets/image/cdestination/phuket-celebration-img.9721fccc.jpg" class="fassets/image" alt="phuket-celebration">
                                         <div class="holiday-txtbox">
                                             <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Phuket Celebration with...
-                                                <span><a href="/tour/phuket-celebration" class="chek-btnbox">Check Now</a></span>
+                                                <span><a href="/tour/phuket-celebration" class="chek-btnbox">View trip</a></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -772,7 +769,7 @@
                                     <div class="holiday-txtbox">
                                         <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Canadian East Coast
                                             <span><a href="/tour/canadian-eastcoast"
-                                                    class="chek-btnbox">Check Now</a></span>
+                                                    class="chek-btnbox">View trip</a></span>
                                         </h3>
                                     </div>
                                 </div>
@@ -787,7 +784,7 @@
                                     <div class="holiday-txtbox">
                                         <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Atlantic Canada
                                             <span><a href="/tour/atlantic-canada"
-                                                    class="chek-btnbox">Check Now</a></span>
+                                                    class="chek-btnbox">View trip</a></span>
                                         </h3>
 
 
@@ -803,8 +800,8 @@
                                             src="/assets/image/cdestination/mexican-celebration-img.37e52e58.jpg" class="fassets/image" alt="mexican celebration"> -->
                                     <div class="holiday-txtbox">
                                         <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Mexican Celebration
-                                            <span><a href="/mexican-celebration" class="chek-btnbox">Check
-                                                    Now</a></span>
+                                            <span><a href="/mexican-celebration" class="chek-btnbox">View
+                                                    trip</a></span>
                                         </h3>
                                     </div>
                                 </div>
@@ -818,7 +815,7 @@
                                         <h3 scrolls scrolls-anim="fade-down" scrolls-duration="1000">Phuket Celebration
                                             with...
                                             <span><a href="/tour/phuket-celebration"
-                                                    class="chek-btnbox">Check Now</a></span>
+                                                    class="chek-btnbox">View trip</a></span>
                                         </h3>
                                     </div>
                                 </div>

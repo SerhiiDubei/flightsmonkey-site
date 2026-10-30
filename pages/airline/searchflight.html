@@ -71,11 +71,11 @@
                 <div class="traw listingradiobtn">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="triptype" id="round" value="round" {{ROUND_CHECKED}}>
-                        <label class="form-check-label" for="round">Round trip</label>
+                        <label class="form-check-label" for="round">Return journey</label>
                     </div>
                     <div class="form-check form-check-inline r2">
                         <input class="form-check-input" type="radio" name="triptype" id="oneway" value="oneway" {{ONEWAY_CHECKED}}>
-                        <label class="form-check-label" for="oneway">Oneway</label>
+                        <label class="form-check-label" for="oneway">Single journey</label>
                     </div>
                 </div>
                 <div class="mt-2 modified-ser mobile-ser">
@@ -86,7 +86,7 @@
                         <div class="frm-width origin_focus">
                             <div class="textlng">
                                 <i class="fa-sharp fa-solid fa-circle-xmark" id="blank1" style="cursor:pointer;"></i>
-                                <label>from</label>
+                                <label>Leaving from</label>
                                 <div class="map-icon"><img src="/assets/images/origin-new.svg" /></div>
                                 <input type="text" id="origin2" name="origin"
                                     class="form-control origin_value frommarg2" value="{{ORIGIN}}"
@@ -97,7 +97,7 @@
                                         <h4 style="font-size:18px;"><i
                                                 style="color:#cc0000 !important;position:relative !important;top:0 !important;left:0 !important;margin-right:10px !important;"
                                                 id='depclickclose' onclick='dpclose1()' class='fa-solid fa-xmark'></i>
-                                            From Where?</h4>
+                                            Departing from?</h4>
                                     </div>
                                     <input type="text" id="origin"
                                         style="border: 1px solid #ccc !important;margin-bottom: 3px; margin-top: 16px;width: 104%;"
@@ -128,7 +128,7 @@
                         <div class="frm-width destination_focus">
                             <div class="textlng">
                                 <i class="fa-sharp fa-solid fa-circle-xmark" id="blank2" style="cursor:pointer;"></i>
-                                <label>To</label>
+                                <label>Going to</label>
                                 <div class="map-icon"><img src="/assets/images/destination.svg" /></div>
                                 <input type="text" class="form-control destination_value frommarg2" id="destination2"
                                     value="{{DEST}}" name="destination" placeholder="TO"
@@ -139,7 +139,7 @@
                                         <h4 style="font-size:18px;"><i
                                                 style="color:#cc0000 !important;position:relative !important;top:0 !important;left:0 !important;margin-right:10px !important;"
                                                 id='depclickclose' onclick='dpclose2()' class='fa-solid fa-xmark'></i>
-                                            Where To?</h4>
+                                            Heading to?</h4>
                                     </div>
                                     <input type="text" class="form-control mobiledestination"
                                         style="border: 1px solid #ccc !important;margin-bottom: 3px; margin-top: 16px;    width: 104%;"
@@ -153,7 +153,7 @@
 
                             <div class="search-smallinput dp_date_focus">
                                 <div class="textlng myreturnbox">
-                                    <label>Departure</label>
+                                    <label>Depart on</label>
                                     <div class="map-icon icon12"><img
                                             src="/assets/images/calender-icon.svg" /></div><input
                                         type="text" class="form-control" placeholder="Select"
@@ -170,24 +170,24 @@
                                                     <select class="form-control newfunction12" style="width: 50%;"
                                                         name="title13">
                                                         <option value="round" {{ROUND_SELECTED}}>
-                                                            Round Trip</option>
+                                                            Return Journey</option>
                                                         <option value="oneway" {{ONEWAY_SELECTED}}>
-                                                            One Way</option>
+                                                            Single Journey</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="row" style="margin: auto;">
                                                         <div class="col-sm-2 mobred">
-                                                            <a href="#" class="resertdate">Reset</a>
+                                                            <a href="#" class="resertdate">Clear</a>
                                                         </div>
                                                         <div class="col-sm-10">
                                                             <div class="row" style="margin: auto;">
                                                                 <div class="col-sm-6"><input type="text"
                                                                         class="form-control depclpop"
-                                                                        placeholder="Departure" /></div>
+                                                                        placeholder="Depart" /></div>
                                                                 <div class="col-sm-6"><input type="text"
                                                                         class="form-control arclpop"
-                                                                        placeholder="Return" /></div>
+                                                                        placeholder="Come back" /></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -209,7 +209,7 @@
                                                         </path>
                                                         <path d="M7 17l-4-1-1 4"></path>
                                                         <path d="M17 7l4 1 1-4"></path>
-                                                    </svg></span> Reset</a>
+                                                    </svg></span> Clear</a>
                                             <button type="button" class="btn btn-primary calbtn"><span><svg
                                                         xmlns="http://www.w3.org/2000/svg" width="12" height="12"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -219,7 +219,7 @@
                                                             d="M11.605 5.782l.23-2.369c.091-.952.98-1.598 1.878-1.366 1.351.35 2.3 1.605 2.3 3.044v3.035c0 .675 0 1.013.146 1.26.083.141.197.26.333.345.24.151.567.151 1.22.151h.396c1.703 0 2.554 0 3.078.39.393.293.67.722.78 1.208.146.65-.181 1.463-.836 3.087l-.326.81a3.261 3.261 0 0 0-.226 1.48c.232 2.874-2.047 5.295-4.833 5.136l-10.424-.599c-1.139-.065-1.708-.098-2.222-.553-.515-.455-.612-.924-.805-1.861a14.324 14.324 0 0 1 .055-6.037c.283-1.248 1.475-1.92 2.706-1.76 3.264.42 6.223-2.019 6.55-5.4z">
                                                         </path>
                                                         <path d="M7 11.5l-.137.457A14.983 14.983 0 0 0 7 21"></path>
-                                                    </svg></span> Done</button>
+                                                    </svg></span> Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@
                             </style>
                             <div class="search-smallinput mobile-mrg ar_date_focus" id="ar_date_focus">
                                 <div class="textlng to_error">
-                                    <label>Return</label>
+                                    <label>Return on</label>
                                     <div class="map-icon icon12"><img
                                             src="/assets/images/destination-cal-icon.svg" /></div><input
                                         type="text" class="form-control" placeholder="Select" id="arrfield"
@@ -261,7 +261,7 @@
                         <div class="frm-width3 ">
                             <div class="textlng">
                                 <div class="traveller_focus">
-                                    <label>Travellers</label>
+                                    <label>Passengers</label>
                                     <div class="map-icon traveliconmap"><img
                                             src="/assets/images/user-new.svg" /></div> <input type="text"
                                         class="form-control" id="popover" value="{{PAX_LABEL}}">
@@ -276,7 +276,7 @@
                                 <input type="hidden" value="{{NONSTOP}}" name="nonstop" id="nonstop" />
                                 <div id="pop" class="myfrm arrow-top">
                                     <div class="repbackhighttr">
-                                        <h4><i id="sfclickclose" class="fa-solid fa-arrow-left"></i> Traveller Details
+                                        <h4><i id="sfclickclose" class="fa-solid fa-arrow-left"></i> Who is flying
                                             </h2>
                                     </div>
                                     <div class="travllerbox-mbl">
@@ -286,7 +286,7 @@
 
                                             <div class="col-sm-4">
                                                 <p><span class="adult">{{ADULTS}} </span> Adults
-                                                    <small>(Aged 12+ yrs)</small>
+                                                    <small>(12 years and over)</small>
                                                 </p>
 
                                                 <div class="btn-group popplusap" role="group"
@@ -299,8 +299,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <p><span class="child">{{CHILDREN}}</span> Child
-                                                    <small>(Aged 2-12 yrs)</small>
+                                                <p><span class="child">{{CHILDREN}}</span> Children
+                                                    <small>(2 to 12 years)</small>
                                                 </p>
 
                                                 <div class="btn-group popplusap" role="group"
@@ -314,7 +314,7 @@
                                             </div>
                                             <div class="col-sm-4">
                                                 <p><span class="infant">{{INFANTS}}</span>
-                                                    Infant<small>(Below 2 yrs)</small></p>
+                                                    Infants<small>(under 2 years)</small></p>
 
                                                 <div class="btn-group popplusap" role="group"
                                                     aria-label="Basic example">
@@ -330,7 +330,7 @@
 
                                         </div>
                                     </div>
-                                    <p class="model_heading">Travel Class</p>
+                                    <p class="model_heading">Cabin</p>
 
 
 
@@ -358,9 +358,9 @@
                                     <div id="optionbtn">
                                         <a href="javascript:void(0);" onclick="func(0)" id="btn-cancel"
                                             class="btncommin "><i class="fa-sharp fa-solid fa-circle-xmark "></i>
-                                            Cancel</a>
+                                            Dismiss</a>
                                         <a href="javascript:void(0);" onclick="func(0)" id="btn-done"
-                                            class="btncommin "> <i class="fa-regular fa-thumbs-up"></i> Done</a>
+                                            class="btncommin "> <i class="fa-regular fa-thumbs-up"></i> Save</a>
                                     </div>
                                 </div>
 
@@ -379,7 +379,7 @@
 
 
                             <button type="submit" id="search22" value="Search"><i class="fa fa-search"
-                                    aria-hidden="true"></i> SEARCH</button>
+                                    aria-hidden="true"></i> FIND FLIGHTS</button>
 
 
                         </div>
@@ -419,11 +419,11 @@
                                     d="M16.474 5.408l2.118 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621z">
                                 </path>
                                 <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"></path>
-                            </svg></span> MODIFY SEARCH</button>
+                            </svg></span> CHANGE SEARCH</button>
                 </div>
                 <button class="btn btn-editsearch" type="button" data-toggle="collapse" data-target="#collapseExample"
                     aria-expanded="false" aria-controls="collapseExample"><i
-                        class="fa-sharp fa-regular fa-pen-to-square"></i> Edit</button>
+                        class="fa-sharp fa-regular fa-pen-to-square"></i> Change</button>
             </div>
 
         </div>
@@ -438,24 +438,24 @@
             <div class="row">
                 <div class="col-sm-5">
             <button class="btn btn-sm btn-filter-mobile btn-success"><i
-                    class="fa-solid fa-filter mr-2"></i>Filter</button>
+                    class="fa-solid fa-filter mr-2"></i>Refine</button>
                         
                     </div>
                     <div class="col-sm-2" style="width: 12px !important;">
                     |
                         </div>
                     <div class="col-sm-5">
-                           <button class="btn-sort"> <i class="fa fa-sort-amount-asc " aria-hidden="true"></i> Sort by</button>
+                           <button class="btn-sort"> <i class="fa fa-sort-amount-asc " aria-hidden="true"></i> Order by</button>
            </div>
                     </div>
                     </div>
                     <div class="sortbynav">
-                        <h4 class="mbl-txt">Sort By</h4>
+                        <h4 class="mbl-txt">Order By</h4>
                     <div class="sortdata">
                         </div>
 
                         <div class="mobfilterclose sortbyapply">
-                  Apply
+                  Go
                 </div>
                     </div>
             <div class="filter-mobile">
@@ -475,7 +475,7 @@
             </div>
             <div class="filterbox-shimmer">
                 <div class="headingbar">
-                    <h4>Filter Your Results </h4>
+                    <h4>Narrow Down Your Results </h4>
 
 
                 </div>
@@ -486,7 +486,7 @@
                         <div class="row">
                             <div class="col-sm-10">
                                 <div class="hed">
-                                    <h3>Stops</h3>
+                                    <h3>Number of Stops</h3>
                                     <div class="filterborder"></div>
                                 </div>
                             </div>
@@ -499,19 +499,19 @@
                     </div>
 
                     <!-- <div>
-      <label for="">Shorting</label>
+      <label for="">Ordering</label>
       <select name="Shorting" id="Shorting" class="Shorting">
 
-      <option value="">--select--</option>
-      <option value="LowerPrice">Lower Price</option>
-      <option value="HighPrice">High Price</option>
-       <option value="">ghfh</option>
-      <option value="">ghfh</option>
+      <option value="">--choose--</option>
+      <option value="LowerPrice">Cheapest first</option>
+      <option value="HighPrice">Priciest first</option>
+       <option value="">tbd</option>
+      <option value="">tbd</option>
       </select>
     </div> -->
                     <div class="white-border-box">
                         <div class="hed">
-                            <h3>Departure From {{ORIGIN}}</h3>
+                            <h3>Leaving {{ORIGIN}}</h3>
                             <div class="filterborder"></div>
 
                         </div>
@@ -530,7 +530,7 @@
                         <div class="row">
                             <div class="col-sm-10">
                                 <div class="hed">
-                                    <h3>Preferred Airlines</h3>
+                                    <h3>Favourite Airlines</h3>
                                     <div class="filterborder"></div>
                                 </div>
                             </div>
@@ -545,7 +545,7 @@
                         <div class="row">
                             <div class="col-sm-10">
                                 <div class="hed">
-                                    <h3>Price</h3>
+                                    <h3>Fare Range</h3>
                                     <div class="filterborder"></div>
                                 </div>
                             </div>
