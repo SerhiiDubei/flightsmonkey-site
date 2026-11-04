@@ -61,12 +61,10 @@ const cfg = {
     legal: process.env.SITE_LEGAL || 'Flights Monkey LLC',
     domain: process.env.SITE_DOMAIN || 'reservationsflightstoday.com',
     url: process.env.SITE_URL || `https://${process.env.SITE_DOMAIN || 'reservationsflightstoday.com'}`,
-    // The client has no numbers yet and will put them in themselves (agreed in
-    // the task on 28.09), so the site carries a placeholder that cannot pass
-    // for a real line — 1-800-555-0100 could. The Alaska page's own number
-    // follows SITE_PHONE unless set, so one real number fixes every page.
-    phone: process.env.SITE_PHONE || '+11111111111',
-    phoneAlt: process.env.SITE_PHONE_ALT || process.env.SITE_PHONE || '+11111111111',
+    // The client's number, sent 04.11. The Alaska page's own number follows
+    // SITE_PHONE unless set, so one number covers every page.
+    phone: process.env.SITE_PHONE || '+18555104348',
+    phoneAlt: process.env.SITE_PHONE_ALT || process.env.SITE_PHONE || '+18555104348',
     // Second and third footer lines. Optional: empty hides the line, rather
     // than printing the main number three times over.
     phone2: process.env.SITE_PHONE_2 || '',
